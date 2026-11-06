@@ -56,14 +56,14 @@ export default function BlogInnerHero({ data }) {
   const categoryTitle = data.category_id?.title || "Uncategorized";
   const title = data.title || "Untitled";
   const introduction = data.introduction || "";
-  
+
   // ✅ Format date from API
-  const formattedDate = data.createdAt 
-    ? new Date(data.createdAt).toLocaleDateString('en-US', { 
-        month: 'long', 
-        day: 'numeric', 
-        year: 'numeric' 
-      })
+  const formattedDate = data.createdAt
+    ? new Date(data.createdAt).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    })
     : 'April 9, 2022';
 
   // ✅ Get read time from API or use default
@@ -117,7 +117,7 @@ export default function BlogInnerHero({ data }) {
   };
 
   return (
-    <Section sx={{ pt: { xs: 4, md: 8 }, pb: { xs: 6, md: 10 } }}>
+    <Section sx={{ pt: { xs: 15, md: 15, lg: 17, xl: 20 }, pb: { xs: 6, md: 10 } }}>
       <SiteContainer>
         {/* CATEGORY */}
         <AnimatedLine
@@ -150,13 +150,13 @@ export default function BlogInnerHero({ data }) {
         >
           <Stack
             direction="row"
-            spacing={1}
+            spacing={2.9} // 👈 Increased from 1 to 1.5 (or 2)
             justifyContent="center"
             alignItems="center"
             mb={4}
             flexWrap="wrap"
           >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}> {/* 👈 Increased gap */}
               <MotionBox
                 sx={{
                   width: 24,
@@ -225,7 +225,7 @@ export default function BlogInnerHero({ data }) {
               width: '100%',
               height: { xs: 200, sm: 280, md: 360 },
               borderRadius: 2,
-              mb: 1,
+              mb: 5,
               position: 'relative',
               overflow: 'hidden',
             }}
@@ -271,7 +271,19 @@ export default function BlogInnerHero({ data }) {
         </MotionBox>
 
         {/* INTRO */}
-        <AnimatedParagraph delay={0.1}>
+        <AnimatedParagraph
+          delay={0.1}
+          sx={{
+            fontFamily: '"Red Hat Display", sans-serif',
+            fontWeight: 400,
+            fontStyle: 'normal', // Figma's "Regular"
+            fontSize: '18px',
+            lineHeight: '28px',
+            letterSpacing: '0%', // 0% is the default, but explicitly stated here
+            color: '#444444',
+            verticalAlign: 'middle',
+          }}
+        >
           {introduction}
         </AnimatedParagraph>
 
@@ -286,7 +298,7 @@ export default function BlogInnerHero({ data }) {
               fontSize: "28px",
               lineHeight: "100%",
               display: "block",
-              marginTop: "32px",
+              marginTop: "39px",
               marginBottom: "16px",
             },
 

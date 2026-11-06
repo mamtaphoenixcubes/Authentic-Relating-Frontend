@@ -55,11 +55,13 @@ export const RecommendationSection = ({ relatedBlogs = [] }) => {
     return null;
   }
 
+  const displayBlogs = relatedBlogs.slice(0, 3);
+
   return (
     <Section sx={{ py: { xs: 4, sm: 5, md: 6 } }}>
       <SiteContainer>
         <MotionBox
-          key={relatedBlogs.length}
+          key={displayBlogs.length}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -88,10 +90,11 @@ export const RecommendationSection = ({ relatedBlogs = [] }) => {
           {/* CARDS GRID */}
           <Grid
             container
-            spacing={{ xs: 2, sm: 3, md: 3 }}
-            justifyContent="center"
+            spacing={2} 
+            justifyContent="center" 
+            alignItems="stretch"
           >
-            {relatedBlogs.map((blog, index) => {
+            {displayBlogs.map((blog, index) => {
               const imageUrl = blog.image
                 ? `${process.env.NEXT_PUBLIC_API_URL}/${blog.image}`
                 : "/placeholder.png";
@@ -100,21 +103,20 @@ export const RecommendationSection = ({ relatedBlogs = [] }) => {
                 <Grid
                   item
                   key={blog._id}
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  lg={4}
-                  xl={4}
+                  xs={12} 
+                  sm={6}  
+                  md={4}  
+                  lg={4}  
+                  xl={4}  
                   sx={{
                     display: 'flex',
-                    justifyContent: 'center',
-                    width: '100%'
+                    justifyContent: 'center', 
                   }}
                   component={motion.div}
                   variants={cardVariants}
                   custom={index}
                 >
-                  <motion.div style={{ width: '100%', maxWidth: 400 }}>
+                  <motion.div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                     <Card
                       sx={{
                         p: 2,
@@ -126,8 +128,10 @@ export const RecommendationSection = ({ relatedBlogs = [] }) => {
                         flexDirection: "column",
                         position: "relative",
                         overflow: "hidden",
+                        width: "100%",
                         height: "100%",
-                        border: "2px solid rgba(255,255,255,0.8)",
+                        // ✅ SOLID WHITE BORDER
+                        border: "2px solid #FFFFFF",
                         transition: "transform 0.3s ease, box-shadow 0.3s ease",
 
                         "&:hover": {
@@ -214,12 +218,10 @@ export const RecommendationSection = ({ relatedBlogs = [] }) => {
                             color: "#fff",
                             position: "relative",
                             overflow: "hidden",
-
-                            // UPDATED BUTTON GRADIENT
                             background:
                               "linear-gradient(105deg, #6fc1fc 0%, #21a2ff 100%)",
-
-                            border: "2px solid rgba(255,255,255,0.8)",
+                            // ✅ SOLID WHITE BORDER ON BUTTON
+                            border: "2px solid #FFFFFF", 
                             boxShadow: "0 3px 8px rgba(33, 150, 243, 0.15)",
                             transition: "all 0.3s ease",
 

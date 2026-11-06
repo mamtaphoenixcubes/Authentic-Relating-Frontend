@@ -20,18 +20,15 @@ export const RecommendationSection = () => {
   const cards = [
     {
       id: 1,
-      title: 'Morbi varius ornare ante non posuere. Morbi lacus.',
-      description: 'Amet erat vitae, interdum semper leo.',
+      title: 'Awake & Relating Inner Truth Blog',
+      description:
+        'In a world of constant digital distractions and superficial interactions, the art of authentic communication has become increasingly rare and valuable. When we communicate...',
     },
     {
       id: 2,
-      title: 'Morbi varius ornare ante non posuere. Morbi lacus.',
-      description: 'Amet erat vitae, interdum semper leo.',
-    },
-    {
-      id: 3,
-      title: 'Morbi varius ornare ante non posuere. Morbi lacus.',
-      description: 'Amet erat vitae, interdum semper leo.',
+      title: "What Is Authentic Relating? A Beginner's Guide",
+      description:
+        'In a world of constant digital distractions and superficial interactions, the art of authentic communication has become increasingly rare and valuable. When we communicate...',
     },
   ];
 
@@ -76,9 +73,10 @@ export const RecommendationSection = () => {
             sx={{ mb: { xs: 3, sm: 4, md: 4 } }}
           />
 
+          {/* ✅ REDUCED GAP: Changed spacing to 2 (16px) */}
           <Grid
             container
-            spacing={{ xs: 2, sm: 3, md: 3 }}
+            spacing={2}
             justifyContent="center"
           >
             {cards.map((card) => (
@@ -86,10 +84,10 @@ export const RecommendationSection = () => {
                 item
                 key={card.id}
                 xs={12}
-                sm={4}
-                md={4}
-                lg={4}
-                xl={4}
+                sm={6}
+                md={6}
+                lg={6}
+                xl={6}
                 sx={{
                   display: 'flex',
                   justifyContent: 'center',
@@ -102,19 +100,12 @@ export const RecommendationSection = () => {
                   sx={{
                     height: {
                       xs: 'auto',
-                      sm: 320,
-                      md: 310,
-                      lg: 360,
-                      xl: 380,
+                      sm: 380, // Adjusted height to fit content nicely
+                      md: 400,
+                      lg: 420,
                     },
+                    // ✅ REMOVED maxWidth constraint so it fills the column naturally
                     width: '100%',
-                    maxWidth: {
-                      xs: 400,
-                      sm: 200,
-                      md: 280,
-                      lg: 400,
-                      xl: 420,
-                    },
                     background:
                       'linear-gradient(100deg, #50B0F0 0%, #80B8F5 50%, #BFC3FA 100%)',
                     borderRadius: '16px',
@@ -125,30 +116,34 @@ export const RecommendationSection = () => {
                     p: 2,
                     boxShadow: '0 8px 24px rgba(100, 181, 246, 0.3)',
                     transition: 'all 0.3s ease',
-
                     '&:hover': {
                       transform: 'translateY(-6px)',
                       boxShadow: '0 16px 40px rgba(100, 181, 246, 0.4)',
                     },
                   }}
                 >
-                  <CardMedia
-                    component="div"
+                  {/* ✅ Changed to use an img tag so the image appears properly like your screenshot */}
+                  <Box
                     sx={{
                       width: '100%',
                       height: {
-                        xs: 120,
-                        sm: 120,
-                        md: 130,
-                        lg: 140,
-                        xl: 150,
+                        xs: 160,
+                        sm: 180,
+                        md: 200,
                       },
                       backgroundColor: '#FFFFFF',
                       borderRadius: '12px',
                       mb: 2,
                       flexShrink: 0,
+                      overflow: 'hidden',
                     }}
-                  />
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800&auto=format&fit=crop"
+                      alt={card.title}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </Box>
 
                   <CardContent
                     sx={{
@@ -157,7 +152,6 @@ export const RecommendationSection = () => {
                       p: 1,
                       display: 'flex',
                       flexDirection: 'column',
-
                       '&:last-child': {
                         pb: 1,
                       },
@@ -169,7 +163,9 @@ export const RecommendationSection = () => {
                       sx={{
                         color: '#FFFFFF',
                         fontWeight: 600,
-                        lineHeight: 1.5,
+                        fontSize: '1.2rem', // Matches your screenshot font size
+                        lineHeight: 1.3,
+                        mb: 1.5,
                       }}
                     >
                       {card.title}
@@ -180,6 +176,7 @@ export const RecommendationSection = () => {
                       sx={{
                         color: '#FFFFFF',
                         fontWeight: 400,
+                        fontSize: '0.95rem',
                         lineHeight: 1.6,
                         mb: 2,
                       }}
@@ -191,22 +188,18 @@ export const RecommendationSection = () => {
                       <EventButton
                         variant="glass"
                         sx={{
-                          background:
-                            'linear-gradient(105deg, #6BB9F1 0%, #80C5F5 100%)',
+                          background: 'transparent',
                           color: '#FFFFFF',
-                          border: '1px solid rgba(255,255,255,0.7)',
-                          borderRadius: '8px',
-                          px: 3,
+                          border: '1.5px solid #FFFFFF', // Matches screenshot border
+                          borderRadius: '10px',
+                          px: 4,
                           py: 1,
-                          fontWeight: 600,
+                          fontWeight: 500,
+                          fontSize: '15px',
                           textTransform: 'none',
-                          boxShadow: '0 3px 8px rgba(0,0,0,0.10)',
                           transition: 'all 0.3s ease',
-
                           '&:hover': {
-                            background:
-                              'linear-gradient(105deg, #58AEEF 0%, #70BDF3 100%)',
-                            boxShadow: '0 5px 12px rgba(0,0,0,0.15)',
+                            background: 'rgba(255,255,255,0.2)',
                           },
                         }}
                       >

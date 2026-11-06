@@ -19,58 +19,27 @@ import SiteContainer from '../../_components/common/SiteContainer';
 import Card from '../../_components/common/Card';
 import EventButton from '../../_components/buttons/EventButton';
 
-// Create motion components
 const MotionBox = motion(Box);
 const MotionTypography = motion(Typography);
 const MotionStack = motion(Stack);
 const MotionChip = motion(Chip);
 
-// Animation variants
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-            delayChildren: 0.1
-        }
+        transition: { staggerChildren: 0.1, delayChildren: 0.1 }
     }
 };
 
 const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.5,
-            ease: "easeOut"
-        }
-    }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
 
 const fadeInUpVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.6,
-            ease: "easeOut"
-        }
-    }
-};
-
-const scaleInVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-        opacity: 1,
-        scale: 1,
-        transition: {
-            duration: 0.5,
-            ease: "easeOut"
-        }
-    }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
 
 const staggerItemVariants = {
@@ -78,16 +47,11 @@ const staggerItemVariants = {
     visible: (i) => ({
         opacity: 1,
         y: 0,
-        transition: {
-            duration: 0.4,
-            delay: i * 0.1,
-            ease: "easeOut"
-        }
+        transition: { duration: 0.4, delay: i * 0.1, ease: "easeOut" }
     })
 };
 
 export const BlogGrid = () => {
-
     const [mounted, setMounted] = useState(false);
     const [blogs, setBlogs] = useState([]);
     const [recentPosts, setRecentPosts] = useState([]);
@@ -101,20 +65,18 @@ export const BlogGrid = () => {
 
     const router = useRouter();
 
+    // ✅ SAME as CourseCard theme defaults
+    const readMoreBackground = "linear-gradient(105deg, #6BB9F1 0%, #80C5F5 100%)";
+    const readMoreHover = "linear-gradient(105deg, #58AEEF 0%, #70BDF3 100%)";
+
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
                 const res = await axiosInstance.get('/frontendApis/getblogs', {
-                    params: {
-                        limit: limit,
-                        page: page,
-                        search: searchQuery,
-                        category: selectedCategory
-                    },
+                    params: { limit, page, search: searchQuery, category: selectedCategory },
                 });
 
                 const pagination = res?.data?.data?.pagination;
-
                 setTotalPages(pagination?.totalPages || 0);
 
                 const allBlogs = (res?.data?.data?.blogs || []).sort((a, b) => a.index_position - b.index_position);
@@ -124,13 +86,11 @@ export const BlogGrid = () => {
                 setRecentPosts(sortedByDate.slice(0, 4));
 
                 setMounted(true);
-
             } catch (error) {
                 console.error('API error:', error);
                 setMounted(true);
             }
         };
-
         fetchBlogs();
     }, [page, searchQuery, selectedCategory]);
 
@@ -141,30 +101,19 @@ export const BlogGrid = () => {
                 setCategories(res.data);
             } catch (error) {
                 console.error('API error:', error);
-                setMounted(true);
             }
         };
-
         fetchBlogsCategories();
-    }, [page]);
+    }, []);
 
     if (!mounted) {
         return (
             <Box sx={{ px: { xs: 2, sm: 4, md: 6, lg: 12 }, py: { xs: 4, sm: 6, md: 8, lg: 10 } }}>
                 <Box sx={{ pb: { xs: 4, sm: 5, md: 6 } }}>
-                    <Typography
-                        sx={{
-                            color: '#ff8a80',
-                            fontWeight: 700,
-                            fontSize: { xs: 26, md: 32 },
-                            mb: 2,
-                        }}
-                    >
+                    <Typography sx={{ color: '#ff8a80', fontWeight: 700, fontSize: { xs: 26, md: 32 }, mb: 2 }}>
                         The Authentic Relating Blog
                     </Typography>
-                    <div style={{ minHeight: '600px' }}>
-                        Loading content...
-                    </div>
+                    <div style={{ minHeight: '600px' }}>Loading content...</div>
                 </Box>
             </Box>
         );
@@ -179,11 +128,11 @@ export const BlogGrid = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     variants={containerVariants}
                 >
-                    {/* Blog Header Section */}
+                    {/* HEADER */}
                     <MotionBox
                         variants={fadeInUpVariants}
-                        whileInView="visible"
                         initial="hidden"
+                        whileInView="visible"
                         viewport={{ once: true }}
                         sx={{ pb: { xs: 4, sm: 5, md: 6 } }}
                     >
@@ -192,19 +141,8 @@ export const BlogGrid = () => {
                             sx={{
                                 fontFamily: "var(--font-redhat)",
                                 fontWeight: 700,
-                                fontSize: {
-                                    xs: "22px",
-                                    sm: "26px",
-                                    md: "32px",
-                                    lg: "36px",
-                                    xl: "40px",
-                                },
-                                lineHeight: {
-                                    xs: 1.2,
-                                    sm: 1.15,
-                                    md: 1.1,
-                                    lg: 1.1,
-                                },
+                                fontSize: { xs: "22px", sm: "26px", md: "32px", lg: "36px", xl: "40px" },
+                                lineHeight: { xs: 1.2, sm: 1.15, md: 1.1, lg: 1.1 },
                                 letterSpacing: "0%",
                                 textAlign: "left",
                                 color: "#ff8a80",
@@ -219,13 +157,7 @@ export const BlogGrid = () => {
                             sx={{
                                 fontFamily: "var(--font-redhat)",
                                 fontWeight: 400,
-                                fontSize: {
-                                    xs: "14px",
-                                    sm: "15px",
-                                    md: "16px",
-                                    lg: "20px",
-                                    xl: "22px",
-                                },
+                                fontSize: { xs: "14px", sm: "15px", md: "16px", lg: "20px", xl: "22px" },
                                 color: "#444444",
                                 textAlign: "left",
                                 mb: { xs: 1.5, md: 2 },
@@ -239,13 +171,7 @@ export const BlogGrid = () => {
                             sx={{
                                 fontFamily: "var(--font-redhat)",
                                 fontWeight: 400,
-                                fontSize: {
-                                    xs: "14px",
-                                    sm: "15px",
-                                    md: "16px",
-                                    lg: "20px",
-                                    xl: "22px",
-                                },
+                                fontSize: { xs: "14px", sm: "15px", md: "16px", lg: "20px", xl: "22px" },
                                 color: "#1b1b1b",
                                 textAlign: "left",
                                 mb: { xs: 1.5, md: 2 },
@@ -263,13 +189,7 @@ export const BlogGrid = () => {
                             sx={{
                                 fontFamily: "var(--font-redhat)",
                                 fontWeight: 400,
-                                fontSize: {
-                                    xs: "14px",
-                                    sm: "15px",
-                                    md: "16px",
-                                    lg: "20px",
-                                    xl: "22px",
-                                },
+                                fontSize: { xs: "14px", sm: "15px", md: "16px", lg: "20px", xl: "22px" },
                                 color: "#1b1b1b",
                                 textAlign: "left",
                                 mb: { xs: 1.5, md: 2 },
@@ -284,13 +204,7 @@ export const BlogGrid = () => {
                             variants={itemVariants}
                             sx={{
                                 fontWeight: 600,
-                                fontSize: {
-                                    xs: "14px",
-                                    sm: "15px",
-                                    md: "16px",
-                                    lg: "20px",
-                                    xl: "22px",
-                                },
+                                fontSize: { xs: "14px", sm: "15px", md: "16px", lg: "20px", xl: "22px" },
                                 color: "#1b1b1b",
                             }}
                         >
@@ -298,13 +212,14 @@ export const BlogGrid = () => {
                         </MotionTypography>
                     </MotionBox>
 
-                    {/* MAIN CONTENT GRID */}
+                    {/* MAIN GRID */}
                     <Grid container spacing={{ xs: 2, md: 4 }}>
+
+                        {/* LEFT BLOG GRID */}
 
                         {/* LEFT BLOG GRID */}
                         <Grid item xs={12} sm={8} md={8} lg={8} xl={8}>
                             <MotionBox
-                                component={motion.div}
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true, amount: 0.1 }}
@@ -312,9 +227,9 @@ export const BlogGrid = () => {
                             >
                                 <Grid
                                     container
-                                    spacing={3}
+                                    spacing={{ xs: 2, sm: 3, md: 3 }}
                                     key={selectedCategory || 'all'}
-                                    justifyContent={{ xs: 'center', sm: 'flex-start' }}
+                                    justifyContent="center"
                                 >
                                     {blogs.map((blog, index) => {
                                         const imageUrl = blog.image
@@ -326,133 +241,189 @@ export const BlogGrid = () => {
                                                 item
                                                 xs={12}
                                                 sm={6}
-                                                lg={6}
+                                                md={6}
                                                 key={blog._id}
                                                 sx={{
                                                     display: 'flex',
-                                                    justifyContent: { xs: 'center', sm: 'flex-start' }
+                                                    justifyContent: 'center',
                                                 }}
                                             >
                                                 <motion.div
-                                                    key={blog._id}
                                                     variants={staggerItemVariants}
                                                     custom={index}
-                                                    initial="hidden"
-                                                    whileInView="visible"
-                                                    viewport={{ once: true }}
-                                                    style={{ width: "100%" }}
+                                                    style={{
+                                                        width: '100%',
+                                                        display: 'flex',
+                                                        justifyContent: 'center',
+                                                    }}
                                                 >
                                                     <Card
+                                                        elevation={3}
                                                         sx={{
-                                                            p: 2,
-                                                            borderRadius: "16px",
+                                                            height: {
+                                                                xs: 'auto',
+                                                                sm: 320,
+                                                                md: 310,
+                                                                lg: 360,
+                                                                xl: 380,
+                                                            },
+                                                            width: '100%',
+                                                            maxWidth: {
+                                                                xs: 400,
+                                                                sm: 280,
+                                                                md: 320,
+                                                                lg: 400,
+                                                                xl: 520,
+                                                            },
                                                             background:
-                                                                "linear-gradient(100deg, #50B0F0 0%, #80B8F5 50%, #BFC3FA 100%)",
-                                                            boxShadow: "0 8px 24px rgba(100, 181, 246, 0.3)",
-                                                            display: "flex",
-                                                            flexDirection: "column",
-                                                            position: "relative",
-                                                            overflow: "hidden",
-                                                            height: "100%",
-                                                            transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                                                            "&:hover": {
-                                                                transform: "translateY(-6px)",
-                                                                boxShadow: "0 16px 40px rgba(100, 181, 246, 0.4)",
+                                                                'linear-gradient(100deg, #50B0F0 0%, #80B8F5 50%, #BFC3FA 100%)',
+                                                            borderRadius: '16px',
+                                                            overflow: 'hidden',
+                                                            display: 'flex',
+                                                            boxShadow: '0px 4px 7.3px 1px #0000001A',
+                                                            // ✅ 2px white border
+                                                            border: '2px solid #FFFFFF',
+                                                            flexDirection: 'column',
+                                                            alignItems: 'center',
+                                                            p: 2,
+                                                            boxShadow:
+                                                                '0 8px 24px rgba(100, 181, 246, 0.3)',
+                                                            transition: 'all 0.3s ease',
+
+                                                            '&:hover': {
+                                                                transform: 'translateY(-6px)',
+                                                                boxShadow:
+                                                                    '0 16px 40px rgba(100, 181, 246, 0.4)',
                                                             },
                                                         }}
                                                     >
-                                                        {/* IMAGE */}
+                                                        {/* BLOG IMAGE */}
                                                         <Box
                                                             sx={{
-                                                                height: "200px",
-                                                                minHeight: "200px",
-                                                                borderRadius: "12px",
-                                                                overflow: "hidden",
+                                                                width: '100%',
+                                                                height: {
+                                                                    xs: 120,
+                                                                    sm: 120,
+                                                                    md: 130,
+                                                                    lg: 140,
+                                                                    xl: 150,
+                                                                },
+                                                                backgroundColor: '#FFFFFF',
+                                                                borderRadius: '12px',
                                                                 mb: 2,
-                                                                background: "#fff",
                                                                 flexShrink: 0,
+                                                                overflow: 'hidden',
                                                             }}
                                                         >
                                                             <img
                                                                 src={imageUrl}
-                                                                alt={blog.title}
+                                                                alt={blog.title || 'Blog image'}
                                                                 style={{
-                                                                    width: "100%",
-                                                                    height: "100%",
-                                                                    objectFit: "cover",
+                                                                    width: '100%',
+                                                                    height: '100%',
+                                                                    objectFit: 'cover',
+                                                                }}
+                                                                onError={(e) => {
+                                                                    e.currentTarget.onerror = null;
+                                                                    e.currentTarget.src =
+                                                                        '/placeholder.png';
                                                                 }}
                                                             />
                                                         </Box>
 
-                                                        {/* TITLE */}
-                                                        <Typography
+                                                        {/* BLOG CONTENT */}
+                                                        <Box
                                                             sx={{
-                                                                fontFamily: '"Red Hat Display", sans-serif',
-                                                                fontWeight: 700,
-                                                                fontSize: { xs: "16px", md: "18px" },
-                                                                color: "#FFFFFF",
-                                                                mb: 1,
-                                                                minHeight: "48px",
-                                                                display: "-webkit-box",
-                                                                WebkitLineClamp: 2,
-                                                                WebkitBoxOrient: "vertical",
-                                                                overflow: "hidden",
+                                                                flexGrow: 1,
+                                                                width: '100%',
+                                                                p: 1,
+                                                                display: 'flex',
+                                                                flexDirection: 'column',
                                                             }}
                                                         >
-                                                            {blog.title}
-                                                        </Typography>
-
-                                                        {/* DESCRIPTION */}
-                                                        <Box sx={{ mb: 3 }}>
+                                                            {/* TITLE */}
                                                             <Typography
                                                                 sx={{
                                                                     fontFamily: '"Red Hat Display", sans-serif',
+                                                                    color: '#FFFFFF',
+                                                                    fontWeight: 600,
+                                                                    fontSize: {
+                                                                        xs: 15,
+                                                                        sm: 14,
+                                                                        md: 15,
+                                                                        lg: 16,
+                                                                        xl: 17,
+                                                                    },
+                                                                    lineHeight: 1.5,
+                                                                    mb: 1,
+                                                                    display: '-webkit-box',
+                                                                    WebkitLineClamp: 2,
+                                                                    WebkitBoxOrient: 'vertical',
+                                                                    overflow: 'hidden',
+                                                                }}
+                                                            >
+                                                                {blog.title}
+                                                            </Typography>
+
+                                                            {/* DESCRIPTION */}
+                                                            <Typography
+                                                                sx={{
+                                                                    fontFamily: '"Red Hat Display", sans-serif',
+                                                                    color: '#FFFFFF',
                                                                     fontWeight: 400,
-                                                                    fontSize: { xs: "12px", md: "13px" },
+                                                                    fontSize: {
+                                                                        xs: 12,
+                                                                        sm: 11,
+                                                                        md: 12,
+                                                                        lg: 13,
+                                                                        xl: 14,
+                                                                    },
                                                                     lineHeight: 1.6,
-                                                                    color: "rgba(255,255,255,0.9)",
-                                                                    display: "-webkit-box",
+                                                                    mb: 2,
+                                                                    display: '-webkit-box',
                                                                     WebkitLineClamp: 3,
-                                                                    WebkitBoxOrient: "vertical",
-                                                                    overflow: "hidden",
+                                                                    WebkitBoxOrient: 'vertical',
+                                                                    overflow: 'hidden',
                                                                 }}
                                                             >
                                                                 {blog.introduction}
                                                             </Typography>
-                                                        </Box>
 
-                                                        {/* READ MORE BUTTON */}
-                                                        <Box sx={{ mt: "auto" }}>
-                                                            <EventButton
-                                                                onClick={() =>
-                                                                    router.push(`/blogpage/${blog.blogSlug}`)
-                                                                }
-                                                                sx={{
-                                                                    width: "auto",
-                                                                    minWidth: "130px",
-                                                                    height: "44px",
-                                                                    px: 3,
-                                                                    borderRadius: "10px",
-                                                                    fontSize: "14px",
-                                                                    fontWeight: 500,
-                                                                    fontFamily: '"Red Hat Display", sans-serif',
-                                                                    color: "#FFFFFF",
-                                                                    background:
-                                                                        "linear-gradient(105deg, #6BB9F1 0%, #80C5F5 100%)",
-                                                                    border: "1.5px solid #FFFFFF",
-                                                                    boxShadow: "0px 2px 5px rgba(0,0,0,0.12)",
-                                                                    transition: "all 0.3s ease",
-
-                                                                    "&:hover": {
+                                                            {/* READ MORE BUTTON */}
+                                                            <Box sx={{ mt: 'auto' }}>
+                                                                <EventButton
+                                                                    onClick={() =>
+                                                                        router.push(
+                                                                            `/blogpage/${blog.blogSlug}`
+                                                                        )
+                                                                    }
+                                                                    variant="glass"
+                                                                    sx={{
                                                                         background:
-                                                                            "linear-gradient(105deg, #58AEEF 0%, #70BDF3 100%)",
-                                                                        boxShadow: "0px 4px 10px rgba(0,0,0,0.15)",
-                                                                        transform: "translateY(-1px)",
-                                                                    },
-                                                                }}
-                                                            >
-                                                                Read More
-                                                            </EventButton>
+                                                                            'linear-gradient(105deg, #6BB9F1 0%, #80C5F5 100%)',
+                                                                        color: '#FFFFFF',
+                                                                        border: '1px solid rgba(255,255,255,0.7)',
+                                                                        borderRadius: '8px',
+                                                                        px: 3,
+                                                                        py: 1,
+                                                                        fontWeight: 600,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        boxShadow:
+                                                                            '0 3px 8px rgba(0,0,0,0.10)',
+                                                                        transition: 'all 0.3s ease',
+
+                                                                        '&:hover': {
+                                                                            background:
+                                                                                'linear-gradient(105deg, #58AEEF 0%, #70BDF3 100%)',
+                                                                            boxShadow:
+                                                                                '0 5px 12px rgba(0,0,0,0.15)',
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    Read More
+                                                                </EventButton>
+                                                            </Box>
                                                         </Box>
                                                     </Card>
                                                 </motion.div>
@@ -463,7 +434,8 @@ export const BlogGrid = () => {
                             </MotionBox>
                         </Grid>
 
-                        {/* RIGHT SIDEBAR */}
+
+                        {/* RIGHT SIDEBAR — unchanged structure, but cards already match */}
                         <Grid
                             item
                             xs={12}
@@ -473,7 +445,6 @@ export const BlogGrid = () => {
                             xl={4}
                             sx={{ pl: { xs: 0, sm: 2, md: 3, lg: 4 } }}
                         >
-                            {/* ───────── PARENT: controls the one-by-one stagger ───────── */}
                             <MotionBox
                                 initial="hidden"
                                 whileInView="visible"
@@ -482,50 +453,39 @@ export const BlogGrid = () => {
                                     hidden: { opacity: 0 },
                                     visible: {
                                         opacity: 1,
-                                        transition: {
-                                            staggerChildren: 0.25,   // 👈 gap between Search → Recent → Categories
-                                            delayChildren: 0.1,
-                                        },
+                                        transition: { staggerChildren: 0.25, delayChildren: 0.1 },
                                     },
                                 }}
                             >
-                                {/* ───── 1. SEARCH ───── */}
+                                {/* SEARCH */}
                                 <MotionBox
-                                    variants={{
-                                        hidden: { opacity: 0, y: 30 },
-                                        visible: {
-                                            opacity: 1,
-                                            y: 0,
-                                            transition: { duration: 0.5, ease: 'easeOut' },
-                                        },
-                                    }}
+                                    variants={fadeInUpVariants}
                                     sx={{
                                         display: 'flex',
-                                        alignItems: 'center',
+                                        alignItems: 'flex-end',
                                         gap: 2,
                                         mb: 3,
                                         justifyContent: { xs: 'center', sm: 'flex-start' },
                                         flexDirection: { xs: 'column', sm: 'row' },
                                     }}
                                 >
-                                    <MotionBox
-                                        variants={itemVariants}
-                                        sx={{
-                                            maxWidth: { xs: 300, sm: '100%' },
-                                            width: '100%',
-                                        }}
-                                    >
+                                    <MotionBox variants={itemVariants} sx={{ maxWidth: { xs: 300, sm: '100%' }, width: '100%' }}>
                                         <TextField
                                             variant="standard"
                                             fullWidth
                                             placeholder="Enter search keywords"
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            InputProps={{ disableUnderline: false }}
                                             sx={{
                                                 '& .MuiInput-root:before': { borderBottom: '2px solid #2196f3' },
                                                 '& .MuiInput-root:hover:not(.Mui-disabled):before': { borderBottom: '2px solid #2196f3' },
                                                 '& .MuiInput-root:after': { borderBottom: '2px solid #2196f3' },
+                                                '& .MuiInputBase-input': {
+                                                    fontFamily: 'var(--font-redhat)',
+                                                    fontSize: '15px',
+                                                    color: '#333',
+                                                    pb: 1,
+                                                }
                                             }}
                                         />
                                     </MotionBox>
@@ -536,33 +496,53 @@ export const BlogGrid = () => {
                                         sx={{
                                             textTransform: 'none',
                                             fontFamily: 'var(--font-redhat)',
-                                            fontWeight: 600,
-                                            fontSize: { xs: '13px', sm: '14px', md: '15px' },
-                                            px: { xs: 2.5, md: 4 },
-                                            height: { xs: '38px', md: '42px' },
-                                            borderRadius: '10px',
-                                            color: '#fff',
-                                            background: 'linear-gradient(102.12deg, #FFB3A6 0%, #db7276 100%)',
+                                            fontWeight: 500,
+                                            fontSize: '16px',
+
+                                            // ✅ Button Background
+                                            backgroundColor: '#EF706D',
+                                            backgroundImage: 'none',
+                                            color: '#FFFFFF',
+                                            borderRadius: '12px',
+                                            px: 4,
+                                            py: 1,
+                                            height: '42px',
+                                            minWidth: '110px',
+
+                                            // ✅ Required for the gradient border trick
                                             position: 'relative',
                                             overflow: 'hidden',
                                             border: 'none',
-                                            minWidth: { xs: 80 },
+
+                                            // ✅ Soft outer drop shadow
+                                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+
+                                            // ✅ Gradient Border via ::before mask
                                             '&::before': {
                                                 content: '""',
                                                 position: 'absolute',
                                                 inset: 0,
-                                                borderRadius: '10px',
-                                                padding: '2px',
-                                                background: 'linear-gradient(106deg, #FFFFFF 34%, rgba(255,255,255,0.1) 105%)',
+                                                borderRadius: '12px',
+                                                padding: '2.5px', // slightly thinner reads cleaner at 42px height
+                                                background: 'linear-gradient(135deg, #FFFFFF 0%, #F8E1E1 50%, #EFC9C9 100%)',
                                                 WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
                                                 WebkitMaskComposite: 'xor',
                                                 maskComposite: 'exclude',
                                                 pointerEvents: 'none',
+                                                zIndex: 1,
                                             },
+
+                                            // ✅ Ensure text sits above the border
+                                            '& > span': {
+                                                position: 'relative',
+                                                zIndex: 2,
+                                            },
+
+                                            transition: 'all 0.3s ease',
                                             '&:hover': {
-                                                background: 'linear-gradient(102.12deg, #FFA494 0%, #E96A57 100%)',
-                                                boxShadow: '0 10px 25px rgba(0,0,0,0.25)',
-                                                transform: 'translateY(-2px)',
+                                                backgroundColor: '#E55B57',
+                                                boxShadow: '0 6px 16px rgba(0, 0, 0, 0.2)',
+                                                transform: 'translateY(-1px)',
                                             },
                                         }}
                                     >
@@ -570,16 +550,9 @@ export const BlogGrid = () => {
                                     </EventButton>
                                 </MotionBox>
 
-                                {/* ───── 2. RECENT POSTS ───── */}
+                                {/* RECENT POSTS */}
                                 <MotionBox
-                                    variants={{
-                                        hidden: { opacity: 0, y: 30 },
-                                        visible: {
-                                            opacity: 1,
-                                            y: 0,
-                                            transition: { duration: 0.5, ease: 'easeOut' },
-                                        },
-                                    }}
+                                    variants={fadeInUpVariants}
                                     sx={{
                                         p: { xs: 1.5, sm: 1.5, md: 1.75, lg: 2, xl: 2.5 },
                                         borderRadius: { xs: 2, sm: 2, md: 2, lg: 2.5, xl: 2 },
@@ -619,10 +592,7 @@ export const BlogGrid = () => {
                                             sx={{
                                                 cursor: 'pointer',
                                                 transition: 'all 0.2s ease',
-                                                '&:hover': {
-                                                    transform: 'translateY(-3px)',
-                                                    opacity: 0.9,
-                                                },
+                                                '&:hover': { transform: 'translateY(-3px)', opacity: 0.9 },
                                                 '&:last-child': { mb: 0 },
                                             }}
                                         >
@@ -662,7 +632,6 @@ export const BlogGrid = () => {
                                                     fontSize={{ xs: 13, sm: 12, md: 13, lg: 14, xl: 15 }}
                                                     fontWeight={500}
                                                     lineHeight={1.3}
-                                                    textAlign={{ xs: 'left', sm: 'left' }}
                                                 >
                                                     {post.title}
                                                 </MotionTypography>
@@ -674,7 +643,6 @@ export const BlogGrid = () => {
                                                     fontSize={{ xs: 11, sm: 10, md: 11, lg: 12, xl: 13 }}
                                                     opacity={0.9}
                                                     mt={0.25}
-                                                    textAlign={{ xs: 'left', sm: 'left' }}
                                                 >
                                                     {new Date(post.createdAt).toLocaleDateString('en-US', {
                                                         month: 'long',
@@ -687,21 +655,13 @@ export const BlogGrid = () => {
                                     ))}
                                 </MotionBox>
 
-                                {/* ───── 3. CATEGORIES ───── */}
+                                {/* CATEGORIES */}
                                 <MotionBox
-                                    variants={{
-                                        hidden: { opacity: 0, y: 30 },
-                                        visible: {
-                                            opacity: 1,
-                                            y: 0,
-                                            transition: { duration: 0.5, ease: 'easeOut' },
-                                        },
-                                    }}
+                                    variants={fadeInUpVariants}
                                     sx={{
                                         p: { xs: 1.5, sm: 1.5, md: 1.75, lg: 2, xl: 2.5 },
                                         borderRadius: { xs: 2, sm: 2, md: 2, lg: 2.5, xl: 2 },
-                                        background:
-                                            'linear-gradient(50deg, #f7a500, #fac864ff, #f7a500, #fac864ff)',
+                                        background: 'linear-gradient(50deg, #f7a500, #fac864ff, #f7a500, #fac864ff)',
                                         color: '#fff',
                                         maxWidth: { xs: 300, sm: '100%' },
                                         mx: { xs: 'auto', sm: 0 },
@@ -728,10 +688,7 @@ export const BlogGrid = () => {
                                             hidden: { opacity: 0 },
                                             visible: {
                                                 opacity: 1,
-                                                transition: {
-                                                    staggerChildren: 0.08,
-                                                    delayChildren: 0.2,
-                                                },
+                                                transition: { staggerChildren: 0.08, delayChildren: 0.2 },
                                             },
                                         }}
                                         direction={{ xs: 'column', sm: 'row' }}
@@ -746,7 +703,6 @@ export const BlogGrid = () => {
                                             variants={staggerItemVariants}
                                             label="All"
                                             size="small"
-                                            variant="outlined"
                                             onClick={() => setSelectedCategory(null)}
                                             sx={{
                                                 borderRadius: 1,
@@ -794,29 +750,18 @@ export const BlogGrid = () => {
                                                     borderColor: '#fff',
                                                     color: '#fff',
                                                     cursor: 'pointer',
-                                                    opacity:
-                                                        selectedCategory && selectedCategory !== category._id
-                                                            ? 0.5
-                                                            : 1,
+                                                    opacity: selectedCategory && selectedCategory !== category._id ? 0.5 : 1,
                                                     border:
                                                         selectedCategory === category._id
                                                             ? '2px solid #fff'
                                                             : '1px solid #fff',
                                                     transform:
-                                                        selectedCategory === category._id
-                                                            ? 'scale(1.05)'
-                                                            : 'scale(1)',
+                                                        selectedCategory === category._id ? 'scale(1.05)' : 'scale(1)',
                                                     transition: 'all 0.2s ease',
                                                     width: { xs: '100%', sm: 'auto' },
                                                     maxWidth: { xs: '200px', sm: 'none' },
                                                     '& .MuiChip-label': {
-                                                        px: {
-                                                            xs: 1.25,
-                                                            sm: 1,
-                                                            md: 1.25,
-                                                            lg: 1.5,
-                                                            xl: 1.75,
-                                                        },
+                                                        px: { xs: 1.25, sm: 1, md: 1.25, lg: 1.5, xl: 1.75 },
                                                         py: 0.25,
                                                         width: '100%',
                                                         textAlign: 'center',
@@ -830,7 +775,7 @@ export const BlogGrid = () => {
                         </Grid>
                     </Grid>
 
-                    {/* CTA Section */}
+                    {/* CTA — unchanged */}
                     <MotionBox
                         initial="hidden"
                         whileInView="visible"
@@ -839,13 +784,38 @@ export const BlogGrid = () => {
                         sx={{
                             mt: { xs: 4, sm: 5, md: 6, lg: 6, xl: 7 },
                             p: { xs: 2.5, sm: 3, md: 3.5, lg: 4, xl: 8 },
-                            borderRadius: { xs: 3, sm: 3.5, md: 4, lg: 4, xl: 4 },
+                            borderRadius: '43px',
                             background: 'linear-gradient(135deg, #ff7043, #ffab91)',
                             color: '#fff',
                             display: 'flex',
                             flexDirection: { xs: 'column', sm: 'row' },
                             alignItems: { xs: 'flex-start', sm: 'center' },
                             gap: { xs: 2, sm: 3, md: 4, lg: 5 },
+
+                            position: 'relative',
+                            // Do NOT use overflow: 'hidden' here, it can clip the ::before border on some browsers
+                            backdropFilter: 'blur(260px)',
+                            WebkitBackdropFilter: 'blur(260px)',
+                            boxShadow: '0px 4px 7.3px 1px #0000001A',
+
+                            // Remove the parent border to stop the "double line" effect
+                            border: 'none',
+
+                            // Gradient border that respects border-radius
+                            '&::before': {
+                                content: '""',
+                                position: 'absolute',
+                                // Negative inset pulls the border out so it sits EXACTLY on the edge
+                                inset: '-2px',
+                                borderRadius: '45px', // 43px + 2px inset = 45px to match the curve perfectly
+                                padding: '2px',
+                                background: 'linear-gradient(105.94deg, #FFFFFF 2.2%, #999999 100%)',
+                                WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                                WebkitMaskComposite: 'xor',
+                                maskComposite: 'exclude',
+                                pointerEvents: 'none',
+                                zIndex: 1,
+                            },
                         }}
                     >
                         <MotionTypography
@@ -856,28 +826,28 @@ export const BlogGrid = () => {
                             sx={{
                                 fontFamily: "var(--font-redhat)",
                                 fontWeight: 700,
-                                fontSize: {
-                                    xs: "28px",
-                                    sm: "34px",
-                                    md: "44px",
-                                    lg: "56px",
-                                    xl: "64px",
-                                },
-                                lineHeight: {
-                                    xs: 1.2,
-                                    sm: 1.15,
-                                    md: 1.1,
-                                    lg: "100%",
-                                },
+                                fontSize: { xs: "28px", sm: "34px", md: "44px", lg: "56px", xl: "64px" },
+                                lineHeight: { xs: 1.2, sm: 1.15, md: 1.1, lg: "100%" },
                                 letterSpacing: "-0.01em",
                                 minWidth: { sm: '160px', md: '190px', lg: '210px' },
                                 flexShrink: 0,
+                                position: 'relative',
+                                zIndex: 2,                          // above border overlay
                             }}
                         >
                             Let us start<br /> a session
                         </MotionTypography>
 
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 1.5, sm: 2 }, flex: 1 }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: { xs: 1.5, sm: 2 },
+                                flex: 1,
+                                position: 'relative',
+                                zIndex: 2,                          // above border overlay
+                            }}
+                        >
                             <MotionTypography
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -886,18 +856,8 @@ export const BlogGrid = () => {
                                 sx={{
                                     fontFamily: "var(--font-redhat)",
                                     fontWeight: 400,
-                                    fontSize: {
-                                        xs: "14px",
-                                        sm: "16px",
-                                        md: "18px",
-                                        lg: "20px",
-                                        xl: "20px",
-                                    },
-                                    lineHeight: {
-                                        xs: 1.6,
-                                        sm: 1.5,
-                                        md: "130%",
-                                    },
+                                    fontSize: { xs: "14px", sm: "16px", md: "18px", lg: "20px", xl: "20px" },
+                                    lineHeight: { xs: 1.6, sm: 1.5, md: "130%" },
                                     maxWidth: 600,
                                     letterSpacing: "0%",
                                 }}
@@ -905,6 +865,7 @@ export const BlogGrid = () => {
                                 Authentic Relating can help you strengthen clarity,
                                 honesty, and presence in how you show up in life.
                             </MotionTypography>
+
                             <MotionStack
                                 initial="hidden"
                                 whileInView="visible"
@@ -915,103 +876,57 @@ export const BlogGrid = () => {
                                 alignItems={{ xs: 'stretch', sm: 'center' }}
                                 sx={{ width: '100%' }}
                             >
-                                <EventButton
-                                    variant="glass"
-                                    sx={{
-                                        textTransform: "none",
-                                        fontFamily: "var(--font-redhat)",
-                                        fontWeight: 600,
-                                        fontSize: {
-                                            xs: "13px",
-                                            sm: "14px",
-                                            md: "15px",
-                                        },
-                                        px: { xs: 2, sm: 2.5, md: 3, lg: 3.5 },
-                                        height: { xs: "44px", sm: "42px", md: "44px", lg: "46px" },
-                                        width: { xs: "100%", sm: "auto" },
-                                        minWidth: { xs: "100%", sm: "180px", md: "200px", lg: "220px" },
-                                        borderRadius: "10px",
-                                        color: "#fff",
-                                        background: "linear-gradient(106.27deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05))",
-                                        backdropFilter: "blur(10px)",
-                                        WebkitBackdropFilter: "blur(10px)",
-                                        position: "relative",
-                                        overflow: "hidden",
-                                        border: "none",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        whiteSpace: "nowrap",
-                                        "&::before": {
-                                            content: '""',
-                                            position: "absolute",
-                                            inset: 0,
+                                {["Check event schedules", "Know more about us"].map((label) => (
+                                    <EventButton
+                                        key={label}
+                                        variant="glass"
+                                        sx={{
+                                            textTransform: "none",
+                                            fontFamily: "var(--font-redhat)",
+                                            fontWeight: 600,
+                                            fontSize: { xs: "13px", sm: "14px", md: "15px" },
+                                            px: { xs: 2, sm: 2.5, md: 3, lg: 3.5 },
+                                            height: { xs: "44px", sm: "42px", md: "44px", lg: "46px" },
+                                            width: { xs: "100%", sm: "auto" },
+                                            minWidth: { xs: "100%", sm: "180px", md: "200px", lg: "220px" },
                                             borderRadius: "10px",
-                                            padding: "1.5px",
-                                            background: "linear-gradient(106deg, #FFFFFF 34%, rgba(255,255,255,0.1) 105%)",
-                                            WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                                            WebkitMaskComposite: "xor",
-                                            maskComposite: "exclude",
-                                            pointerEvents: "none",
-                                        },
-                                        "&:hover": {
-                                            background: "linear-gradient(106.27deg, rgba(255,255,255,0.28), rgba(255,255,255,0.08))",
-                                            boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
-                                            transform: "translateY(-2px)",
-                                        },
-                                    }}
-                                >
-                                    Check event schedules
-                                </EventButton>
-
-                                <EventButton
-                                    variant="glass"
-                                    sx={{
-                                        textTransform: "none",
-                                        fontFamily: "var(--font-redhat)",
-                                        fontWeight: 600,
-                                        fontSize: {
-                                            xs: "13px",
-                                            sm: "14px",
-                                            md: "15px",
-                                        },
-                                        px: { xs: 2, sm: 2.5, md: 3, lg: 3.5 },
-                                        height: { xs: "44px", sm: "42px", md: "44px", lg: "46px" },
-                                        width: { xs: "100%", sm: "auto" },
-                                        minWidth: { xs: "100%", sm: "180px", md: "200px", lg: "200px" },
-                                        borderRadius: "10px",
-                                        color: "#fff",
-                                        background: "linear-gradient(106.27deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05))",
-                                        backdropFilter: "blur(10px)",
-                                        WebkitBackdropFilter: "blur(10px)",
-                                        position: "relative",
-                                        overflow: "hidden",
-                                        border: "none",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        whiteSpace: "nowrap",
-                                        "&::before": {
-                                            content: '""',
-                                            position: "absolute",
-                                            inset: 0,
-                                            borderRadius: "10px",
-                                            padding: "1.5px",
-                                            background: "linear-gradient(106deg, #FFFFFF 34%, rgba(255,255,255,0.1) 105%)",
-                                            WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                                            WebkitMaskComposite: "xor",
-                                            maskComposite: "exclude",
-                                            pointerEvents: "none",
-                                        },
-                                        "&:hover": {
-                                            background: "linear-gradient(106.27deg, rgba(255,255,255,0.28), rgba(255,255,255,0.08))",
-                                            boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
-                                            transform: "translateY(-2px)",
-                                        },
-                                    }}
-                                >
-                                    Know more about us
-                                </EventButton>
+                                            color: "#fff",
+                                            background:
+                                                "linear-gradient(106.27deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05))",
+                                            backdropFilter: "blur(10px)",
+                                            WebkitBackdropFilter: "blur(10px)",
+                                            position: "relative",
+                                            overflow: "hidden",
+                                            border: "none",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            whiteSpace: "nowrap",
+                                            "&::before": {
+                                                content: '""',
+                                                position: "absolute",
+                                                inset: 0,
+                                                borderRadius: "10px",
+                                                padding: "1.5px",
+                                                background:
+                                                    "linear-gradient(106deg, #FFFFFF 34%, rgba(255,255,255,0.1) 105%)",
+                                                WebkitMask:
+                                                    "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                                                WebkitMaskComposite: "xor",
+                                                maskComposite: "exclude",
+                                                pointerEvents: "none",
+                                            },
+                                            "&:hover": {
+                                                background:
+                                                    "linear-gradient(106.27deg, rgba(255,255,255,0.28), rgba(255, 151, 151, 0.23))",
+                                                boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
+                                                transform: "translateY(-2px)",
+                                            },
+                                        }}
+                                    >
+                                        {label}
+                                    </EventButton>
+                                ))}
                             </MotionStack>
                         </Box>
                     </MotionBox>
