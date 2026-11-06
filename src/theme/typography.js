@@ -267,7 +267,7 @@ const typography = {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 700,
       fontStyle: "normal",
-      fontSize: { xs: "14px", sm: "15px", md: "16px", lg: "18px", xl: "18px" },
+      fontSize: { xs: "14px", sm: "12px", md: "14px", lg: "18px", xl: "18px" },
       lineHeight: "120%",
       letterSpacing: 0,
       textAlign: "left",

@@ -3527,6 +3527,9 @@ const theme = createTheme({
         color: colors.podcastSection.description,
         maxWidth: spacing.podcastSection.descriptionMaxWidth,
         mb: spacing.podcastSection.descriptionMb,
+        "@media (min-width:1025px)": {
+          maxWidth: "100%",
+        },
       },
       topTitle: {
         ...typography.podcastSection.topTitle,
@@ -3542,6 +3545,9 @@ const theme = createTheme({
         width: "100%",
         maxWidth: spacing.podcastSection.descriptionMaxWidth,
         mb: spacing.podcastSection.episodesMb,
+        "@media (min-width:1025px)": {
+          maxWidth: "100%",
+        },
       },
       episodeCard: {
         p: spacing.podcastSection.episodeCardPadding,
@@ -3563,6 +3569,9 @@ const theme = createTheme({
         borderRadius: spacing.podcastSection.episodeImageRadius,
         backgroundColor: colors.podcastSection.episodeImageBg,
         overflow: "hidden",
+        "@media (min-width:1025px)": {
+          aspectRatio: "4 / 3",
+        },
       },
       episodeInfo: {
         mt: spacing.podcastSection.episodeInfoMt,

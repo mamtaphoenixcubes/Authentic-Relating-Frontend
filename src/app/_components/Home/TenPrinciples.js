@@ -4,6 +4,8 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import axiosInstance from "@/lib/axios";
 
 import Section from "../common/Section";
 import SiteContainer from "../common/SiteContainer";
@@ -15,65 +17,6 @@ import typography from "../../../theme/typography";
 import theme from "../../../theme/theme";
 
 const MotionBox = motion(Box);
-
-const principles = [
-  {
-    id: 1,
-    title: "Cultivate Presence and Awareness",
-    img: "/TenPrinciples1.png",
-  },
-  {
-    id: 2,
-    title:
-      "Approach with Openness, Curiosity and a Sense of Safety",
-    img: "/TenPrinciples2.png",
-  },
-  {
-    id: 3,
-    title: "Attuned and Reflective Listening",
-    img: "/TenPrinciples3.png",
-  },
-  {
-    id: 4,
-    title:
-      "Express and Communicate with Honesty, Care, and Congruence",
-    img: "/TenPrinciples4.png",
-  },
-  {
-    id: 5,
-    title:
-      "Walk in Self-Responsibility with Integrity and Agency",
-    img: "/TenPrinciples5.png",
-  },
-  {
-    id: 6,
-    title:
-      "Practice Self-Care to Sustain Authenticity",
-    img: "/TenPrinciples6.png",
-  },
-  {
-    id: 7,
-    title: "Embrace Discomfort to Grow",
-    img: "/TenPrinciples7.png",
-  },
-  {
-    id: 8,
-    title: "Infuse Lightness and Play",
-    img: "/TenPrinciples8.png",
-  },
-  {
-    id: 9,
-    title:
-      "Cultivate Compassion — For Others and Yourself",
-    img: "/TenPrinciples9.png",
-  },
-  {
-    id: 10,
-    title:
-      "Foster Meaningful and Lasting Connections Through Service",
-    img: "/TenPrinciples10.png",
-  },
-];
 
 const containerVariants = {
   hidden: {},
@@ -103,13 +46,34 @@ const cardVariants = {
 
 export default function TenPrinciples() {
   const router = useRouter();
+  const [principles, setPrinciples] = useState([]);
 
   const design = theme.custom.tenPrinciples;
   const text = typography.tenPrinciples;
   const color = colors.tenPrinciples;
 
-  const handleNavigateToPrinciples = () => {
-    router.push("/principlesofauthenticrelating");
+  useEffect(() => {
+    const fetchPrinciples = async () => {
+      try {
+        const res = await axiosInstance.get(
+          "/frontendApis/getAllFiveDimensionsprincipels",
+          { params: { size: 20, page: 0, search: "" } }
+        );
+
+        const sorted = [...(res?.data?.list || [])].sort(
+          (a, b) => a.index_position - b.index_position
+        );
+        setPrinciples(sorted);
+      } catch (error) {
+        console.error("API error:", error);
+      }
+    };
+
+    fetchPrinciples();
+  }, []);
+
+  const handleNavigateToBooks = () => {
+    router.push("/mybooks");
   };
 
   return (
@@ -243,12 +207,23 @@ export default function TenPrinciples() {
             ...design.grid,
           }}
         >
-          {principles.map((item) => (
+          {principles.map((item, index) => (
             <MotionBox
-              key={item.id}
+              key={item._id || item.id}
               variants={cardVariants}
             >
               <Card
+                onClick={() =>
+                  router.push("/principlesofauthenticrelating/")
+                }
+                role="link"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    router.push("/principlesofauthenticrelating/");
+                  }
+                }}
                 sx={{
                   ...design.card,
 
@@ -266,12 +241,31 @@ export default function TenPrinciples() {
                         "translateY(0)",
                     },
                   },
+
+                  // On large screens keep the label visible and zoom the
+                  // image and label independently when the card is hovered.
+                  // MUI's md breakpoint is 900px, covering 1024px screens.
+                  "@media (min-width:900px)": {
+                    "&:hover": {
+                      transform: "none",
+                      "& img": {
+                        transform: "scale(1.08)",
+                      },
+                      "& .card-overlay": {
+                        opacity: 1,
+                        transform: "translateY(0)",
+                      },
+                      "& .card-title": {
+                        transform: "scale(1.06)",
+                      },
+                    },
+                  },
                 }}
               >
                 {/* IMAGE */}
 
                 <Image
-                  src={item.img}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/${item.image}`}
                   alt={item.title}
                   fill
                   sizes="
@@ -281,6 +275,7 @@ export default function TenPrinciples() {
                   "
                   style={{
                     objectFit: "cover",
+                    transition: "transform 0.35s ease",
                   }}
                 />
 
@@ -290,9 +285,20 @@ export default function TenPrinciples() {
                   className="card-overlay"
                   sx={{
                     ...design.overlay,
+                    opacity: {
+                      xs: 1,
+                      md: 1,
+                      lg: 1,
+                    },
+                    transform: {
+                      xs: "translateY(0)",
+                      md: "translateY(0)",
+                      lg: "translateY(0)",
+                    },
                   }}
                 >
                   <Typography
+                    className="card-title"
                     sx={{
                       ...text.cardTitle,
 
@@ -301,9 +307,11 @@ export default function TenPrinciples() {
 
                       textShadow:
                         color.cardTextShadow,
+                      transition: "transform 0.35s ease",
+                      transformOrigin: "left bottom",
                     }}
                   >
-                    {item.id}. {item.title}
+                    {index + 1}. {item.title}
                   </Typography>
                 </Box>
               </Card>
@@ -322,7 +330,7 @@ export default function TenPrinciples() {
         >
           <PrimaryWaveButton
             onClick={
-              handleNavigateToPrinciples
+              handleNavigateToBooks
             }
             sx={{
               transition:

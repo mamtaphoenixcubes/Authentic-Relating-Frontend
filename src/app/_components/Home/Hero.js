@@ -25,7 +25,7 @@ export default function Hero() {
 
   const slides = [
     {
-      image: '/HomeBg.png',
+      image: '/slider2.png',
       title: 'Come as you are,',
       subtitle: 'be seen, be heard, be met, and belong.',
       author: '— Amitabha Bhatia',
