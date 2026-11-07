@@ -76,7 +76,7 @@ export default function FAQSection() {
               sx={theme => ({
                 ...theme.custom.faq.title,
                 color: "#0077D1", // Override color here
-              })}
+              })}  //
             >
               Frequently Asked Questions
             </Typography>
