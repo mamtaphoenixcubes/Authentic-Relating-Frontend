@@ -74,7 +74,8 @@ export default function JoyLabSection() {
   };
 
   return (
-    <Section sx={{ mt: 0, pt: 0 }}>
+    // 👇 Added pb override to reduce the bottom gap
+    <Section sx={{ mt: 0, pt: 0, pb: { xs: 2, md: 0, lg: 2 } }}>
       <SiteContainer>
         <Box sx={s.container}>
           {/* HEADING */}

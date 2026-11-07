@@ -40,7 +40,7 @@ export default function JoyLabHighlights() {
   ];
 
   return (
-    <Section sx={{ my: 0, py: 0 }}>
+     <Section sx={{ pt: { xs: 2, sm: 3, md: 1, lg: 1 } }}>
       <SiteContainer>
         <MotionBox
           sx={s.panel}
@@ -51,10 +51,11 @@ export default function JoyLabHighlights() {
         >
           {/* TITLE PILL */}
           <MotionBox
-            sx={{...s.pill,border: '2px solid rgba(255,255,255,0.85)',
-
-              // Shadow
-              boxShadow: '0 3px 6px rgba(0,0,0,0.12)',}}
+            sx={{
+              ...s.pill,
+              border: '2px solid rgba(255,255,255,0.85)',
+              boxShadow: '0 3px 6px rgba(0,0,0,0.12)',
+            }}
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -72,9 +73,10 @@ export default function JoyLabHighlights() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
-            <Box sx={s.row}>
+            {/* 👇 Added alignItems: 'center' so they don't stretch to match the tallest one */}
+            <Box sx={{ ...s.row, alignItems: 'center' }}>
               {cards.map((text, i) => (
-                <motion.div key={i} variants={cardVariants}>
+                <motion.div key={i} variants={cardVariants} style={{ display: 'flex', height: '100%' }}>
                   <Card sx={s.card}>
                     <Typography sx={s.cardText}>{text}</Typography>
                   </Card>

@@ -29,7 +29,8 @@ const SKEW_ANGLE = -8; // degrees — tweak this single value to change all card
 
 const CirclePowerCard = () => {
   return (
-    <Section>
+    // 👇 Kept your custom top padding and added a bottom padding override
+    <Section sx={{ pt: { xs: 2, sm: 3, md: 4, lg: 10 }, pb: { xs: 2, sm: 3, lg: 2 } }}>
       <SiteContainer>
         <motion.div
           initial={{ y: 50, opacity: 0 }}

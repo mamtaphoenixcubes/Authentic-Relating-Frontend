@@ -13,7 +13,8 @@ export default function WhyItMatters() {
   const styles = theme.custom.whyItMatters;
 
   return (
-    <Section sx={styles.section}>
+    // 👇 Added 'pt' override to reduce the top gap
+    <Section sx={{ ...styles.section, pt: { xs: 2, md: 3 } }}>
       <SiteContainer>
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}

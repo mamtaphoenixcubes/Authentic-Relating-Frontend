@@ -19,7 +19,7 @@ export const RelatingCirclespage = () => {
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
     >
-      <Section>
+      <Section sx={{ pb: { xs: 2,md: 5, lg: 10 } }}>
         <SiteContainer>
           <Grid container {...rc.grid}>
             {/* TEXT */}

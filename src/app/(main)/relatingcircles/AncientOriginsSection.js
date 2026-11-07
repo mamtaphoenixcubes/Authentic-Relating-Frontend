@@ -68,7 +68,8 @@ export default function AncientOriginsSection() {
   if (!styles.rowsWrapper) return null;
 
   return (
-    <Section sx={styles.container}>
+    // 👇 Added pb override to reduce ONLY the bottom gap
+    <Section sx={{ ...styles.container, pb: { xs: 2, md: 5, lg: 3 } }}>
       <SiteContainer>
         {/* ── HEADER BANNER ─────────────────────────────────────────
             SectionHeader primitive doesn't support a gradient banner,

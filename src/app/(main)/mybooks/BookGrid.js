@@ -226,7 +226,8 @@ export default function BookGrid() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5 }}
         >
-            <Section>
+            {/* 👇 Reduced Section bottom padding */}
+            <Section sx={{ pb: { xs: 2, sm: 3, md: 4 } }}>
                 <SiteContainer>
                     {/* ================= CATEGORY FILTER ================= */}
                     <motion.div
@@ -240,7 +241,8 @@ export default function BookGrid() {
                             spacing={1.25}
                             alignItems="center"
                             justifyContent="center"
-                            mb={{ xs: 3, md: 5 }}
+                            // 👇 Reduced bottom margin
+                            mb={{ xs: 2, md: 3 }}
                             sx={{ width: '100%', px: { xs: 2, sm: 3, md: 4 } }}
                         >
                             <IconButton
@@ -660,7 +662,8 @@ export default function BookGrid() {
                         alignItems="center"
                         justifyContent="center"
                         spacing={1.5}
-                        sx={{ mt: { xs: 3, md: 4 } }}
+                        // 👇 Reduced top margin
+                        sx={{ mt: { xs: 2, md: 2.5 } }}
                     >
                         {!showAll && (
                             <>

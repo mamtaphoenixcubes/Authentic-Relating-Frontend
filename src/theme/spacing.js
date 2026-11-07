@@ -689,6 +689,9 @@ const spacing = {
   // =========================================================
   // JOY LAB HIGHLIGHTS
   // =========================================================
+  // =========================================================
+  // JOY LAB HIGHLIGHTS
+  // =========================================================
   joyLabHighlights: {
     panelMy: { xs: 3, md: 5 },
     panelPadding: { xs: 3, sm: 4, md: 6 },
@@ -703,8 +706,13 @@ const spacing = {
     rowGap: { xs: 2, sm: 2.5, md: 3 },
     rowMaxWidth: 1800,
     cardWidth: { xs: "100%", sm: 240, md: 280, lg: 320 },
-    cardHeight: { xs: 160, sm: 180, md: 200 },
-    cardPx: { xs: 2, md: 3 },
+    
+    // 👇 1. Change from { xs: 160, sm: 180, md: 200 } to "auto"
+    cardHeight: "auto", 
+    
+    // 👇 2. Increase vertical padding slightly so it looks good when text is short
+    cardPx: { xs: 3, md: 3 }, 
+    
     cardRadius: { xs: "14px", md: "18px" },
     cardSkew: { xs: "skewX(0deg)", md: "skewX(-6deg)" },
     cardSkewChild: { xs: "skewX(0deg)", md: "skewX(6deg)" },

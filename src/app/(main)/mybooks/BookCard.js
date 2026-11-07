@@ -201,7 +201,8 @@ export default function BookCard() {
   };
 
   return (
-    <Section sx={{ py: 6 }}>
+    // 👇 1. Reduced top padding (pt) while keeping bottom padding
+    <Section sx={{ pt: { xs: 2, md: 4 }, pb: { xs: 6, md: 8 } }}>
       <SiteContainer
         sx={{
           maxWidth: {
@@ -227,7 +228,8 @@ export default function BookCard() {
                 overflow: "hidden",
                 boxShadow: 3,
                 mb: { xs: 6, md: 10 },
-                mt: { xs: 6, md: 10 },
+                // 👇 2. Reduced top margin (mt) of the cards to pull them up
+                mt: { xs: 2, md: 4 },
               }}
             >
               <Grid

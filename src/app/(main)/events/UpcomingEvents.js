@@ -1,11 +1,9 @@
 'use client';
 
-
 import { useEffect, useState } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import axiosInstance from '@/lib/axios';
-
 
 // Common components
 import Section from '../../_components/common/Section';
@@ -14,16 +12,11 @@ import SectionHeader from '../../_components/common/SectionHeader';
 import Card from '../../_components/common/Card';
 import EventButton from '../../_components/buttons/EventButton';
 
-
 // =====================================================
 // CONSTANTS
 // =====================================================
 const categories = ['All', 'Category 1', 'Category 2', 'Category 3', 'Category 4'];
-
-
-// 👇 Toggle this to `false` when your API returns real data
 const USE_MOCK_DATA = true;
-
 
 // =====================================================
 // MOCK DATA (fallback when API returns nothing)
@@ -133,22 +126,16 @@ const MOCK_EVENTS = [
   },
 ];
 
-
 // =====================================================
 // HELPERS
 // =====================================================
 const formatEventDate = (start, end) => {
   if (!start) return '';
-
-
   const startDate = new Date(start);
   const endDate = end ? new Date(end) : null;
-
-
   const day = startDate.getDate();
   const month = startDate.toLocaleString('en-US', { month: 'short' });
   const year = startDate.getFullYear();
-
 
   const getOrdinal = (n) => {
     if (n > 3 && n < 21) return 'th';
@@ -160,7 +147,6 @@ const formatEventDate = (start, end) => {
     }
   };
 
-
   const formatTime = (date) =>
     date
       .toLocaleString('en-US', {
@@ -170,16 +156,13 @@ const formatEventDate = (start, end) => {
       })
       .toLowerCase();
 
-
   const startTime = formatTime(startDate);
   const endTime = endDate ? formatTime(endDate) : '';
-
 
   return `${day}${getOrdinal(day)} ${month}, ${year} @ ${startTime}${
     endTime ? ` – ${endTime}` : ''
   }`;
 };
-
 
 const formatLocation = (event) => {
   if (event?.formatted_address) return event.formatted_address;
@@ -187,14 +170,12 @@ const formatLocation = (event) => {
   return parts.join(', ');
 };
 
-
 // =====================================================
 // COMPONENT
 // =====================================================
 export default function UpcomingEvents() {
   const theme = useTheme();
   const styles = theme.custom.upcomingEvents;
-
 
   const [eventsData, setEventsData] = useState([]);
   const [page, setPage] = useState(0);
@@ -204,18 +185,9 @@ export default function UpcomingEvents() {
   const [loading, setLoading] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All');
 
-
   useEffect(() => {
-    // if (USE_MOCK_DATA) {
-    //   setEventsData(MOCK_EVENTS);
-    //   setTotalPages(1);
-    //   setTotalCount(MOCK_EVENTS.length);
-    //   return;
-    // }
     fetchEvents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
-
 
   const fetchEvents = async () => {
     try {
@@ -224,13 +196,8 @@ export default function UpcomingEvents() {
         params: { page: page + 1, limit },
       });
 
-
-      console.log('API response:', res.data);
-
-
       if (res.data.status === 1) {
         const apiEvents = res.data.data || [];
-
 
         if (apiEvents.length === 0) {
           setEventsData(MOCK_EVENTS);
@@ -256,13 +223,9 @@ export default function UpcomingEvents() {
     }
   };
 
-
   return (
     <Section sx={styles.section}>
       <Container>
-        {/* ============================== */}
-        {/* HEADER                          */}
-        {/* ============================== */}
         <SectionHeader
           title="Upcoming Events"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed urna elit. Ut in tincidunt lacus, at convallis risus. Orci varius natoque penatibus et magnis dis parturient montes."
@@ -270,32 +233,28 @@ export default function UpcomingEvents() {
           sx={styles.header}
         />
 
-
         {loading && <Box sx={styles.loading}>Loading events...</Box>}
 
-
-        {/* ============================== */}
-        {/* CARDS GRID — 3 PER ROW          */}
-        {/* ============================== */}
+        {/* CARDS GRID — Strictly 3 PER ROW on Desktop */}
         <Box
           sx={{
             ...styles.grid,
             display: 'grid',
+            // 👇 Forces 3 columns on desktop, 2 on tablet, 1 on mobile
             gridTemplateColumns: {
-              xs: '1fr',                       // mobile: 1 per row
-              sm: 'repeat(2, minmax(0, 1fr))', // tablet: 2 per row
-              md: 'repeat(3, minmax(0, 1fr))', // desktop: 3 per row
-              lg: 'repeat(3, minmax(0, 1fr))', // large: 3 per row
+              xs: '1fr',                       
+              sm: 'repeat(2, minmax(0, 1fr))', 
+              md: 'repeat(3, minmax(0, 1fr))', 
             },
-            gap: { xs: 2, sm: 2.5, md: 3, lg: 3 },
+            gap: { xs: 2, sm: 2.5, md: 3, lg: 4 },
             alignItems: 'stretch',
+            justifyContent: 'center', // Centers cards if they don't fill full width
           }}
         >
           {eventsData.map((item, index) => {
             const imageUrl = item.image
               ? `${process.env.NEXT_PUBLIC_API_URL}/${item.image}`
               : '/placeholder.png';
-
 
             return (
               <motion.div
@@ -304,11 +263,21 @@ export default function UpcomingEvents() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                style={{ height: '100%' }}
+                style={{ height: '100%', display: 'flex', justifyContent: 'center' }}
               >
-                <Card sx={styles.card}>
-                  {/* IMAGE */}
-                  <Box sx={styles.imageWrapper}>
+                {/* 👇 Card overrides to shrink the height and width */}
+                <Card 
+                  sx={{ 
+                    ...styles.card, 
+                    width: '100%', 
+                    maxWidth: { xs: '100%', sm: '360px', md: '100%' }, // Prevents cards from stretching too wide
+                    height: '100%',
+                    p: { xs: 2, sm: 2.5 }, // Tighter padding
+                    borderRadius: '16px',
+                  }}
+                >
+                  {/* IMAGE (Reduced Height) */}
+                  <Box sx={{ ...styles.imageWrapper, height: { xs: 160, md: 180 }, minHeight: { xs: 160, md: 180 }, mb: 2 }}>
                     <Box
                       component="img"
                       src={imageUrl}
@@ -317,80 +286,76 @@ export default function UpcomingEvents() {
                     />
                   </Box>
 
-
                   {/* TITLE */}
-                  <Typography sx={styles.cardTitle}>
+                  <Typography sx={{ ...styles.cardTitle, minHeight: 'auto', mb: 1, fontSize: { xs: '16px', md: '17px' } }}>
                     {item.event_name}
                   </Typography>
 
-
-                  {/* DESCRIPTION */}
-                  <Typography sx={styles.cardDescription}>
+                  {/* DESCRIPTION (Clamped to 2 lines) */}
+                  <Typography 
+                    sx={{ 
+                      ...styles.cardDescription, 
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2, // Prevents long text from making card tall
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      mb: 2,
+                      fontSize: { xs: '12px', md: '13px' }
+                    }}
+                  >
                     {item.event_description}
                   </Typography>
 
-
-                  {/* DATE / TIME */}
-                  <Box sx={styles.metaRow}>
-                    <Box component="span" sx={styles.metaIcon}>
-                      🕐
+                  {/* META INFO */}
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 2 }}>
+                    <Box sx={styles.metaRow}>
+                      <Box component="span" sx={styles.metaIcon}>🕐</Box>
+                      <Typography sx={styles.metaText} noWrap>
+                        {formatEventDate(item.start_date, item.end_date)}
+                      </Typography>
                     </Box>
-                    <Typography sx={styles.metaText}>
-                      {formatEventDate(item.start_date, item.end_date)}
-                    </Typography>
-                  </Box>
 
-
-                  {/* LOCATION */}
-                  <Box sx={styles.metaRow}>
-                    <Box component="span" sx={styles.metaIcon}>
-                      📍
+                    <Box sx={styles.metaRow}>
+                      <Box component="span" sx={styles.metaIcon}>📍</Box>
+                      <Typography sx={styles.metaText} noWrap>
+                        {formatLocation(item)}
+                        {item.mode_of_event && ` • ${item.mode_of_event}`}
+                      </Typography>
                     </Box>
-                    <Typography sx={styles.metaText}>
-                      {formatLocation(item)}
-                      {item.mode_of_event && ` • ${item.mode_of_event}`}
-                    </Typography>
-                  </Box>
 
-
-                  {/* TIMEZONE */}
-                  <Box sx={{ ...styles.metaRow, mb: 2 }}>
-                    <Box component="span" sx={styles.metaIcon}>
-                      🌐
+                    <Box sx={styles.metaRow}>
+                      <Box component="span" sx={styles.metaIcon}>🌐</Box>
+                      <Typography sx={styles.metaText} noWrap>
+                        {item.timezone || 'IST (GMT +5:30)'}
+                      </Typography>
                     </Box>
-                    <Typography sx={styles.metaText}>
-                      {item.timezone || 'IST (GMT +5:30)'}
-                    </Typography>
                   </Box>
-
 
                   {/* PRICE */}
-                  <Box sx={styles.priceRow}>
-                    <Typography sx={styles.price}>
+                  <Box sx={{ ...styles.priceRow, mt: 'auto', mb: 2 }}>
+                    <Typography sx={{ ...styles.price, fontSize: { xs: '16px', md: '18px' } }}>
                       USD ${item.minPrice}
                     </Typography>
-                    <Typography sx={styles.originalPrice}>$ 500</Typography>
+                    <Typography sx={{ ...styles.originalPrice, fontSize: '12px' }}>
+                      $ 500
+                    </Typography>
                   </Box>
 
-
-                  {/* BUTTONS */}
+                  {/* BUTTONS (Shorter Height) */}
                   <Box sx={styles.buttonsContainer}>
-                    <Box sx={styles.buttonRow}>
+                    <Box sx={{ ...styles.buttonRow, gap: 1.5 }}>
                       <EventButton
                         {...styles.readMoreButton}
-                        onClick={() =>
-                          (window.location.href = `/events/${item.eventSlug}`)
-                        }
+                        onClick={() => (window.location.href = `/events/${item.eventSlug}`)}
+                        sx={{ ...styles.readMoreButton?.sx, height: '36px', fontSize: '12px' }}
                       >
                         Read More
                       </EventButton>
 
-
                       <EventButton
                         {...styles.bookNowButton}
-                        onClick={() =>
-                          (window.location.href = `/events/payment/${item.eventSlug}`)
-                        }
+                        onClick={() => (window.location.href = `/events/payment/${item.eventSlug}`)}
+                        sx={{ ...styles.bookNowButton?.sx, height: '36px', fontSize: '12px' }}
                       >
                         Book Now
                       </EventButton>
@@ -402,10 +367,7 @@ export default function UpcomingEvents() {
           })}
         </Box>
 
-
-        {/* ============================== */}
-        {/* PAGINATION                      */}
-        {/* ============================== */}
+        {/* PAGINATION */}
         {totalPages > 1 && (
           <Box sx={styles.pagination.container}>
             <EventButton
@@ -415,7 +377,6 @@ export default function UpcomingEvents() {
             >
               ← Prev
             </EventButton>
-
 
             <Box sx={styles.pagination.pageNumbers}>
               {[...Array(totalPages)].map((_, i) => (
@@ -429,12 +390,9 @@ export default function UpcomingEvents() {
               ))}
             </Box>
 
-
             <EventButton
               {...styles.pagination.nextButton(page === totalPages - 1)}
-              onClick={() =>
-                setPage((prev) => Math.min(prev + 1, totalPages - 1))
-              }
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages - 1))}
               disabled={page === totalPages - 1}
             >
               Next →
@@ -445,4 +403,3 @@ export default function UpcomingEvents() {
     </Section>
   );
 }
-

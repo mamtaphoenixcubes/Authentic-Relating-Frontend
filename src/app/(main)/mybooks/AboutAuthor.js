@@ -15,14 +15,16 @@ export default function AboutAuthor() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5 }}
         >
-            <Section sx={{ py: 6 }}>
+            {/* 👇 1. Reduced outer Section padding (was py: 6) */}
+            <Section sx={{ py: { xs: 2, sm: 2, md: 1 } }}>
                 <SiteContainer sx={{ maxWidth: { xs: '100%', md: '1200px', lg: '1360px', xl: '1640px' } }}>
                     <Box
                         sx={{
                             background: colors.authenticGradient,
                             borderRadius: '28px',
                             px: { xs: 3, md: 7 },
-                            py: { xs: 4, md: 6 },
+                            // 👇 2. Reduced inner Card padding (was py: { xs: 4, md: 6 })
+                            py: { xs: 3, md: 4 },
                         }}
                     >
                         {/* HEADING */}
@@ -51,7 +53,8 @@ export default function AboutAuthor() {
                                     },
                                     letterSpacing: "0%",
                                     color: colors.authenticText,
-                                    mb: { xs: 3, md: 5 },
+                                    // 👇 3. Reduced heading bottom margin (was mb: { xs: 3, md: 5 })
+                                    mb: { xs: 2, md: 3 },
                                     maxWidth: {
                                         xs: "100%",
                                         sm: "85%",
@@ -61,7 +64,6 @@ export default function AboutAuthor() {
                                     },
                                     textAlign: { xs: "center", sm: "left" },
                                     mx: { xs: "auto", sm: 0 },
-                                    // 👇 Pull heading further to the left on desktop
                                     ml: { xs: 0, sm: 0, md: -4, lg: -1, xl: 1 }, 
                                 }}
                             >
@@ -79,7 +81,6 @@ export default function AboutAuthor() {
                             <Box
                                 sx={{
                                     display: 'grid',
-                                    // 👇 Changed ratio so the left column is narrower and aligns left
                                     gridTemplateColumns: {
                                         xs: "1fr",
                                         sm: "1fr 1fr 1fr",
@@ -100,7 +101,6 @@ export default function AboutAuthor() {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: { xs: 'center', sm: 'flex-start' },
-                                    // 👇 Pull text further to the left on desktop
                                     ml: { xs: 0, sm: 0, md: -4, lg: -1, xl: -3 },
                                 }}>
                                     <motion.div
