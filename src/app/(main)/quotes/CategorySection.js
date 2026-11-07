@@ -188,7 +188,6 @@ function CategorySection({
           >
             <Typography
               sx={{
-                // 👇 Removed var(--font-redhat) and applied the direct font family
                 fontFamily: '"Red Hat Display", sans-serif',
                 fontWeight: 700,
                 fontSize: {
@@ -520,22 +519,6 @@ export default function AllCategories() {
     });
   };
 
-  /*
-   * IMPORTANT FIX for:
-   *   "The final argument passed to useEffect changed size between renders."
-   *
-   * The previous code used a separate useEffect with `[maxPage, page]`,
-   * but that effect was declared BEFORE the `if (!mounted) return ...`
-   * early return — which meant on the FIRST render (mounted=false) React
-   * never registered the effect, then on subsequent renders it did.
-   * Because hooks must ALWAYS run in the same order & count, this broke
-   * React's dependency tracking.
-   *
-   * We fix it by:
-   *   1. Moving ALL hooks ABOVE the early return.
-   *   2. Removing the standalone clamp effect and inlining the clamp
-   *      into the page-change handlers.
-   */
   const goToPage = (next) => {
     setPage((prev) => {
       const target = typeof next === 'function' ? next(prev) : next;
@@ -640,10 +623,10 @@ export default function AllCategories() {
             my={{ xs: 3, md: 10 }}
             sx={{ width: '100%' }}
           >
-            {/* LEFT ARROW */}
+            {/* LEFT ARROW (Increased size) */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <IconButton
-                size="small"
+                size="medium"
                 aria-label="Previous category page"
                 onClick={() => goToPage((p) => Math.max(p - 1, 0))}
                 disabled={page === 0}
@@ -651,11 +634,13 @@ export default function AllCategories() {
                   color: page === 0 ? '#bbb' : '#087EDF',
                   '&:hover': { bgcolor: 'transparent' },
                   '&.Mui-disabled': { color: '#bbb' },
+                  '& svg': { fontSize: '2rem' }, // Made icon bigger
                 }}
               >
                 <ChevronLeftIcon />
               </IconButton>
             </motion.div>
+
 
             <Box
               role="tablist"
@@ -716,10 +701,11 @@ export default function AllCategories() {
                           onClick={() => handleChipClick(label)}
                           variant="outlined"
                           sx={{
-                            height: 40,
-                            minWidth: 78,
-                            px: 1.5,
+                            height: 44,
+                            // 👇 Removed fixed width/minWidth/maxWidth to allow full text
+                            px: 3, // Gives breathing room on the sides
                             flexShrink: 0,
+                            boxSizing: 'border-box',
                             cursor: 'pointer',
                             borderRadius: '8px',
 
@@ -733,14 +719,22 @@ export default function AllCategories() {
                             '& .MuiChip-label': {
                               fontFamily: '"Red Hat Display", sans-serif',
                               fontWeight: 500,
-                              fontSize: '11px',
+
+                              // Responsive font size: xs to xl
+                              fontSize: {
+                                xs: '12px',
+                                sm: '13px',
+                                md: '14px',
+                                lg: '15px',
+                                xl: '16px',
+                              },
+
                               letterSpacing: 0,
-                              padding: 5,
+                              padding: 0, // Let the chip's px handle the padding
                               whiteSpace: 'nowrap',
                             },
 
                             // Hover
-                            // HOVER
                             '&:hover': {
                               background: active
                                 ? 'linear-gradient(98.48deg, #95C4FF 0%, #087EDF 100%)'
@@ -752,22 +746,30 @@ export default function AllCategories() {
                               transform: 'translateY(-2px)',
                             },
 
-                            // ACTIVE
+                            // Active
                             ...(active && {
                               background:
                                 'linear-gradient(98.48deg, #95C4FF 0%, #087EDF 100%) !important',
                               color: '#FFFFFF !important',
                               border: '2px solid #FFFFFF',
 
-                              // Increased active shadow
                               boxShadow: `
-                              0px 3px 6px rgba(0, 0, 0, 0.18),
-                              0px 5px 12px rgba(255, 255, 255, 0.84)
-                                `,
+                    0px 3px 6px rgba(0, 0, 0, 0.18),
+                    0px 5px 12px rgba(255, 255, 255, 0.84)
+                  `,
 
                               '& .MuiChip-label': {
                                 color: '#FFFFFF',
-                                fontWeight: 600,
+                                fontWeight: 500,
+
+                                // Responsive font size for active chip
+                                fontSize: {
+                                  xs: '12px',
+                                  sm: '13px',
+                                  md: '14px',
+                                  lg: '15px',
+                                  xl: '16px',
+                                },
                               },
                             }),
                           }}
@@ -779,10 +781,11 @@ export default function AllCategories() {
               </Box>
             </Box>
 
-            {/* RIGHT ARROW */}
+
+            {/* RIGHT ARROW (Increased size) */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <IconButton
-                size="small"
+                size="medium"
                 aria-label="Next category page"
                 onClick={() => goToPage((p) => Math.min(p + 1, maxPage))}
                 disabled={page === maxPage}
@@ -790,6 +793,7 @@ export default function AllCategories() {
                   color: page === maxPage ? '#bbb' : '#087EDF',
                   '&:hover': { bgcolor: 'transparent' },
                   '&.Mui-disabled': { color: '#bbb' },
+                  '& svg': { fontSize: '2rem' }, // Made icon bigger
                 }}
               >
                 <ChevronRightIcon />
