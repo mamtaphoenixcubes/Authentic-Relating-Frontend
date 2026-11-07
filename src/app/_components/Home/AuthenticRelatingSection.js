@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { Box, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
@@ -19,9 +19,6 @@ const MotionBox = motion(Box);
 const MotionDiv = motion.div;
 
 export const AuthenticRelatingSection = () => {
-  const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
 
   // Extract theme values
   const authentic = typography.authenticRelating;
@@ -32,16 +29,6 @@ export const AuthenticRelatingSection = () => {
     { text: 'Join a circle', url: '/relatingcircles' },
     { text: 'Experience training', url: '/onlinecourse' },
   ];
-
-  const handleToggleVideo = () => {
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-    } else {
-      videoRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
 
   return (
     <Box
@@ -450,16 +437,9 @@ export const AuthenticRelatingSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          whileHover={{
-            scale: 1.02,
-            boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
-            transition: { duration: 0.3 },
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
           sx={{
             width: '100%',
-            height: { xs: 200, sm: 260, md: 510, lg: 540 },
+            height: { xs: 200, sm: 360, md: 820 },
             bgcolor: '#d8efef',
             borderRadius: '20px',
             display: 'flex',
@@ -468,113 +448,34 @@ export const AuthenticRelatingSection = () => {
             mb: { xs: 5, md: 8 },
             position: 'relative',
             overflow: 'hidden',
+            isolation: 'isolate',
+            transform: 'translateZ(0)',
           }}
         >
           {/* VIDEO */}
           <video
-            ref={videoRef}
             autoPlay
             muted
             loop
             playsInline
+            controls={false}
             style={{
               position: 'absolute',
+              display: 'block',
               width: '100%',
               height: '100%',
               objectFit: 'cover',
+              borderRadius: 'inherit',
+              transform: 'translate3d(0, 0, 0)',
+              backfaceVisibility: 'hidden',
               top: 0,
               left: 0,
               zIndex: 0,
             }}
           >
-            <source src="/video/homeVideo.mp4" type="video/mp4" />
+            <source src="/video/homevideotemp.mp4" type="video/mp4" />
           </video>
 
-          {/* OVERLAY */}
-          <MotionBox
-            animate={{
-              opacity: isHovered || !isPlaying ? 0.35 : 0,
-            }}
-            transition={{ duration: 0.4 }}
-            sx={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              background: 'rgba(0,0,0,0.35)',
-              zIndex: 1,
-            }}
-          />
-
-          {/* Animated background gradient */}
-          <MotionBox
-            animate={{
-              rotate: [0, 360],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: 'linear',
-            }}
-            sx={{
-              position: 'absolute',
-              width: '150%',
-              height: '150%',
-              background:
-                'radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%)',
-              opacity: 0.3,
-              zIndex: 1,
-            }}
-          />
-
-          {/* PLAY / PAUSE BUTTON */}
-          <MotionBox
-            onClick={handleToggleVideo}
-            animate={{
-              opacity: isHovered || !isPlaying ? 1 : 0,
-              scale: [1, 1.1, 1],
-              boxShadow: [
-                '0 0 0 0 rgba(255,255,255,0.7)',
-                '0 0 0 20px rgba(255,255,255,0)',
-                '0 0 0 0 rgba(255,255,255,0)',
-              ],
-            }}
-            transition={{
-              duration: 0.4,
-            }}
-            sx={{
-              width: { xs: 60, md: 70 },
-              height: { xs: 60, md: 70 },
-              borderRadius: '50%',
-              bgcolor: 'rgba(255,255,255,0.9)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              position: 'relative',
-              zIndex: 2,
-            }}
-          >
-            {isPlaying ? (
-              /* PAUSE ICON */
-              <Box sx={{ display: 'flex', gap: '4px' }}>
-                <Box sx={{ width: '6px', height: '20px', bgcolor: '#00A7B7' }} />
-                <Box sx={{ width: '6px', height: '20px', bgcolor: '#00A7B7' }} />
-              </Box>
-            ) : (
-              /* PLAY ICON */
-              <Box
-                sx={{
-                  width: 0,
-                  height: 0,
-                  borderLeft: '20px solid #00A7B7',
-                  borderTop: '14px solid transparent',
-                  borderBottom: '14px solid transparent',
-                  ml: '6px',
-                }}
-              />
-            )}
-          </MotionBox>
         </MotionBox>
       </SiteContainer>
     </Box>

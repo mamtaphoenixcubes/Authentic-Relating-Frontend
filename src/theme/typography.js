@@ -43,7 +43,13 @@ const typography = {
       letterSpacing: 0,
       color: "#ffffff",
       textAlign: "left",
-      maxWidth: { xs: "280px", sm: "400px", md: "520px", lg: "650px", xl: "750px" },
+      maxWidth: {
+        xs: "280px",
+        sm: "400px",
+        md: "520px",
+        lg: "650px",
+        xl: "750px",
+      },
       textShadow: "0 4px 12px rgba(0,0,0,0.25)",
     },
     subtitle: {
@@ -55,7 +61,13 @@ const typography = {
       letterSpacing: 0,
       color: "rgba(255,255,255,0.92)",
       textAlign: "left",
-      maxWidth: { xs: "300px", sm: "450px", md: "600px", lg: "760px", xl: "900px" },
+      maxWidth: {
+        xs: "300px",
+        sm: "450px",
+        md: "600px",
+        lg: "760px",
+        xl: "900px",
+      },
       textShadow: "0 3px 10px rgba(0,0,0,0.22)",
     },
     author: {
@@ -71,9 +83,27 @@ const typography = {
       textShadow: "0 3px 10px rgba(0,0,0,0.22)",
     },
     content: {
-      paddingTop: { xs: "120px", sm: "140px", md: "80px", lg: "100px", xl: "110px" },
-      paddingLeft: { xs: "16px", sm: "24px", md: "32px", lg: "40px", xl: "48px" },
-      maxWidth: { xs: "100%", sm: "600px", md: "800px", lg: "1000px", xl: "1100px" },
+      paddingTop: {
+        xs: "120px",
+        sm: "140px",
+        md: "80px",
+        lg: "100px",
+        xl: "110px",
+      },
+      paddingLeft: {
+        xs: "16px",
+        sm: "24px",
+        md: "32px",
+        lg: "40px",
+        xl: "48px",
+      },
+      maxWidth: {
+        xs: "100%",
+        sm: "600px",
+        md: "800px",
+        lg: "1000px",
+        xl: "1100px",
+      },
     },
   },
 
@@ -208,16 +238,40 @@ const typography = {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 400,
       fontStyle: "italic",
-      fontSize: { xs: "14px", sm: "14px", md: "14px", lg: "19.4px", xl: "19.4px" },
-      lineHeight: { xs: "20px", sm: "21px", md: "24px", lg: "29.86px", xl: "29.86px" },
+      fontSize: {
+        xs: "14px",
+        sm: "14px",
+        md: "14px",
+        lg: "19.4px",
+        xl: "19.4px",
+      },
+      lineHeight: {
+        xs: "20px",
+        sm: "21px",
+        md: "24px",
+        lg: "29.86px",
+        xl: "29.86px",
+      },
       letterSpacing: 0,
     },
     finalText: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 700,
       fontStyle: "italic",
-      fontSize: { xs: "14px", sm: "14px", md: "14px", lg: "15px", xl: "16.59px" },
-      lineHeight: { xs: "20px", sm: "21px", md: "21px", lg: "29.86px", xl: "29.86px" },
+      fontSize: {
+        xs: "14px",
+        sm: "14px",
+        md: "14px",
+        lg: "15px",
+        xl: "16.59px",
+      },
+      lineHeight: {
+        xs: "20px",
+        sm: "21px",
+        md: "21px",
+        lg: "29.86px",
+        xl: "29.86px",
+      },
       letterSpacing: 0,
     },
   },
@@ -259,7 +313,13 @@ const typography = {
       fontWeight: 500,
       fontStyle: "normal",
       fontSize: { xs: "12px", sm: "13px", md: "15px", lg: "20px", xl: "20px" },
-      lineHeight: { xs: "18px", sm: "20px", md: "22px", lg: "28px", xl: "28px" },
+      lineHeight: {
+        xs: "18px",
+        sm: "20px",
+        md: "22px",
+        lg: "28px",
+        xl: "28px",
+      },
       letterSpacing: 0,
       textAlign: "center",
     },
@@ -341,20 +401,38 @@ const typography = {
         fontFamily: '"Red Hat Display", sans-serif',
         fontWeight: 400,
         fontSize: { xs: 14, sm: 15, md: 16, lg: 17, xl: 18 },
-        lineHeight: { xs: "22px", sm: "26px", md: "28.8px", lg: "30px", xl: "32px" },
+        lineHeight: {
+          xs: "22px",
+          sm: "26px",
+          md: "28.8px",
+          lg: "30px",
+          xl: "32px",
+        },
         letterSpacing: "0%",
       },
       bodyBold: { fontWeight: 700 },
       listItem: {
         fontWeight: 400,
         fontSize: { xs: 14, sm: 15, md: 16, lg: 17, xl: 18 },
-        lineHeight: { xs: "22px", sm: "26px", md: "28.8px", lg: "30px", xl: "32px" },
+        lineHeight: {
+          xs: "22px",
+          sm: "26px",
+          md: "28.8px",
+          lg: "30px",
+          xl: "32px",
+        },
       },
       listItemBold: { fontWeight: 700 },
       finalLine: {
         fontWeight: 700,
         fontSize: { xs: 14, sm: 15, md: 16, lg: 17, xl: 18 },
-        lineHeight: { xs: "22px", sm: "26px", md: "28.8px", lg: "30px", xl: "32px" },
+        lineHeight: {
+          xs: "22px",
+          sm: "26px",
+          md: "28.8px",
+          lg: "30px",
+          xl: "32px",
+        },
       },
     },
   },
@@ -451,18 +529,18 @@ const typography = {
       letterSpacing: "0%",
     },
     xsCircleTitle: {
-  fontFamily: '"Red Hat Display", sans-serif',
-  fontWeight: 500,
-  // 8px → 12px smoothly between 320px and 599px viewports
-  fontSize: 'clamp(8px, 2.2vw + 2px, 12px)',
-  lineHeight: 1.25,
-},
-xsCircleDescription: {
-  fontFamily: '"Red Hat Display", sans-serif',
-  fontWeight: 400,
-  fontSize: 'clamp(6.5px, 1.8vw + 1.5px, 10px)',
-  lineHeight: 1.25,
-},
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 500,
+      // 8px → 12px smoothly between 320px and 599px viewports
+      fontSize: "clamp(8px, 2.2vw + 2px, 12px)",
+      lineHeight: 1.25,
+    },
+    xsCircleDescription: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 400,
+      fontSize: "clamp(6.5px, 1.8vw + 1.5px, 10px)",
+      lineHeight: 1.25,
+    },
   },
 
   // =====================================================
@@ -500,7 +578,7 @@ xsCircleDescription: {
     description: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 500,
-      fontSize: { xs: "14px", sm: "15px", md: "12px", lg: "13px" ,xl: "16px" },
+      fontSize: { xs: "14px", sm: "15px", md: "12px", lg: "13px", xl: "16px" },
       letterSpacing: "0%",
       textAlign: "center",
     },
@@ -543,7 +621,7 @@ xsCircleDescription: {
       fontSize: { xs: 14, sm: 13, md: 16 },
       lineHeight: "28.8px",
       letterSpacing: "0%",
-      verticalalignment:"middle",
+      verticalalignment: "middle",
       textAlign: "center",
     },
     headingRight: {
@@ -765,7 +843,13 @@ xsCircleDescription: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 400,
       fontSize: { xs: 11, sm: 12, md: 13, lg: 15, xl: 16 },
-      lineHeight: { xs: "14px", sm: "16px", md: "18px", lg: "26px", xl: "28.8px" },
+      lineHeight: {
+        xs: "14px",
+        sm: "16px",
+        md: "18px",
+        lg: "26px",
+        xl: "28.8px",
+      },
       letterSpacing: "0%",
       textAlign: "center",
     },
@@ -874,47 +958,47 @@ xsCircleDescription: {
     },
   },
 
-podcastSection: {
-  title: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 600,
-    fontSize: { xs: "28px", sm: "32px", md: "34px", lg: "40px", xl: "44px" },
-    lineHeight: 1.1,
-    letterSpacing: "0%",
+  podcastSection: {
+    title: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 600,
+      fontSize: { xs: "28px", sm: "32px", md: "34px", lg: "40px", xl: "44px" },
+      lineHeight: 1.1,
+      letterSpacing: "0%",
+    },
+    description: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 400,
+      fontSize: { xs: "14px", sm: "14px", md: "12px", lg: "14px", xl: "16px" },
+      lineHeight: { xs: 1.7, md: 1.75 },
+      letterSpacing: "0%",
+    },
+    topTitle: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 600,
+      fontSize: { xs: "16px", md: "14px", lg: "16px", xl: "18px" },
+      lineHeight: 1.2,
+    },
+    episodeTitle: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 600,
+      fontSize: { xs: "11px", sm: "13px", md: "11px", lg: "13px", xl: "14px" },
+      lineHeight: 1.3,
+    },
+    episodeMeta: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 400,
+      fontSize: { xs: "10px", sm: "11px", md: "9px", lg: "11px", xl: "12px" },
+      lineHeight: 1.2,
+    },
+    playButton: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 500,
+      fontSize: { xs: "9px", sm: "11px", md: "9px", lg: "11px", xl: "12px" },
+      lineHeight: 1,
+      textTransform: "none",
+    },
   },
-  description: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 400,
-    fontSize: { xs: "14px", sm: "14px", md: "12px", lg: "14px", xl: "16px" },
-    lineHeight: { xs: 1.7, md: 1.75 },
-    letterSpacing: "0%",
-  },
-  topTitle: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 600,
-    fontSize: { xs: "16px", md: "14px", lg: "16px", xl: "18px" },
-    lineHeight: 1.2,
-  },
-  episodeTitle: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 600,
-    fontSize: { xs: "11px", sm: "13px", md: "11px", lg: "13px", xl: "14px" },
-    lineHeight: 1.3,
-  },
-  episodeMeta: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 400,
-    fontSize: { xs: "10px", sm: "11px", md: "9px", lg: "11px", xl: "12px" },
-    lineHeight: 1.2,
-  },
-  playButton: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 500,
-    fontSize: { xs: "9px", sm: "11px", md: "9px", lg: "11px", xl: "12px" },
-    lineHeight: 1,
-    textTransform: "none",
-  },
-},
   // =====================================================
   // JOY LAB
   // =====================================================
@@ -996,15 +1080,33 @@ podcastSection: {
     cardTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 700,
-      fontSize: { xs: "16px", sm: "18px", md: "20.43px", lg: "20.43px", xl: "20.43px" },
+      fontSize: {
+        xs: "16px",
+        sm: "18px",
+        md: "20.43px",
+        lg: "20.43px",
+        xl: "20.43px",
+      },
       lineHeight: "100%",
       letterSpacing: 0,
     },
     cardDescription: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 400,
-      fontSize: { xs: "13px", sm: "14px", md: "14.86px", lg: "14.86px", xl: "14.86px" },
-      lineHeight: { xs: "20px", sm: "24px", md: "26.74px", lg: "26.74px", xl: "26.74px" },
+      fontSize: {
+        xs: "13px",
+        sm: "14px",
+        md: "14.86px",
+        lg: "14.86px",
+        xl: "14.86px",
+      },
+      lineHeight: {
+        xs: "20px",
+        sm: "24px",
+        md: "26.74px",
+        lg: "26.74px",
+        xl: "26.74px",
+      },
       letterSpacing: 0,
     },
     button: {
@@ -1043,11 +1145,12 @@ podcastSection: {
     },
     text: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 400,
-      fontSize: { xs: "14px", sm: "15px", md: "16px" },
-      lineHeight: { xs: "22px", md: "26px" },
-      letterSpacing: 0,
+      fontWeight: 200,
+      fontSize: { xs: "14px", sm: "14px", md: "18px", lg: "18px" },
+      lineHeight: { xs: 1.7, md: 1.75 },
+      letterSpacing: "0.1%",
     },
+
     userName: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 600,
@@ -1926,65 +2029,65 @@ podcastSection: {
     },
   },
   // =====================================================
-// COURSE INNER DETAIL PAGE
-// =====================================================
-courseInnerDetail: {
-  pageTitle: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 700,
-    fontSize: { xs: 22, sm: 24, md: 26, lg: 28, xl: 30 },
+  // COURSE INNER DETAIL PAGE
+  // =====================================================
+  courseInnerDetail: {
+    pageTitle: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 700,
+      fontSize: { xs: 22, sm: 24, md: 26, lg: 28, xl: 30 },
+    },
+    tab: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 500,
+      fontSize: { xs: 12, sm: 13, md: 14, lg: 15, xl: 16 },
+    },
+    tabActive: {
+      fontWeight: 600,
+    },
+    instructorHeader: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 600,
+      fontSize: { xs: 16, sm: 18, md: 20, lg: 22, xl: 24 },
+    },
+    instructorName: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 600,
+      fontSize: { xs: 15, sm: 17, md: 19, lg: 21, xl: 23 },
+    },
+    instructorRole: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 400,
+      fontSize: { xs: 12, sm: 13, md: 14, lg: 15, xl: 16 },
+    },
+    bulletText: {
+      fontFamily: '"Red Hat Display", sans-serif',
+      fontWeight: 400,
+      fontSize: { xs: 12.5, sm: 13.5, md: 14.5, lg: 15.5, xl: 16.5 },
+    },
+    priceLabel: {
+      fontFamily: "var(--font-redhat)",
+      fontWeight: 600,
+      fontSize: { xs: "13px", sm: "14px", md: "16px" },
+      lineHeight: { xs: "24px", sm: "26px", md: "28.8px" },
+    },
+    priceValue: {
+      fontFamily: "var(--font-redhat)",
+      fontWeight: 700,
+      fontSize: { xs: "20px", sm: "24px", md: "28px" },
+      lineHeight: "100%",
+    },
+    detailLabel: {
+      fontFamily: "var(--font-redhat)",
+      fontWeight: 400,
+      fontSize: { xs: "13px", sm: "14px" },
+    },
+    ctaButton: {
+      fontFamily: "var(--font-redhat)",
+      fontWeight: 600,
+      fontSize: { xs: "13px", sm: "14px", md: "15px" },
+    },
   },
-  tab: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 500,
-    fontSize: { xs: 12, sm: 13, md: 14, lg: 15, xl: 16 },
-  },
-  tabActive: {
-    fontWeight: 600,
-  },
-  instructorHeader: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 600,
-    fontSize: { xs: 16, sm: 18, md: 20, lg: 22, xl: 24 },
-  },
-  instructorName: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 600,
-    fontSize: { xs: 15, sm: 17, md: 19, lg: 21, xl: 23 },
-  },
-  instructorRole: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 400,
-    fontSize: { xs: 12, sm: 13, md: 14, lg: 15, xl: 16 },
-  },
-  bulletText: {
-    fontFamily: '"Red Hat Display", sans-serif',
-    fontWeight: 400,
-    fontSize: { xs: 12.5, sm: 13.5, md: 14.5, lg: 15.5, xl: 16.5 },
-  },
-  priceLabel: {
-    fontFamily: 'var(--font-redhat)',
-    fontWeight: 600,
-    fontSize: { xs: "13px", sm: "14px", md: "16px" },
-    lineHeight: { xs: "24px", sm: "26px", md: "28.8px" },
-  },
-  priceValue: {
-    fontFamily: 'var(--font-redhat)',
-    fontWeight: 700,
-    fontSize: { xs: "20px", sm: "24px", md: "28px" },
-    lineHeight: '100%',
-  },
-  detailLabel: {
-    fontFamily: 'var(--font-redhat)',
-    fontWeight: 400,
-    fontSize: { xs: '13px', sm: '14px' },
-  },
-  ctaButton: {
-    fontFamily: 'var(--font-redhat)',
-    fontWeight: 600,
-    fontSize: { xs: '13px', sm: '14px', md: '15px' },
-  },
-},
   // =====================================================
   // CONNECTION SECTION
   // =====================================================

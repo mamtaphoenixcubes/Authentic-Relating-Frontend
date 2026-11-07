@@ -1,7 +1,6 @@
 'use client';
 
 import { Box, Typography, Grid } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
@@ -25,6 +24,7 @@ const CoreValues = () => {
                 const sorted = (res?.data?.detailsOfVisions || []).sort(
                     (a, b) => a.index_position - b.index_position
                 );
+                console.log(sorted)
                 setValues(sorted);
             } catch (error) {
                 console.error('API error:', error);
@@ -101,7 +101,17 @@ const CoreValues = () => {
                                         whileTap={{ scale: 0.9 }}
                                         style={{ display: 'inline-flex' }}// Keeps icon aligned left
                                     >
-                                        <FavoriteBorderIcon sx={cv.icon} />
+                                        <Box
+                                            component="img"
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}/${value.icon}`}
+                                            alt=""
+                                            sx={{
+                                                ...cv.icon,
+                                                width: 80,
+                                                height: 80,
+                                                objectFit: 'contain',
+                                            }}
+                                        />
                                     </motion.div>
 
                                     <Typography sx={cv.cardTitle}>{value.title}</Typography>

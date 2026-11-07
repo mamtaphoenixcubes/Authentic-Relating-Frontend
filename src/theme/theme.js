@@ -3651,7 +3651,7 @@ const theme = createTheme({
         px: { xs: 3, sm: 5, md: 6 },
         py: { xs: 4, md: 5 },
         background: colors.clientTestimonial.cardBackground,
-        boxShadow: colors.clientTestimonial.cardShadow,
+        boxShadow: "none",
         color: colors.clientTestimonial.textColor,
         display: "flex",
         flexDirection: "column",

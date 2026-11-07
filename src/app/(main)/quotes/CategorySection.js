@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import axiosInstance from '@/lib/axios';
@@ -28,6 +29,9 @@ const getItemsPerPage = (width) => {
   if (width < 900) return 3;
   return 4;
 };
+
+// Adjust this value to change how far the selected category sits below the viewport top.
+const CATEGORY_SCROLL_OFFSET_PX = 120;
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -249,7 +253,7 @@ function CategorySection({
             direction="row"
             spacing={1}
             sx={{
-              display: { xs: 'none', sm: 'flex' },
+              display: 'flex',
               position: 'absolute',
               right: 0,
               top: { xs: -40, sm: -45 },
@@ -503,19 +507,30 @@ export default function AllCategories() {
     setSelectedCategory(label);
 
     requestAnimationFrame(() => {
-      if (label === 'All') {
-        const container = document.getElementById('all-categories-top');
-        if (container) {
-          container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        return;
-      }
-      const element = document.getElementById(`category-${label}`);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      const element = document.getElementById(
+        label === 'All' ? 'all-categories-top' : `category-${label}`
+      );
+      if (!element) return;
+
+      const targetTop =
+        element.getBoundingClientRect().top +
+        window.scrollY -
+        CATEGORY_SCROLL_OFFSET_PX;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+    });
+  };
+
+  const handleReset = () => {
+    setSelectedCategory('All');
+    setPage(0);
+    requestAnimationFrame(() => {
+      const element = document.getElementById('all-categories-top');
+      if (!element) return;
+      const targetTop =
+        element.getBoundingClientRect().top +
+        window.scrollY -
+        CATEGORY_SCROLL_OFFSET_PX;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
     });
   };
 
@@ -619,9 +634,15 @@ export default function AllCategories() {
             direction="row"
             alignItems="center"
             justifyContent="center"
-            spacing={2}
+            spacing={{ xs: 0.5, sm: 2 }}
             my={{ xs: 3, md: 10 }}
-            sx={{ width: '100%' }}
+            sx={{
+              width: '100%',
+              boxSizing: 'border-box',
+              position: 'relative',
+              flexWrap: 'nowrap',
+              pr: { xs: 5, sm: 6 },
+            }}
           >
             {/* LEFT ARROW (Increased size) */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
@@ -796,9 +817,45 @@ export default function AllCategories() {
                   '& svg': { fontSize: '2rem' }, // Made icon bigger
                 }}
               >
+                
                 <ChevronRightIcon />
               </IconButton>
             </motion.div>
+
+            <Box
+              component={motion.div}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              sx={{
+                position: { xs: 'static', sm: 'absolute' },
+                right:30,
+                top: { sm: 'calc(50% - 18px)' },
+                ml: { xs: 'auto', sm: 0 },
+              }}
+            >
+              <IconButton
+                size="small"
+                aria-label="Reset category filter"
+                title="Reset category filter"
+                onClick={handleReset}
+                sx={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: '10px',
+                  bgcolor: '#087EDF',
+                  color: '#fff',
+                  boxShadow: '0px 2px 8px rgba(0,0,0,0.15)',
+                  border: '2px solid #FFFFFF',
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    bgcolor: '#087EDF',
+                    boxShadow: '0px 4px 12px rgba(0,0,0,0.2)',
+                  },
+                }}
+              >
+                <RestartAltIcon fontSize="small" />
+              </IconButton>
+            </Box>
           </Stack>
         </motion.div>
 

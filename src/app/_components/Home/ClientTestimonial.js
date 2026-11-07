@@ -1,15 +1,10 @@
 "use client";
 
-import { Box, Typography, Container, IconButton } from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-import { useRef } from "react";
-import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 
 import spacing from "../../../theme/spacing";
 import theme from "../../../theme/theme";
@@ -43,14 +38,13 @@ const testimonials = [
 
 export default function ClientTestimonial() {
   const testimonial = theme.custom.clientTestimonial;
-  const swiperRef = useRef(null);
 
   return (
     <Box
       sx={{
         py: {
           xs: spacing.clientTestimonial.sectionY.xs / 4,
-          md: spacing.clientTestimonial.sectionY.xs / 8,
+          md: spacing.clientTestimonial.sectionY.xs / 6,
         },
       }}
     >
@@ -73,14 +67,11 @@ export default function ClientTestimonial() {
         </MotionTypography>
 
         <Swiper
-          modules={[Pagination]}
+          modules={[Autoplay]}
           slidesPerView={1}
           spaceBetween={20}
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-          }}
-          pagination={{ clickable: true }}
-          style={{ width: "100%", paddingBottom: 36 }}
+          autoplay={{ delay: 2000, disableOnInteraction: false }}
+          style={{ width: "100%" }}
         >
           {testimonials.map((item) => (
             <SwiperSlide key={item.id} style={{ height: "auto" }}>
@@ -89,11 +80,27 @@ export default function ClientTestimonial() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
+                onMouseEnter={(event) =>
+                  event.currentTarget.closest(".swiper")?.swiper?.autoplay.stop()
+                }
+                onMouseLeave={(event) =>
+                  event.currentTarget.closest(".swiper")?.swiper?.autoplay.start()
+                }
+                onTouchStart={(event) =>
+                  event.currentTarget.closest(".swiper")?.swiper?.autoplay.stop()
+                }
+                onTouchEnd={(event) =>
+                  event.currentTarget.closest(".swiper")?.swiper?.autoplay.start()
+                }
                 sx={{
                   ...testimonial.card,
                   minHeight: {
                     xs: "auto",
                     md: testimonial.card.minHeight.md,
+                  },
+                  "@media (min-width: 786px)": {
+                    minHeight: "auto",
+                    py: 3,
                   },
                 }}
               >
@@ -112,7 +119,7 @@ export default function ClientTestimonial() {
                   <Box
                     sx={{
                       ...testimonial.userInfo,
-                      mt: "auto",
+                      mt: { xs: "auto", md: 2 },
                     }}
                   >
                     <Box
@@ -134,50 +141,6 @@ export default function ClientTestimonial() {
             </SwiperSlide>
           ))}
         </Swiper>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            mt: 1,
-          }}
-        >
-          <IconButton
-            aria-label="Previous testimonial"
-            onClick={() => swiperRef.current?.slidePrev()}
-            sx={{
-              width: 42,
-              height: 42,
-              color: "#647521",
-              bgcolor: "#ffffff",
-              border: "1px solid rgba(119, 129, 24, 0.35)",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
-              "&:hover": {
-                bgcolor: "#778118",
-                color: "#ffffff",
-              },
-            }}
-          >
-            <ChevronLeftRoundedIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Next testimonial"
-            onClick={() => swiperRef.current?.slideNext()}
-            sx={{
-              width: 42,
-              height: 42,
-              color: "#647521",
-              bgcolor: "#ffffff",
-              border: "1px solid rgba(119, 129, 24, 0.35)",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
-              "&:hover": {
-                bgcolor: "#778118",
-                color: "#ffffff",
-              },
-            }}
-          >
-            <ChevronRightRoundedIcon />
-          </IconButton>
-        </Box>
       </Container>
     </Box>
   );

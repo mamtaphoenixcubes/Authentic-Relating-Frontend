@@ -159,29 +159,77 @@ export const Leadership = () => {
                                                     </Typography>
                                                 </motion.div>
 
-                                                <Box sx={{ width: '100%', flex: 1 }}>
-                                                    {(() => {
-                                                        const tempDiv = document.createElement('div');
-                                                        tempDiv.innerHTML = section.description;
-                                                        const children = Array.from(tempDiv.children);
+                                                {/* Description with split animation - each element appears one by one */}
+                                            <Box sx={{ width: '100%', flex: 1 }}>
+                                                {(() => {
+                                                    // Create a temporary div to parse HTML
+                                                    const tempDiv = document.createElement('div');
+                                                    tempDiv.innerHTML = section.description;
+                                                    const children = Array.from(tempDiv.children);
 
-                                                        return children.map((child, idx) => (
-                                                            <motion.div
-                                                                key={idx}
-                                                                initial={{ opacity: 0, y: 20 }}
-                                                                whileInView={{ opacity: 1, y: 0 }}
-                                                                viewport={{ once: true }}
-                                                                transition={{ duration: 0.5, delay: 0.4 + (idx * 0.1) }}
-                                                                style={{ width: '100%' }}
-                                                            >
-                                                                <Box
-                                                                    dangerouslySetInnerHTML={{ __html: child.outerHTML }}
-                                                                    sx={lead.richDescription}
-                                                                />
-                                                            </motion.div>
-                                                        ));
-                                                    })()}
-                                                </Box>
+                                                    return children.map((child, idx) => (
+                                                        <motion.div
+                                                            key={idx}
+                                                            initial={{ opacity: 0, y: 20 }}
+                                                            whileInView={{ opacity: 1, y: 0 }}
+                                                            viewport={{ once: true }}
+                                                            transition={{ duration: 0.5, delay: 0.4 + (idx * 0.1) }}
+                                                            style={{ width: '100%' }}
+                                                        >
+                                                            <Box
+                                                                dangerouslySetInnerHTML={{ __html: child.outerHTML }}
+                                                                sx={{
+                                                                    fontFamily: "Red Hat Display, sans-serif",
+                                                                    fontSize: { xs: 14, sm: 14, md: 15, lg: 16 },
+                                                                    lineHeight: 1.7,
+                                                                    color: "#444",
+                                                                    width: '100%',
+                                                                    mb: 2,
+
+                                                                    "& p": {
+                                                                        mb: 1.5,
+                                                                        '&:last-child': {
+                                                                            mb: 0
+                                                                        }
+                                                                    },
+
+                                                                    "& h3, & h4": {
+                                                                        fontSize: { xs: 18, md: 20 },
+                                                                        fontWeight: 600,
+                                                                        mb: 1.5,
+                                                                        mt: 2,
+                                                                        color: '#1a1a1a'
+                                                                    },
+
+                                                                    "& ul": {
+                                                                        pl: 0,
+                                                                        mt: 1,
+                                                                        listStyle: "none"
+                                                                    },
+
+                                                                    "& li": {
+                                                                        display: "flex",
+                                                                        alignItems: "flex-start",
+                                                                        gap: 1.5,
+                                                                        mb: 1.5,
+                                                                        fontSize: { xs: 13, sm: 13, md: 14 },
+
+                                                                        "&::before": {
+                                                                            content: '""',
+                                                                            width: 18,
+                                                                            height: 18,
+                                                                            borderRadius: "50%",
+                                                                            border: "3px solid #2196F3",
+                                                                            marginTop: "4px",
+                                                                            flexShrink: 0
+                                                                        }
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </motion.div>
+                                                    ));
+                                                })()}
+                                            </Box>
                                             </Box>
                                         </motion.div>
                                     </Box>

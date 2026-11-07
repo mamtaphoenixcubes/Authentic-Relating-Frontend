@@ -53,12 +53,20 @@ export default function OurSignatureOfferings() {
     router.push('/ourofferings');
   };
 
+  const handleOfferingClick = (offeringSlug) => {
+    if (offeringSlug) {
+      router.push(`/ourofferings/${encodeURIComponent(offeringSlug)}/`);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
   // Use fetched data or fallback to default
   const displayOfferings = offerings.length > 0 ? offerings : defaultOfferings;
+
+  console.log(displayOfferings,"displayofferings")
 
   // Get theme styles
   const styles = theme.custom.signatureOfferings;
@@ -155,7 +163,19 @@ export default function OurSignatureOfferings() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ scale: 1.05 }}
-              sx={styles.mobile.card}
+              onClick={() => handleOfferingClick(item.offeringSlug)}
+              role={item.offeringSlug ? 'link' : undefined}
+              tabIndex={item.offeringSlug ? 0 : undefined}
+              onKeyDown={(event) => {
+                if (item.offeringSlug && (event.key === 'Enter' || event.key === ' ')) {
+                  event.preventDefault();
+                  handleOfferingClick(item.offeringSlug);
+                }
+              }}
+              sx={{
+                ...styles.mobile.card,
+                cursor: item.offeringSlug ? 'pointer' : 'default',
+              }}
             >
               <Box
                 component="img"
@@ -209,7 +229,19 @@ export default function OurSignatureOfferings() {
                       damping: 12,
                     }}
                     whileHover={{ scale: 1.05 }}
-                    sx={styles.desktop.card}
+                    onClick={() => handleOfferingClick(item.offeringSlug)}
+                    role={item.offeringSlug ? 'link' : undefined}
+                    tabIndex={item.offeringSlug ? 0 : undefined}
+                    onKeyDown={(event) => {
+                      if (item.offeringSlug && (event.key === 'Enter' || event.key === ' ')) {
+                        event.preventDefault();
+                        handleOfferingClick(item.offeringSlug);
+                      }
+                    }}
+                    sx={{
+                      ...styles.desktop.card,
+                      cursor: item.offeringSlug ? 'pointer' : 'default',
+                    }}
                   >
                     <Box sx={styles.desktop.card.inner}>
                       {/* Image */}

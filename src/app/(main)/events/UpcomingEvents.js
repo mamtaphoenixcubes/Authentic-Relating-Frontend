@@ -190,12 +190,12 @@ export default function UpcomingEvents() {
   const [activeCategory, setActiveCategory] = useState('All');
 
   useEffect(() => {
-    if (USE_MOCK_DATA) {
-      setEventsData(MOCK_EVENTS);
-      setTotalPages(1);
-      setTotalCount(MOCK_EVENTS.length);
-      return;
-    }
+    // if (USE_MOCK_DATA) {
+    //   setEventsData(MOCK_EVENTS);
+    //   setTotalPages(1);
+    //   setTotalCount(MOCK_EVENTS.length);
+    //   return;
+    // }
     fetchEvents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
@@ -206,6 +206,8 @@ export default function UpcomingEvents() {
       const res = await axiosInstance.get('/frontendApis/getAllEvents', {
         params: { page: page + 1, limit },
       });
+
+      console.log('API response:', res.data);
 
       if (res.data.status === 1) {
         const apiEvents = res.data.data || [];
@@ -250,17 +252,17 @@ export default function UpcomingEvents() {
         {loading && <Box sx={styles.loading}>Loading events...</Box>}
 
         {/* ============================== */}
-        {/* CARDS GRID                      */}
+        {/* CARDS GRID — 3 PER ROW          */}
         {/* ============================== */}
         <Box
           sx={{
             ...styles.grid,
             display: 'grid',
             gridTemplateColumns: {
-              xs: '1fr',                       // Mobile: 1 per row
-              sm: 'repeat(3, minmax(0, 1fr))', // Tablet: 3 per row
-              md: 'repeat(3, minmax(0, 1fr))', // Desktop: 3 per row
-              lg: 'repeat(3, minmax(0, 1fr))', // Large: 3 per row
+              xs: '1fr',                       // mobile: 1 per row
+              sm: 'repeat(2, minmax(0, 1fr))', // tablet: 2 per row
+              md: 'repeat(3, minmax(0, 1fr))', // desktop: 3 per row
+              lg: 'repeat(3, minmax(0, 1fr))', // large: 3 per row
             },
             gap: { xs: 2, sm: 2.5, md: 3, lg: 3 },
             alignItems: 'stretch',
@@ -278,24 +280,9 @@ export default function UpcomingEvents() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                style={{ height: '100%', display: 'flex', width: '100%' }}
+                style={{ height: '100%' }}
               >
-                {/* 
-                  👇 CARD DIMENSIONS & ALIGNMENT 
-                  - height: '100%' makes all cards match height in a row.
-                  - minHeight: '520px' gives it a fixed base height.
-                  - display: flex, column allows pushing buttons to bottom.
-                */}
-                <Card
-                  sx={{
-                    ...styles.card,
-                    width: '100%',
-                    height: '100%',
-                    minHeight: '520px', 
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
+                <Card sx={styles.card}>
                   {/* IMAGE */}
                   <Box sx={styles.imageWrapper}>
                     <Box
@@ -355,12 +342,8 @@ export default function UpcomingEvents() {
                     <Typography sx={styles.originalPrice}>$ 500</Typography>
                   </Box>
 
-                  {/* 
-                    BUTTONS 
-                    👇 mt: 'auto' pushes this container to the absolute bottom 
-                    so all cards line up perfectly regardless of description length.
-                  */}
-                  <Box sx={{ ...styles.buttonsContainer, mt: 'auto' }}>
+                  {/* BUTTONS */}
+                  <Box sx={styles.buttonsContainer}>
                     <Box sx={styles.buttonRow}>
                       <EventButton
                         {...styles.readMoreButton}
