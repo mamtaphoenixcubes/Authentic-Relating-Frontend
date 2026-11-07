@@ -82,23 +82,19 @@ export const DeepenConnection = () => {
     }, []);
 
     return (
-        <Section
-            sx={{
-                py: { xs: 3, sm: 4 },
-                px: { xs: 2, sm: 3, md: 4 },
-            }}
-        >
+        <Section sx={{ pb: { xs: 2, sm: 0, md: 0 }, pt: { xs: 4, sm: 5, md: 8 } }}>
             <SiteContainer>
                 <Grid
                     container
                     spacing={{ xs: 2, sm: 3, md: 4 }}
                     alignItems="center"
                     sx={{
-                        flexDirection: { xs: 'column', md: 'row' }
+                        /* ✅ CHANGED: column on xs, row from sm upward */
+                        flexDirection: { xs: 'column', sm: 'row' }
                     }}
                 >
                     {/* LEFT CONTENT */}
-                    <Grid item xs={12} md={6} lg={6}>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
                         {/* HEADING */}
                         <motion.div
                             initial={{ opacity: 0, y: 24 }}
@@ -110,13 +106,13 @@ export const DeepenConnection = () => {
                                 sx={{
                                     color: '#F9998D',
                                     fontFamily: 'var(--font-redhat), "Red Hat Display", sans-serif',
-                                    fontWeight: 900,
+                                    fontWeight: 700,
                                     fontSize: {
                                         xs: '24px',
-                                        sm: '28px',
+                                        sm: '25px',
                                         md: '32px',
                                         lg: '40px',
-                                        xl: '54px'
+                                        xl: '44px'
                                     },
                                     lineHeight: {
                                         xs: '1.2',
@@ -124,9 +120,10 @@ export const DeepenConnection = () => {
                                         md: '1.3',
                                         lg: '1.1'
                                     },
-                                    textAlign: { xs: 'center', md: 'left' },
+                                    /* ✅ text aligned left starting at sm since it's now side-by-side */
+                                    textAlign: { xs: 'center', sm: 'left' },
                                     mb: { xs: 2, sm: 2.5, md: 3, lg: 4 },
-                                    maxWidth: { xs: '100%', md: '90%' },
+                                    maxWidth: { xs: '100%', sm: '100%', md: '90%' },
                                 }}
                             >
                                 Deepen Connection. Start a Conversation That Matters.
@@ -148,10 +145,10 @@ export const DeepenConnection = () => {
                                     fontWeight: 500,
                                     fontSize: {
                                         xs: '14px',
-                                        sm: '15px',
+                                        sm: '10px',
                                         md: '16px',
-                                        lg: '18px',
-                                        xl: '18px'
+                                        lg: '16px',
+                                        xl: '16px'
                                     },
                                     lineHeight: {
                                         xs: '1.5',
@@ -159,8 +156,9 @@ export const DeepenConnection = () => {
                                         md: '1.6',
                                         lg: '1.4'
                                     },
-                                    textAlign: { xs: 'center', md: 'left' },
-                                    maxWidth: { xs: '100%', md: '95%' }
+                                    /* ✅ text aligned left starting at sm */
+                                    textAlign: { xs: 'center', sm: 'left' },
+                                    maxWidth: { xs: '100%', sm: '100%', md: '95%' }
                                 }}
                             >
                                 Welcome to AuthenticRelating.com — the home of genuine human connection,
@@ -192,10 +190,10 @@ export const DeepenConnection = () => {
                                             fontWeight: 600,
                                             fontSize: {
                                                 xs: '16px',
-                                                sm: '18px',
+                                                sm: '10px',
                                                 md: '20px',
                                                 lg: '24px',
-                                                xl: '29px'
+                                                xl: '28px'
                                             },
                                             lineHeight: {
                                                 xs: '1.3',
@@ -203,7 +201,8 @@ export const DeepenConnection = () => {
                                                 md: '1.15',
                                                 lg: '1.2'
                                             },
-                                            textAlign: { xs: 'center', md: 'left' },
+                                            /* ✅ text aligned left starting at sm */
+                                            textAlign: { xs: 'center', sm: 'left' },
                                         }}
                                     >
                                         {text}
@@ -217,13 +216,14 @@ export const DeepenConnection = () => {
                     <Grid
                         item
                         xs={12}
+                        sm={6}
                         md={6}
                         lg={6}
                         sx={{
                             display: 'flex',
-                            justifyContent: { xs: 'center', md: 'flex-end' },
+                            justifyContent: { xs: 'center', sm: 'flex-end' },
                             alignItems: 'center',
-                            order: { xs: 0, md: 1 }
+                            order: { xs: 0, sm: 1 }
                         }}
                     >
                         <MotionCard
@@ -235,7 +235,7 @@ export const DeepenConnection = () => {
                                 width: '100%',
                                 maxWidth: {
                                     xs: '100%',
-                                    sm: '450px',
+                                    sm: '100%',      /* ✅ fill the 6-col grid on sm */
                                     md: '480px',
                                     lg: '550px',
                                     xl: '600px'
@@ -243,7 +243,7 @@ export const DeepenConnection = () => {
                                 height: 'auto',
                                 minHeight: {
                                     xs: '220px',
-                                    sm: '260px',
+                                    sm: '240px',     /* ✅ slightly shorter on tablet */
                                     md: '300px',
                                     lg: '340px',
                                     xl: '380px'

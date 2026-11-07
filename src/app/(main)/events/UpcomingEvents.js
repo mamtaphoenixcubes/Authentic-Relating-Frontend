@@ -1,9 +1,11 @@
 'use client';
 
+
 import { useEffect, useState } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import axiosInstance from '@/lib/axios';
+
 
 // Common components
 import Section from '../../_components/common/Section';
@@ -12,13 +14,16 @@ import SectionHeader from '../../_components/common/SectionHeader';
 import Card from '../../_components/common/Card';
 import EventButton from '../../_components/buttons/EventButton';
 
+
 // =====================================================
 // CONSTANTS
 // =====================================================
 const categories = ['All', 'Category 1', 'Category 2', 'Category 3', 'Category 4'];
 
+
 // 👇 Toggle this to `false` when your API returns real data
 const USE_MOCK_DATA = true;
+
 
 // =====================================================
 // MOCK DATA (fallback when API returns nothing)
@@ -128,18 +133,22 @@ const MOCK_EVENTS = [
   },
 ];
 
+
 // =====================================================
 // HELPERS
 // =====================================================
 const formatEventDate = (start, end) => {
   if (!start) return '';
 
+
   const startDate = new Date(start);
   const endDate = end ? new Date(end) : null;
+
 
   const day = startDate.getDate();
   const month = startDate.toLocaleString('en-US', { month: 'short' });
   const year = startDate.getFullYear();
+
 
   const getOrdinal = (n) => {
     if (n > 3 && n < 21) return 'th';
@@ -151,6 +160,7 @@ const formatEventDate = (start, end) => {
     }
   };
 
+
   const formatTime = (date) =>
     date
       .toLocaleString('en-US', {
@@ -160,19 +170,23 @@ const formatEventDate = (start, end) => {
       })
       .toLowerCase();
 
+
   const startTime = formatTime(startDate);
   const endTime = endDate ? formatTime(endDate) : '';
+
 
   return `${day}${getOrdinal(day)} ${month}, ${year} @ ${startTime}${
     endTime ? ` – ${endTime}` : ''
   }`;
 };
 
+
 const formatLocation = (event) => {
   if (event?.formatted_address) return event.formatted_address;
   const parts = [event?.city, event?.state, event?.country].filter(Boolean);
   return parts.join(', ');
 };
+
 
 // =====================================================
 // COMPONENT
@@ -181,6 +195,7 @@ export default function UpcomingEvents() {
   const theme = useTheme();
   const styles = theme.custom.upcomingEvents;
 
+
   const [eventsData, setEventsData] = useState([]);
   const [page, setPage] = useState(0);
   const [limit] = useState(6);
@@ -188,6 +203,7 @@ export default function UpcomingEvents() {
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All');
+
 
   useEffect(() => {
     // if (USE_MOCK_DATA) {
@@ -200,6 +216,7 @@ export default function UpcomingEvents() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
+
   const fetchEvents = async () => {
     try {
       setLoading(true);
@@ -207,10 +224,13 @@ export default function UpcomingEvents() {
         params: { page: page + 1, limit },
       });
 
+
       console.log('API response:', res.data);
+
 
       if (res.data.status === 1) {
         const apiEvents = res.data.data || [];
+
 
         if (apiEvents.length === 0) {
           setEventsData(MOCK_EVENTS);
@@ -236,6 +256,7 @@ export default function UpcomingEvents() {
     }
   };
 
+
   return (
     <Section sx={styles.section}>
       <Container>
@@ -249,7 +270,9 @@ export default function UpcomingEvents() {
           sx={styles.header}
         />
 
+
         {loading && <Box sx={styles.loading}>Loading events...</Box>}
+
 
         {/* ============================== */}
         {/* CARDS GRID — 3 PER ROW          */}
@@ -273,6 +296,7 @@ export default function UpcomingEvents() {
               ? `${process.env.NEXT_PUBLIC_API_URL}/${item.image}`
               : '/placeholder.png';
 
+
             return (
               <motion.div
                 key={item._id}
@@ -293,15 +317,18 @@ export default function UpcomingEvents() {
                     />
                   </Box>
 
+
                   {/* TITLE */}
                   <Typography sx={styles.cardTitle}>
                     {item.event_name}
                   </Typography>
 
+
                   {/* DESCRIPTION */}
                   <Typography sx={styles.cardDescription}>
                     {item.event_description}
                   </Typography>
+
 
                   {/* DATE / TIME */}
                   <Box sx={styles.metaRow}>
@@ -312,6 +339,7 @@ export default function UpcomingEvents() {
                       {formatEventDate(item.start_date, item.end_date)}
                     </Typography>
                   </Box>
+
 
                   {/* LOCATION */}
                   <Box sx={styles.metaRow}>
@@ -324,6 +352,7 @@ export default function UpcomingEvents() {
                     </Typography>
                   </Box>
 
+
                   {/* TIMEZONE */}
                   <Box sx={{ ...styles.metaRow, mb: 2 }}>
                     <Box component="span" sx={styles.metaIcon}>
@@ -334,6 +363,7 @@ export default function UpcomingEvents() {
                     </Typography>
                   </Box>
 
+
                   {/* PRICE */}
                   <Box sx={styles.priceRow}>
                     <Typography sx={styles.price}>
@@ -341,6 +371,7 @@ export default function UpcomingEvents() {
                     </Typography>
                     <Typography sx={styles.originalPrice}>$ 500</Typography>
                   </Box>
+
 
                   {/* BUTTONS */}
                   <Box sx={styles.buttonsContainer}>
@@ -353,6 +384,7 @@ export default function UpcomingEvents() {
                       >
                         Read More
                       </EventButton>
+
 
                       <EventButton
                         {...styles.bookNowButton}
@@ -370,6 +402,7 @@ export default function UpcomingEvents() {
           })}
         </Box>
 
+
         {/* ============================== */}
         {/* PAGINATION                      */}
         {/* ============================== */}
@@ -383,6 +416,7 @@ export default function UpcomingEvents() {
               ← Prev
             </EventButton>
 
+
             <Box sx={styles.pagination.pageNumbers}>
               {[...Array(totalPages)].map((_, i) => (
                 <button
@@ -394,6 +428,7 @@ export default function UpcomingEvents() {
                 </button>
               ))}
             </Box>
+
 
             <EventButton
               {...styles.pagination.nextButton(page === totalPages - 1)}
@@ -410,3 +445,4 @@ export default function UpcomingEvents() {
     </Section>
   );
 }
+

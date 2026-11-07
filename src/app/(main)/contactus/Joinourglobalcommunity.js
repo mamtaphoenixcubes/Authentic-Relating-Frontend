@@ -146,11 +146,12 @@ const StyledIconButton = ({ children, href, color, index }) => {
                 component="a"
                 href={href}
                 target="_blank"
-                sx={theme.custom?.globalCommunity?.iconButton || {
-                    background: color,
+                sx={{
+                    // Force the background to be blue, ignoring the theme
+                    background: '#2196f3 !important',
                     color: '#fff',
-                    width: { xs: 36, sm: 40, md: 42, lg: 44 },
-                    height: { xs: 36, sm: 40, md: 42, lg: 44 },
+                    width: { xs: 26, sm: 30, md: 34, lg: 40, xl: 44 },
+                    height: { xs: 26, sm: 30, md: 34, lg: 40, xl: 44 },
                     border: '1px solid rgba(255,255,255,0.5)',
                     backdropFilter: 'blur(6px)',
                     WebkitBackdropFilter: 'blur(6px)',
@@ -158,7 +159,7 @@ const StyledIconButton = ({ children, href, color, index }) => {
                     '&:hover': {
                         opacity: 0.85,
                         borderColor: '#fff',
-                        background: color,
+                        background: '#2196f3 !important',
                     },
                 }}
             >
@@ -173,15 +174,16 @@ export const Joinourglobalcommunity = () => {
     const { custom } = theme;
 
     return (
-        <Section>
-            <SiteContainer>
+        <Section sx={{ pt: { xs: 1, sm: 1, md: 1 }, pb: { xs: 4, sm: 5, md: 6 } }}>
+            <SiteContainer sx={{ pt: 0, pb: 0 }}>
                 <MotionBox
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.1 }}
                     variants={containerVariants}
                     sx={custom?.globalCommunity?.container || {
-                        py: { xs: 4, sm: 5, md: 6 }
+                        pt: { xs: 1, sm: 1, md: 1 },
+                        pb: { xs: 4, sm: 5, md: 6 },
                     }}
                 >
                     <MotionBox
@@ -259,7 +261,11 @@ export const Joinourglobalcommunity = () => {
                             viewport={{ once: true }}
                             variants={containerVariants}
                             direction={{ xs: 'column', sm: 'row' }}
-                            spacing={custom?.globalCommunity?.cards?.spacing || { xs: 2, sm: 2, md: 2.5, lg: 3, xl: 3 }}
+                            spacing={custom?.globalCommunity?.cards?.spacing || { xs: 2, sm: 2, md: 2, lg: 2.5, xl: 3 }}
+                            sx={{
+                                alignItems: 'stretch',
+                                minHeight: { xs: 'auto', sm: '240px', md: '260px', lg: '270px', xl: '280px' },
+                            }}
                         >
                             {/* Newsletter */}
                             <MotionCard
@@ -268,8 +274,10 @@ export const Joinourglobalcommunity = () => {
                                 whileHover="hover"
                                 sx={custom?.globalCommunity?.cards?.newsletter || {
                                     flex: 1,
-                                    p: { xs: 2, sm: 2, md: 2.5, lg: 3, xl: 3 },
-                                    borderRadius: { xs: "16px", sm: "18px", md: "20px" },
+                                    height: '100%',
+                                    justifyContent: 'space-between',
+                                    p: { xs: 2, sm: 1.5, md: 2, lg: 2, xl: 2.5 },
+                                    borderRadius: { xs: "16px", sm: "14px", md: "16px", lg: "16px", xl: "18px" },
                                     position: "relative",
                                     overflow: "hidden",
                                     background: "rgba(255,255,255,0.22)",
@@ -306,15 +314,16 @@ export const Joinourglobalcommunity = () => {
                                         fontFamily: "var(--font-redhat)",
                                         fontWeight: 600,
                                         fontSize: {
-                                            xs: "16px",
-                                            sm: "18px",
-                                            md: "20px",
-                                            lg: "21px",
+                                            xs: "15px",
+                                            sm: "14px",
+                                            md: "16px",
+                                            lg: "16px",
+                                            xl: "18px",
                                         },
                                         lineHeight: 1.2,
                                         textAlign: "center",
                                     }}
-                                    mb={2}
+                                    mb={{ xs: 2, sm: 1.5, md: 1.5, lg: 1.5 }}
                                 >
                                     Subscribe to our Newsletter
                                 </MotionTypography>
@@ -328,7 +337,7 @@ export const Joinourglobalcommunity = () => {
                                     transition={{ duration: 0.4, delay: 0.2 }}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    style={{ width: '100%' }}
+                                    style={{ width: '100%', marginTop: 'auto' }}
                                 >
                                     <Button
                                         component="a"
@@ -343,21 +352,23 @@ export const Joinourglobalcommunity = () => {
                                             border: "none",
                                             background: custom?.defaultButton?.background || '#2196f3',
                                             color: "#fff",
-                                            px: { xs: 3, sm: 3.5, md: 4 },
-                                            py: { xs: 1, sm: 1.1, md: 1.2 },
+                                            px: { xs: 3, sm: 2, md: 2, lg: 2.5, xl: 3 },
+                                            py: { xs: 1, sm: 0.75, md: 0.75, lg: 0.85, xl: 0.9 },
                                             fontFamily: "var(--font-redhat)",
                                             fontWeight: 600,
                                             fontSize: {
                                                 xs: "13px",
-                                                sm: "14px",
-                                                md: "15px",
-                                                lg: "16px",
+                                                sm: "12px",
+                                                md: "12px",
+                                                lg: "13px",
+                                                xl: "14px",
                                             },
                                             width: {
                                                 xs: "100%",
-                                                sm: "80%",
-                                                md: "60%",
-                                                lg: "50%",
+                                                sm: "100%",
+                                                md: "80%",
+                                                lg: "75%",
+                                                xl: "70%",
                                             },
                                             mx: "auto",
                                             display: "flex",
@@ -381,8 +392,10 @@ export const Joinourglobalcommunity = () => {
                                 whileHover="hover"
                                 sx={custom?.globalCommunity?.cards?.followUs || {
                                     flex: 1,
-                                    p: { xs: 2, sm: 2, md: 2.5, lg: 3, xl: 3 },
-                                    borderRadius: { xs: "16px", sm: "18px", md: "20px" },
+                                    height: '100%',
+                                    justifyContent: 'space-between',
+                                    p: { xs: 2, sm: 1.5, md: 2, lg: 2, xl: 2.5 },
+                                    borderRadius: { xs: "16px", sm: "14px", md: "16px", lg: "16px", xl: "18px" },
                                     position: "relative",
                                     overflow: "hidden",
                                     background: "rgba(255,255,255,0.22)",
@@ -419,45 +432,31 @@ export const Joinourglobalcommunity = () => {
                                         fontFamily: "var(--font-redhat)",
                                         fontWeight: 600,
                                         fontSize: {
-                                            xs: "16px",
-                                            sm: "18px",
-                                            md: "20px",
-                                            lg: "21px",
+                                            xs: "15px",
+                                            sm: "14px",
+                                            md: "16px",
+                                            lg: "16px",
+                                            xl: "18px",
                                         },
                                         lineHeight: 1.2,
                                         textAlign: "center",
                                     }}
-                                    mb={2}
+                                    mb={{ xs: 2, sm: 1.5, md: 1.5, lg: 1.5 }}
                                 >
                                     Follow us
                                 </MotionTypography>
 
-                                <Stack 
-                                    direction="row" 
-                                    justifyContent="center" 
-                                    spacing={custom?.globalCommunity?.cards?.socialSpacing || 2}
+                                <Stack
+                                    direction="row"
+                                    justifyContent="center"
+                                    spacing={custom?.globalCommunity?.cards?.socialSpacing || { xs: 1, sm: 1, md: 1.5, lg: 1.5, xl: 2 }}
+                                    sx={{ mt: 'auto', mb: 'auto' }}
                                 >
                                     {[
-                                        {
-                                            image: "/svg/contactus/podcast1.svg",
-                                            color: "#3096E1",
-                                            href: "https://instagram.com",
-                                        },
-                                        {
-                                            image: "/svg/contactus/podcast2.svg",
-                                            color: "#3096E1",
-                                            href: "https://facebook.com",
-                                        },
-                                        {
-                                            image: "/svg/contactus/podcast3.svg",
-                                            color: "#3096E1",
-                                            href: "https://linkedin.com",
-                                        },
-                                        {
-                                            image: "/svg/contactus/podcast4.svg",
-                                            color: "#3096E1",
-                                            href: "https://youtube.com",
-                                        },
+                                        { image: "/svg/contactus/podcast1.svg", color: "#3096E1", href: "https://instagram.com" },
+                                        { image: "/svg/contactus/podcast2.svg", color: "#3096E1", href: "https://facebook.com" },
+                                        { image: "/svg/contactus/podcast3.svg", color: "#3096E1", href: "https://linkedin.com" },
+                                        { image: "/svg/contactus/podcast4.svg", color: "#3096E1", href: "https://youtube.com" },
                                     ].map((social, index) => (
                                         <StyledIconButton
                                             key={index}
@@ -465,14 +464,18 @@ export const Joinourglobalcommunity = () => {
                                             color={social.color}
                                             index={index}
                                         >
-                                            <img
+                                            <Box
+                                                component="img"
                                                 src={social.image}
                                                 alt="social-icon"
-                                                style={custom?.globalCommunity?.cards?.socialIcon || {
-                                                    width: "20px",
-                                                    height: "20px",
-                                                    objectFit: "contain",
-                                                }}
+                                                sx={
+                                                    custom?.globalCommunity?.cards?.socialIcon || {
+                                                        // Reduced icon sizes
+                                                        width: { xs: 12, sm: 12, md: 14, lg: 14, xl: 16 },
+                                                        height: { xs: 12, sm: 12, md: 14, lg: 14, xl: 16 },
+                                                        objectFit: "contain",
+                                                    }
+                                                }
                                             />
                                         </StyledIconButton>
                                     ))}
@@ -486,8 +489,9 @@ export const Joinourglobalcommunity = () => {
                                 whileHover="hover"
                                 sx={custom?.globalCommunity?.cards?.podcast || {
                                     flex: 1,
-                                    p: { xs: 2, sm: 2, md: 2.5, lg: 3, xl: 3 },
-                                    borderRadius: { xs: "16px", sm: "18px", md: "20px" },
+                                    height: '100%',
+                                    p: { xs: 2, sm: 1.5, md: 2, lg: 2, xl: 2.5 },
+                                    borderRadius: { xs: "16px", sm: "14px", md: "16px", lg: "16px", xl: "18px" },
                                     position: "relative",
                                     overflow: "hidden",
                                     background: "rgba(255,255,255,0.22)",
@@ -525,15 +529,16 @@ export const Joinourglobalcommunity = () => {
                                         fontFamily: "var(--font-redhat)",
                                         fontWeight: 600,
                                         fontSize: {
-                                            xs: "16px",
-                                            sm: "18px",
-                                            md: "20px",
-                                            lg: "21px",
+                                            xs: "15px",
+                                            sm: "14px",
+                                            md: "16px",
+                                            lg: "16px",
+                                            xl: "18px",
                                         },
                                         lineHeight: 1.2,
                                         textAlign: "center",
                                     }}
-                                    mb={2}
+                                    mb={{ xs: 2, sm: 1.5, md: 1.5, lg: 1.5 }}
                                 >
                                     Listen to our Podcast
                                 </MotionTypography>
@@ -545,8 +550,8 @@ export const Joinourglobalcommunity = () => {
                                     variants={containerVariants}
                                     direction="row"
                                     justifyContent="center"
-                                    spacing={custom?.globalCommunity?.cards?.podcastIconSpacing || 1}
-                                    mb={3}
+                                    spacing={custom?.globalCommunity?.cards?.podcastIconSpacing || { xs: 0.5, sm: 0.5, md: 1, lg: 1, xl: 1 }}
+                                    mb={{ xs: 2, sm: 2, md: 2, lg: 2 }}
                                 >
                                     {['/svg/contactus/podcast11.svg', '/svg/contactus/podcast21.svg', '/svg/contactus/podcast31.svg', '/svg/contactus/podcast41.svg'].map((src, idx) => (
                                         <MotionBox
@@ -558,10 +563,12 @@ export const Joinourglobalcommunity = () => {
                                             alt={`Podcast ${idx + 1}`}
                                             whileHover={{ scale: 1.1 }}
                                             whileTap={{ scale: 0.95 }}
-                                            sx={custom?.globalCommunity?.cards?.podcastIcon || { 
-                                                height: 34, 
-                                                cursor: 'pointer', 
-                                                '&:hover': { opacity: 0.8 } 
+                                            sx={custom?.globalCommunity?.cards?.podcastIcon || {
+                                                // Reduced podcast icon heights significantly
+                                                height: { xs: 16, sm: 16, md: 20, lg: 22, xl: 24 },
+                                                width: 'auto',
+                                                cursor: 'pointer',
+                                                '&:hover': { opacity: 0.8 }
                                             }}
                                         />
                                     ))}
@@ -572,68 +579,58 @@ export const Joinourglobalcommunity = () => {
                                     whileInView="visible"
                                     viewport={{ once: true }}
                                     variants={containerVariants}
-                                    direction={{ xs: 'column', sm: 'row' }}
+                                    direction={{ xs: 'column', sm: 'column', md: 'row' }}
                                     justifyContent="center"
-                                    spacing={custom?.globalCommunity?.cards?.podcastButtonStackSpacing || 2}
+                                    spacing={custom?.globalCommunity?.cards?.podcastButtonStackSpacing || 1.5}
+                                    sx={{ mt: 'auto', width: '100%' }}
                                 >
                                     <MotionStack
                                         variants={containerVariants}
-                                        direction={{
-                                            xs: 'column',
-                                            sm: 'row'
-                                        }}
+                                        direction={{ xs: 'column', sm: 'column', md: 'row' }}
                                         justifyContent="center"
                                         alignItems="center"
                                         spacing={custom?.globalCommunity?.cards?.podcastButtonSpacing || {
                                             xs: 1,
-                                            sm: 1,
-                                            md: 2,
-                                            lg: 2,
+                                            sm: 0.75,
+                                            md: 1.5,
+                                            lg: 1.5,
                                             xl: 2
                                         }}
+                                        sx={{ width: '100%' }}
                                     >
                                         <motion.div
                                             variants={staggerItemVariants}
                                             custom={0}
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
+                                            style={{ flex: 1, width: '100%', display: 'flex', justifyContent: 'center' }}
                                         >
                                             <Button
                                                 variant="contained"
                                                 sx={custom?.globalCommunity?.cards?.podcastButton || {
-                                                    borderRadius: {
-                                                        xs: "8px",
-                                                        sm: "10px",
-                                                        md: "12px",
-                                                    },
+                                                    borderRadius: { xs: "8px", sm: "8px", md: "8px", lg: "8px", xl: "10px" },
                                                     textTransform: "none",
                                                     position: "relative",
                                                     overflow: "hidden",
                                                     border: "none",
                                                     background: custom?.defaultButton?.background || '#2196f3',
                                                     color: "#fff",
-                                                    px: {
-                                                        xs: 1.5,
-                                                        sm: 2,
-                                                    },
-                                                    py: {
-                                                        xs: 0.75,
-                                                        sm: 0.85,
-                                                        md: 1,
-                                                    },
+                                                    // Reduced button padding and font size
+                                                    px: { xs: 1.5, sm: 1.5, md: 1.5, lg: 1.5, xl: 2 },
+                                                    py: { xs: 0.75, sm: 0.6, md: 0.6, lg: 0.7, xl: 0.75 },
                                                     fontSize: {
-                                                        xs: "0.75rem",
-                                                        sm: "0.7rem",
-                                                        md: "0.9rem",
+                                                        xs: "12px",
+                                                        sm: "11px",
+                                                        md: "11px",
+                                                        lg: "12px",
+                                                        xl: "13px",
                                                     },
-                                                    width: { xs: "200px", sm: "auto" },
+                                                    width: { xs: "100%", sm: "100%", md: "100%", lg: "auto", xl: "auto" },
                                                     maxWidth: "100%",
                                                     backdropFilter: "blur(80px)",
                                                     WebkitBackdropFilter: "blur(80px)",
                                                     transition: "all 0.3s ease",
-                                                    '&:hover': {
-                                                        transform: "translateY(-2px)",
-                                                    },
+                                                    '&:hover': { transform: "translateY(-2px)" },
                                                 }}
                                                 href="https://linkedin.com"
                                                 target="_blank"
@@ -647,43 +644,34 @@ export const Joinourglobalcommunity = () => {
                                             custom={1}
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
+                                            style={{ flex: 1, width: '100%', display: 'flex', justifyContent: 'center' }}
                                         >
                                             <Button
                                                 variant="contained"
                                                 sx={custom?.globalCommunity?.cards?.podcastButton || {
-                                                    borderRadius: {
-                                                        xs: "8px",
-                                                        sm: "10px",
-                                                        md: "12px",
-                                                    },
+                                                    borderRadius: { xs: "8px", sm: "8px", md: "8px", lg: "8px", xl: "10px" },
                                                     textTransform: "none",
                                                     position: "relative",
                                                     overflow: "hidden",
                                                     border: "none",
                                                     background: custom?.defaultButton?.background || '#2196f3',
                                                     color: "#fff",
-                                                    px: {
-                                                        xs: 1.5,
-                                                        sm: 2,
-                                                    },
-                                                    py: {
-                                                        xs: 0.75,
-                                                        sm: 0.85,
-                                                        md: 1,
-                                                    },
+                                                    // Reduced button padding and font size
+                                                    px: { xs: 1.5, sm: 1.5, md: 1.5, lg: 1.5, xl: 2 },
+                                                    py: { xs: 0.75, sm: 0.6, md: 0.6, lg: 0.7, xl: 0.75 },
                                                     fontSize: {
-                                                        xs: "0.75rem",
-                                                        sm: "0.7rem",
-                                                        md: "0.9rem",
+                                                        xs: "12px",
+                                                        sm: "11px",
+                                                        md: "11px",
+                                                        lg: "12px",
+                                                        xl: "13px",
                                                     },
-                                                    width: { xs: "200px", sm: "auto" },
+                                                    width: { xs: "100%", sm: "100%", md: "100%", lg: "auto", xl: "auto" },
                                                     maxWidth: "100%",
                                                     backdropFilter: "blur(80px)",
                                                     WebkitBackdropFilter: "blur(80px)",
                                                     transition: "all 0.3s ease",
-                                                    '&:hover': {
-                                                        transform: "translateY(-2px)",
-                                                    },
+                                                    '&:hover': { transform: "translateY(-2px)" },
                                                 }}
                                                 href="https://youtube.com"
                                                 target="_blank"

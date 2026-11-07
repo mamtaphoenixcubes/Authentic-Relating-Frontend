@@ -110,7 +110,7 @@ const ReachOutSection = () => {
                }}
            />
            
-           <SiteContainer>
+           <SiteContainer sx={{ pt: { xs: 2, sm: 0, md: 2 }, pb: 0 }}>
                <Container 
                    maxWidth="xl" 
                    sx={{ 
@@ -313,7 +313,7 @@ const ReachOutSection = () => {
                                                sm: '26px',
                                                md: '30px',
                                                lg: '34px',
-                                               xl: '38px'
+                                               xl: '44px'
                                            },
                                            color: styles?.title?.color || '#458001',
                                            textAlign: styles?.title?.textAlign || { xs: 'center', sm: 'left' },
@@ -339,7 +339,7 @@ const ReachOutSection = () => {
                                                sm: '14px',
                                                md: '16px',
                                            },
-                                           color: '#666',
+                                           color: '#444444',
                                            mb: theme.spacing(3),
                                            textAlign: { xs: 'center', sm: 'left' },
                                            display: { xs: 'none', sm: 'block' },
@@ -408,7 +408,7 @@ const ReachOutSection = () => {
                                                            sm: '13px',
                                                            md: '15px',
                                                            lg: '16px',
-                                                           xl: '17px'
+                                                           xl: '16px'
                                                        },
                                                        lineHeight: styles?.list?.text?.lineHeight || {
                                                            xs: 1.6,
@@ -416,8 +416,8 @@ const ReachOutSection = () => {
                                                            md: 1.6,
                                                            lg: 1.7
                                                        },
-                                                       color: styles?.list?.text?.color || '#333',
-                                                       fontWeight: 400,
+                                                       color: styles?.list?.text?.color || '#444444',
+                                                       fontWeight: 500,
                                                    }}
                                                >
                                                    {item.text}

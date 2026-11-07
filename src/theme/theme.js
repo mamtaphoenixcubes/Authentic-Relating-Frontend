@@ -2896,8 +2896,9 @@ const theme = createTheme({
           sm: "28px",
           md: "36px",
           lg: "44px",
-          xl: "46px",
+          xl: "48.11px",
         },
+        color: "#F9F9F9",
         mb: 2,
       },
       subheading: {
@@ -2907,7 +2908,8 @@ const theme = createTheme({
         lineHeight: 1,
         letterSpacing: "0%",
         opacity: 0.9,
-        fontSize: { xs: "14px", sm: "18px", md: "22px", lg: "24px" },
+        color: "#F9F9F9",
+        fontSize: { xs: "14px", sm: "18px", md: "22px", lg: "26px" },
         mb: 4,
       },
       emailCard: {
@@ -2918,6 +2920,7 @@ const theme = createTheme({
         borderRadius: { xs: 2, sm: 1.5 },
         position: "relative",
         overflow: "hidden",
+        color: "#F9F9F9",
         background: "rgba(255,255,255,0.12)",
         backdropFilter: "blur(138.4px)",
         WebkitBackdropFilter: "blur(138.4px)",
@@ -2989,11 +2992,11 @@ const theme = createTheme({
         width: { xs: "100%", md: "80%" },
         margin: "auto",
         position: "relative",
-        borderRadius: { xs: 2, sm: 3 },
+        borderRadius: { xs: 2, sm: 1.2 },
       },
       formInput: {
         "& .MuiOutlinedInput-root": {
-          borderRadius: { xs: 2, sm: 1.5 },
+          borderRadius: { xs: 2, sm: 1.2 },
           position: "relative",
           overflow: "hidden",
           background: "rgba(255,255,255,0.08)",
@@ -3042,22 +3045,22 @@ const theme = createTheme({
       submitButton: {
         mt: 3,
         px: { xs: 3, sm: 4 },
-        "@media (maxWidth:320px)": { px: 2.5 },
+        "@media (max-width:320px)": { px: 2.5 },       // ✅ fixed: needs the hyphen
         py: { xs: 0.75, sm: 1 },
-        "@media (maxWidth:320px)": { py: 0.5 },
-        borderRadius: { xs: 2, sm: 1.5 },
+        "@media (max-width:320px)": { py: 0.5 },        // ✅ fixed
+        borderRadius: { xs: 2, sm: 1.1 },
         position: "relative",
         overflow: "hidden",
         border: "none",
-        background: "rgba(255, 130, 110, 0.6)",
-        backdropFilter: "blur(179.9px)",
-        WebkitBackdropFilter: "blur(179.9px)",
+        background: "#FF826E99",
+        backdropFilter: "blur(179.91px)",               // ✅ rounded from 179.9133758544922
+        WebkitBackdropFilter: "blur(179.91px)",         // ✅ keep in sync
         color: "#fff",
         textTransform: "none",
         fontWeight: 600,
         fontSize: { xs: "13px", sm: "14px", md: "16px" },
-        "@media (maxWidth:320px)": { fontSize: "12px" },
-        boxShadow: "0px 5.3px 9.67px 1.32px rgba(0,0,0,0.1)",
+        "@media (max-width:320px)": { fontSize: "12px" }, // ✅ fixed
+        boxShadow: "0px 5.3px 9.67px 1.32px rgba(0, 0, 0, 0.1)", // #0000001A = rgba(0,0,0,0.1)
         "&::before": {
           content: '""',
           position: "absolute",
@@ -3065,7 +3068,7 @@ const theme = createTheme({
           borderRadius: "inherit",
           padding: "2px",
           background:
-            "linear-gradient(104.35deg, #FFFFFF 2.33%, rgba(255,255,255,0.1) 100.06%)",
+            "linear-gradient(104.35deg, #FFFFFF 2.33%, rgba(255, 255, 255, 0.1) 100.06%)",
           WebkitMask:
             "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           WebkitMaskComposite: "xor",
@@ -3075,7 +3078,7 @@ const theme = createTheme({
         "&:hover": {
           background: "rgba(255, 130, 110, 0.75)",
           transform: "translateY(-2px)",
-          boxShadow: "0px 8px 20px rgba(0,0,0,0.2)",
+          boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
         },
         "&.Mui-disabled": { opacity: 0.6, color: "#fff" },
         transition: "all 0.3s ease",

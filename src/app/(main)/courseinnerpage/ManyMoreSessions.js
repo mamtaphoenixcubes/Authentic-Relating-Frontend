@@ -274,125 +274,108 @@ export default function ManyMoreSessions() {
                   </Box>
 
                   {/* BUTTONS - PUSHED TO BOTTOM */}
-                  <div style={{ display: "flex", gap: "12px", marginTop: "auto" }}>
-
+                  {/* BUTTONS - PUSHED TO BOTTOM */}
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: { xs: '8px', sm: '10px', md: '12px' },
+                      mt: 'auto',
+                      flexDirection: 'row',
+                      width: '100%',
+                    }}
+                  >
                     {/* READ MORE BUTTON */}
                     <EventButton
                       sx={{
                         flex: 1,
-                        height: "46px",
-                        borderRadius: "10px",
-                        fontSize: "16px",
+                        minWidth: 0,
+                        height: { xs: '30px', sm: '34px', md: '38px' },
+                        minHeight: 'unset',
+                        borderRadius: { xs: '6px', sm: '7px', md: '8px' },
+                        fontSize: { xs: '10px', sm: '11px', md: '13px' },
                         fontWeight: 500,
                         fontFamily: '"Red Hat Display", sans-serif',
-                        color: "#FFFFFF",
-                        position: "relative",
-                        overflow: "hidden",
-
-                        // Screenshot Read More color
-                        background:
-                          "linear-gradient(105deg, #6BB9F1 0%, #80C5F5 100%)",
-
-                        backdropFilter: "blur(10px)",
-                        WebkitBackdropFilter: "blur(10px)",
-
-                        border: "1.5px solid rgba(255,255,255,0.95)",
-
-                        boxShadow: "0px 2px 5px rgba(0,0,0,0.12)",
-
-                        transition: "all 0.3s ease",
-
-                        "&::before": {
+                        color: '#FFFFFF',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        lineHeight: 1.2,
+                        px: { xs: 0.5, sm: 1, md: 1.5 },
+                        background: 'linear-gradient(105deg, #6BB9F1 0%, #80C5F5 100%)',
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)',
+                        border: '1.5px solid rgba(255,255,255,0.95)',
+                        boxShadow: '0px 2px 5px rgba(0,0,0,0.12)',
+                        transition: 'all 0.3s ease',
+                        '&::before': {
                           content: '""',
-                          position: "absolute",
+                          position: 'absolute',
                           inset: 0,
-                          borderRadius: "10px",
-                          padding: "1px",
-
+                          borderRadius: 'inherit',
+                          padding: '1px',
                           background:
-                            "linear-gradient(135deg, #FFFFFF 0%, rgba(255,255,255,0.35) 100%)",
-
+                            'linear-gradient(135deg, #FFFFFF 0%, rgba(255,255,255,0.35) 100%)',
                           WebkitMask:
-                            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-
-                          WebkitMaskComposite: "xor",
-                          maskComposite: "exclude",
-
-                          pointerEvents: "none",
+                            'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                          WebkitMaskComposite: 'xor',
+                          maskComposite: 'exclude',
+                          pointerEvents: 'none',
                           zIndex: 1,
                         },
-
-                        "&:hover": {
-                          background:
-                            "linear-gradient(105deg, #58AEEF 0%, #70BDF3 100%)",
-
-                          boxShadow: "0px 4px 10px rgba(0,0,0,0.15)",
-
-                          transform: "translateY(-1px)",
+                        '&:hover': {
+                          background: 'linear-gradient(105deg, #58AEEF 0%, #70BDF3 100%)',
+                          boxShadow: '0px 4px 10px rgba(0,0,0,0.15)',
+                          transform: 'translateY(-1px)',
                         },
                       }}
                     >
                       Read More
                     </EventButton>
 
-
                     {/* BOOK NOW BUTTON */}
                     <EventButton
                       sx={{
                         flex: 1,
-                        height: "46px",
-                        borderRadius: "10px",
-                        fontSize: "16px",
+                        minWidth: 0,
+                        height: { xs: '30px', sm: '34px', md: '38px' },
+                        minHeight: 'unset',
+                        borderRadius: { xs: '6px', sm: '7px', md: '8px' },
+                        fontSize: { xs: '10px', sm: '11px', md: '13px' },
                         fontWeight: 600,
                         fontFamily: '"Red Hat Display", sans-serif',
-                        color: "#FFFFFF",
-                        position: "relative",
-                        overflow: "hidden",
-
-                        // Screenshot Book Now color
-                        background:
-                          "linear-gradient(105deg, #93c6fc 0%, #1692ff 100%)",
-
-                        border: "1.5px solid rgba(255,255,255,0.95)",
-
-                        boxShadow: "0px 2px 5px rgba(0,0,0,0.12)",
-
-                        transition: "all 0.3s ease",
-
-                        "&::before": {
+                        color: '#FFFFFF',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        lineHeight: 1.2,
+                        px: { xs: 0.5, sm: 1, md: 1.5 },
+                        background: 'linear-gradient(105deg, #93c6fc 0%, #1692ff 100%)',
+                        border: '1.5px solid rgba(255,255,255,0.95)',
+                        boxShadow: '0px 2px 5px rgba(0,0,0,0.12)',
+                        transition: 'all 0.3s ease',
+                        '&::before': {
                           content: '""',
-                          position: "absolute",
+                          position: 'absolute',
                           inset: 0,
-                          borderRadius: "10px",
-                          padding: "1px",
-
+                          borderRadius: 'inherit',
+                          padding: '1px',
                           background:
-                            "linear-gradient(135deg, #FFFFFF 0%, rgba(255,255,255,0.35) 100%)",
-
+                            'linear-gradient(135deg, #FFFFFF 0%, rgba(255,255,255,0.35) 100%)',
                           WebkitMask:
-                            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-
-                          WebkitMaskComposite: "xor",
-                          maskComposite: "exclude",
-
-                          pointerEvents: "none",
+                            'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                          WebkitMaskComposite: 'xor',
+                          maskComposite: 'exclude',
+                          pointerEvents: 'none',
                           zIndex: 1,
                         },
-
-                        "&:hover": {
-                          background:
-                            "linear-gradient(105deg, #69ADF0 0%, #0876D5 100%)",
-
-                          boxShadow: "0px 4px 10px rgba(0,0,0,0.15)",
-
-                          transform: "translateY(-1px)",
+                        '&:hover': {
+                          background: 'linear-gradient(105deg, #69ADF0 0%, #0876D5 100%)',
+                          boxShadow: '0px 4px 10px rgba(0,0,0,0.15)',
+                          transform: 'translateY(-1px)',
                         },
                       }}
                     >
                       Book Now
                     </EventButton>
-
-                  </div>
+                  </Box>
                 </Card>
               </motion.div>
             );

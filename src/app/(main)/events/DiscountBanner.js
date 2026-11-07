@@ -17,52 +17,53 @@ export default function DiscountBanner() {
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: "easeOut", delay: 0.1 }
-    }
+      transition: { duration: 0.7, ease: 'easeOut', delay: 0.1 },
+    },
   };
 
   const fadeInRight = {
     hidden: { opacity: 0, x: 40 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       x: 0,
-      transition: { duration: 0.7, ease: "easeOut" }
-    }
+      transition: { duration: 0.7, ease: 'easeOut' },
+    },
   };
 
   const scaleIn = {
     hidden: { opacity: 0, scale: 0.85 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scale: 1,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
+      transition: { duration: 0.6, ease: 'easeOut' },
+    },
   };
 
   const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.1 }
-    }
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+    },
   };
 
   const buttonAnimation = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut", delay: 0.4 }
-    }
+      transition: { duration: 0.5, ease: 'easeOut', delay: 0.4 },
+    },
   };
 
   return (
-    <Section>
+    /* ✅ REDUCED top gap: override Section's default py */
+    <Section sx={{ pt: { xs: 1, sm: 1, md: 10 }, pb: { xs: 3, sm: 4, md: 4 } }}>
       <SiteContainer>
-        <Box sx={styles.container}>
+        <Box sx={{ ...styles.container, mt: 0 }}>
           <Box sx={styles.banner}>
             {/* CONTENT */}
             <Box sx={styles.content}>

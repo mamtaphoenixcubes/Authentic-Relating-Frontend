@@ -73,7 +73,7 @@ export default function ContactSection() {
   };
 
   return (
-    <Section>
+    <Section sx={{ pt: { xs: 1, sm: 0, md: 1 }, pb: { xs: 6, sm: 0, md: 0 } }}>
       <SiteContainer sx={contactStyles.section}>
         <motion.div
           initial={{ opacity: 0, y: 60 }}
