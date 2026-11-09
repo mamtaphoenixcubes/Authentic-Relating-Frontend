@@ -66,7 +66,6 @@ export default function OurSignatureOfferings() {
   // Use fetched data or fallback to default
   const displayOfferings = offerings.length > 0 ? offerings : defaultOfferings;
 
-  console.log(displayOfferings,"displayofferings")
 
   // Get theme styles
   const styles = theme.custom.signatureOfferings;
