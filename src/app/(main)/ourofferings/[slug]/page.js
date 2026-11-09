@@ -65,17 +65,30 @@ import OfferingsDetailsClient from "./OfferingsDetailsClient";
 export async function generateStaticParams() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/frontendApis/getAllDetailsOffering?page=0&size=1000`,
-      { cache: "force-cache" }
+      "https://api.authenticrelating.com/frontendApis/getAllDetailsOfferingWithoutPagination",
+      {
+        cache: "no-store",
+      }
     );
 
-    const { data } = await res.json();
+    if (!res.ok) {
+      console.error("API Error:", res.status, res.statusText);
+      return [];
+    }
 
-    console.log("ALL SLUGS:", data?.detailsOfOfferings?.map(i => i.offeringSlug));
+    const response = await res.json();
 
-    return data?.detailsOfOfferings?.map((item) => ({
+    const offerings = response?.detailsOfOfferings || [];
+
+    console.log(
+      "ALL SLUGS:",
+      offerings.map((item) => item.offeringSlug)
+    );
+
+    return offerings.map((item) => ({
       slug: item.offeringSlug,
-    })) || [];
+    }));
+
   } catch (error) {
     console.error("Error generating offering params:", error);
     return [];

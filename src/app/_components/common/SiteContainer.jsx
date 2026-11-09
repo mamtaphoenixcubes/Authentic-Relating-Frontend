@@ -20,13 +20,13 @@ export default function SiteContainer({
           xl: "1640px",
         },
         mx: "auto",
-        px: {
-          xs: 2,
-          sm: 3,
-          md: 3,
-          lg: 3,
-          xl: 3,
-        },
+        // px: {
+        //   xs: 2,
+        //   sm: 3,
+        //   md: 3,
+        //   lg: 3,
+        //   xl: 3,
+        // },
         ...sx,
       }}
     >

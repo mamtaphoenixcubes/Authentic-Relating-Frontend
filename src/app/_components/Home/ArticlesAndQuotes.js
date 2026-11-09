@@ -171,7 +171,7 @@ export const ArticlesAndQuotes = () => {
 
     return (
         <Section>
-            <SiteContainer sx={{ py: { xs: 6, sm: 6, md: 5 } }}>
+            <SiteContainer >
                 <Box>
                     {/* ================= ARTICLES SECTION ================= */}
                     <MotionBox

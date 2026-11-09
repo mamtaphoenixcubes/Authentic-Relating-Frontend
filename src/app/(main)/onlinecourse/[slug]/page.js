@@ -12,8 +12,6 @@ export async function generateStaticParams() {
 
     const courses = data?.course || [];
 
-    console.log(courses.length,"from the course/slug/page.js")
-
     return courses
       .filter((course) => course?.courseSlug)
       .map((course) => ({
