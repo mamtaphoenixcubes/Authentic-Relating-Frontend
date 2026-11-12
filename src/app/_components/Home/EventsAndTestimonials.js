@@ -350,74 +350,30 @@ export const EventsAndTestimonials = () => {
   // EVENT CARD
   // ==========================================================
 
+
   const EventCard = ({ event }) => {
     return (
       <Box
         sx={{
           width: "100%",
-
           p: {
             xs: 2.5,
             sm: 3,
             md: 4,
           },
-
           borderRadius: "16px",
-
           color: "#fff",
 
-          background:
-            "linear-gradient(155deg, rgba(58,163,248,0.95), rgba(121,188,243,0.95), rgba(40,157,253,0.95), rgba(19,143,245,0.95), rgba(108,186,250,0.95), rgba(71,170,250,0.95))",
-
-          boxShadow:
-            "0px 8px 20px rgba(0,0,0,0.18)",
+          // 👇 THIS MATCHES THE SCREENSHOT EXACTLY
+          background: 'linear-gradient(135deg, rgba(131, 194, 247, 0.85) 0%, rgba(52, 152, 252, 0.85),rgba(181, 217, 253, 0.85) 100%)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+          border: '1.5px solid rgba(255, 255, 255, 0.6)',
 
           position: "relative",
-
           overflow: "hidden",
-
-          border: "none",
-
           zIndex: 0,
-
-          // ==================================================
-          // GRADIENT BORDER
-          // ==================================================
-
-          "&::before": {
-            content: '""',
-
-            position: "absolute",
-
-            inset: 0,
-
-            borderRadius: "16px",
-
-            padding: "1.5px",
-
-            background:
-              "linear-gradient(120deg, rgba(255,255,255,0.95), rgba(255,255,255,0.2), rgba(255,255,255,0.6))",
-
-            WebkitMask:
-              "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-
-            WebkitMaskComposite: "xor",
-
-            maskComposite: "exclude",
-
-            pointerEvents: "none",
-
-            zIndex: 0,
-          },
-
-          // ==================================================
-          // CONTENT ABOVE BORDER
-          // ==================================================
-
-          "& > *": {
-            position: "relative",
-            zIndex: 1,
-          },
         }}
       >
         {/* ==================================================
@@ -431,15 +387,12 @@ export const EventsAndTestimonials = () => {
               sm: 20,
               md: 22,
             },
-
             fontWeight: 700,
-
             mb: 1,
-
             lineHeight: 1.3,
           }}
         >
-          {event?.event_name || "Upcoming Event"}
+          {event?.event_name || "Event Name"}
         </Typography>
 
         {/* ==================================================
@@ -454,19 +407,12 @@ export const EventsAndTestimonials = () => {
                 sm: 13,
                 md: 14,
               },
-
-              mb: 2,
-
-              opacity: 0.9,
-
+              mb: 3, // Adjusted spacing based on screenshot
+              opacity: 0.95,
               lineHeight: 1.6,
-
               display: "-webkit-box",
-
               WebkitLineClamp: 2,
-
               WebkitBoxOrient: "vertical",
-
               overflow: "hidden",
             }}
           >
@@ -479,25 +425,22 @@ export const EventsAndTestimonials = () => {
         ================================================== */}
 
         <Stack
-          spacing={1}
-          mb={3}
+          spacing={1.5} // Slightly more spacing
+          mb={3.5}
         >
           {/* TIME */}
 
           <Stack
             direction="row"
-            spacing={1}
-            alignItems="flex-start"
+            spacing={1.5}
+            alignItems="center"
           >
             <AccessTimeIcon
               sx={{
                 fontSize: {
-                  xs: 17,
-                  sm: 18,
+                  xs: 18,
+                  sm: 20,
                 },
-
-                mt: "2px",
-
                 flexShrink: 0,
               }}
             />
@@ -505,11 +448,10 @@ export const EventsAndTestimonials = () => {
             <Typography
               sx={{
                 fontSize: {
-                  xs: 11,
-                  sm: 12,
-                  md: 13,
+                  xs: 12,
+                  sm: 13,
+                  md: 14,
                 },
-
                 lineHeight: 1.5,
               }}
             >
@@ -517,7 +459,7 @@ export const EventsAndTestimonials = () => {
               {formatEventDateTime(
                 event?.start_date,
                 event?.end_date
-              )}
+              ) || "21st March, 2025 @ 10:00 am – 02:00 pm"}
             </Typography>
           </Stack>
 
@@ -525,18 +467,15 @@ export const EventsAndTestimonials = () => {
 
           <Stack
             direction="row"
-            spacing={1}
-            alignItems="flex-start"
+            spacing={1.5}
+            alignItems="center"
           >
             <LocationOnIcon
               sx={{
                 fontSize: {
-                  xs: 17,
-                  sm: 18,
+                  xs: 18,
+                  sm: 20,
                 },
-
-                mt: "2px",
-
                 flexShrink: 0,
               }}
             />
@@ -544,23 +483,18 @@ export const EventsAndTestimonials = () => {
             <Typography
               sx={{
                 fontSize: {
-                  xs: 11,
-                  sm: 12,
-                  md: 13,
+                  xs: 12,
+                  sm: 13,
+                  md: 14,
                 },
-
                 lineHeight: 1.5,
-
                 display: "-webkit-box",
-
                 WebkitLineClamp: 2,
-
                 WebkitBoxOrient: "vertical",
-
                 overflow: "hidden",
               }}
             >
-              Address: {formatLocation(event)}
+              Address: {formatLocation(event) || "Bangalore, India"}
             </Typography>
           </Stack>
         </Stack>
@@ -574,7 +508,7 @@ export const EventsAndTestimonials = () => {
             xs: "column",
             sm: "row",
           }}
-          spacing={1.5}
+          spacing={2}
           width="100%"
         >
           {/* ==================================================
@@ -584,116 +518,77 @@ export const EventsAndTestimonials = () => {
           <MotionButton
             onClick={() => router.push("/events")}
             whileHover={{
-              scale: 1.04,
-              y: -3,
-
-              transition: {
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-              },
+              scale: 1.02,
+              transition: { duration: 0.2 },
             }}
             whileTap={{
-              scale: 0.96,
+              scale: 0.98,
             }}
             sx={{
               width: {
                 xs: "100%",
                 sm: "auto",
               },
-
               minWidth: {
                 xs: "100%",
                 sm: "120px",
-                md: "130px",
+                md: "140px",
               },
-
               height: {
-                xs: "46px",
-                sm: "44px",
-                md: "48px",
+                xs: "44px",
+                sm: "42px",
+                md: "46px",
               },
-
-              px: {
-                xs: 2.5,
-                sm: 2,
-                md: 2.5,
-              },
-
+              px: 2,
               display: "flex",
-
               alignItems: "center",
-
               justifyContent: "center",
-
               borderRadius: "12px",
-
               color: "#fff",
-
               fontSize: {
                 xs: "13px",
-                sm: "12px",
+                sm: "13px",
                 md: "14px",
               },
-
-              fontWeight: 500,
-
+              fontWeight: 600,
               textTransform: "none",
-
               cursor: "pointer",
-
               whiteSpace: "nowrap",
 
-              background:
-                "rgba(255,255,255,0.22)",
-
+              // 👇 GRADIENT BORDER SETUP
+              background: "rgba(255, 255, 255, 0.15)",
+              border: "none !important", // Kill default border
               position: "relative",
+              transform: "translateZ(0)", // Fixes zoom glitch
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+              transition: "background 0.3s ease",
 
-              backdropFilter: "blur(12px)",
-
-              WebkitBackdropFilter: "blur(12px)",
-
-              border: "none",
-
-              overflow: "hidden",
-
+              // The Gradient Border (Matching your EventButton)
               "&::before": {
                 content: '""',
-
                 position: "absolute",
-
                 inset: 0,
-
-                borderRadius: "12px",
-
-                padding: "2px",
-
-                background:
-                  "linear-gradient(106deg, #FFFFFF 34%, rgba(255,255,255,0.1) 105%)",
-
-                WebkitMask:
-                  "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-
+                borderRadius: "inherit",
+                padding: "1.5px",
+                background: "linear-gradient(90deg, #ffffff 0%, #9ec9fa 100%)", // The exact gradient you requested
+                WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                 WebkitMaskComposite: "xor",
-
                 maskComposite: "exclude",
-
                 pointerEvents: "none",
-
                 zIndex: 0,
               },
 
-              "&:hover": {
-                background:
-                  "rgba(255,255,255,0.3)",
-
-                boxShadow:
-                  "0 8px 20px rgba(255,255,255,0.15)",
-              },
-
-              "& .MuiButton-label": {
+              // Keep text above the border
+              "& .MuiButton-label, & > *": {
                 position: "relative",
                 zIndex: 1,
+              },
+
+              "&:hover": {
+                background: "rgba(255, 255, 255, 0.25)",
+                "&::before": {
+                  background: "#FFFFFF", // Turns solid white on hover (just like EventButton)
+                },
               },
             }}
           >
@@ -707,112 +602,77 @@ export const EventsAndTestimonials = () => {
           <MotionButton
             onClick={() => router.push("/contactus")}
             whileHover={{
-              scale: 1.04,
-              y: -3,
-
-              transition: {
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-              },
+              scale: 1.02,
+              transition: { duration: 0.2 },
             }}
             whileTap={{
-              scale: 0.96,
+              scale: 0.98,
             }}
             sx={{
               width: {
                 xs: "100%",
                 sm: "auto",
               },
-
               minWidth: {
                 xs: "100%",
                 sm: "120px",
-                md: "130px",
+                md: "140px",
               },
-
               height: {
-                xs: "46px",
-                sm: "44px",
-                md: "48px",
+                xs: "44px",
+                sm: "42px",
+                md: "46px",
               },
-
-              px: {
-                xs: 2.5,
-                sm: 2,
-                md: 2.5,
-              },
-
+              px: 2,
               display: "flex",
-
               alignItems: "center",
-
               justifyContent: "center",
-
               borderRadius: "12px",
-
               color: "#fff",
-
               fontSize: {
                 xs: "13px",
-                sm: "12px",
+                sm: "13px",
                 md: "14px",
-                lg: "15px",
               },
-
-              fontWeight: 500,
-
+              fontWeight: 600,
               textTransform: "none",
-
               cursor: "pointer",
-
               whiteSpace: "nowrap",
 
-              background:
-                "rgba(255,255,255,0.22)",
-
+              // 👇 GRADIENT BORDER SETUP
+              background: "rgba(255, 255, 255, 0.15)",
+              border: "none !important", // Kill default border
               position: "relative",
+              transform: "translateZ(0)", // Fixes zoom glitch
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+              transition: "background 0.3s ease",
 
-              backdropFilter: "blur(12px)",
-
-              WebkitBackdropFilter: "blur(12px)",
-
-              border: "none",
-
-              overflow: "hidden",
-
+              // The Gradient Border (Matching your EventButton)
               "&::before": {
                 content: '""',
-
                 position: "absolute",
-
                 inset: 0,
-
-                borderRadius: "12px",
-
-                padding: "2px",
-
-                background:
-                  "linear-gradient(106deg, #FFFFFF 34%, rgba(255,255,255,0.1) 105%)",
-
-                WebkitMask:
-                  "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-
+                borderRadius: "inherit",
+                padding: "1.5px",
+                background: "linear-gradient(90deg, #ffffff 0%, #9ec9fa 100%)", // The exact gradient you requested
+                WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                 WebkitMaskComposite: "xor",
-
                 maskComposite: "exclude",
-
                 pointerEvents: "none",
-
                 zIndex: 0,
               },
 
-              "&:hover": {
-                background:
-                  "rgba(255,255,255,0.3)",
+              // Keep text above the border
+              "& .MuiButton-label, & > *": {
+                position: "relative",
+                zIndex: 1,
+              },
 
-                boxShadow:
-                  "0 8px 20px rgba(255,255,255,0.15)",
+              "&:hover": {
+                background: "rgba(255, 255, 255, 0.25)",
+                "&::before": {
+                  background: "#FFFFFF", // Turns solid white on hover (just like EventButton)
+                },
               },
             }}
           >
@@ -974,10 +834,43 @@ export const EventsAndTestimonials = () => {
               {/* ==================================================
                   SEE ALL EVENTS
               ================================================== */}
-
               <EventButton
                 onClick={() => router.push("/events")}
-                variant="default"
+                variant="glass"
+                sx={{
+                  width: { xs: '100%', sm: 'auto' },
+                  borderRadius: '11px',
+                  background: 'rgb(130, 180, 226)',
+                  border: 'none !important',
+                  position: 'relative',
+                  transition: 'transform 0.3s ease, background 0.3s ease',
+
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 'inherit',
+                    padding: '1.5px',
+                    background: 'linear-gradient(90deg, #fffdfd 0%, #76c2f5 100%)',
+                    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                    WebkitMaskComposite: 'xor',
+                    maskComposite: 'exclude',
+                    pointerEvents: 'none',
+                  },
+
+                  '&:hover': {
+                    background: 'rgb(130, 180, 226)',
+                    transform: 'scale(1.05)',
+
+                    '&::before': {
+                      background: 'linear-gradient(90deg, #fffdfd 0%, #76c2f5 100%)',
+                    },
+                  },
+
+                  '&:active': {
+                    transform: 'scale(0.97)',
+                  },
+                }}
               >
                 See All Events →
               </EventButton>
@@ -1078,74 +971,90 @@ export const EventsAndTestimonials = () => {
                         }
                         sx={{
                           cursor: "pointer",
-
                           px: {
                             xs: 1.2,
                             sm: 1,
                             md: 1.5,
                             xl: 2,
                           },
-
                           py: {
                             xs: 1.2,
                             sm: 1,
                             xl: 2,
                           },
-
                           height: "auto",
-
                           minWidth: {
                             xs: "auto",
                             sm: "110px",
                             md: "120px",
                           },
-
                           fontWeight: 500,
-
                           fontSize: {
                             xs: "10px",
                             sm: "12px",
                             md: "13px",
                           },
-
                           borderRadius: "10px",
-
-                          transition:
-                            "all .3s ease",
-
+                          transition: "all .3s ease",
                           whiteSpace: "nowrap",
-
                           textAlign: "center",
 
-                          ...(selectedIndex ===
-                            realIndex
+                          // 👇 GRADIENT BORDER SETUP
+                          position: "relative",
+                          overflow: "hidden",
+                          transform: "translateZ(0)", // Fixes zoom glitch
+                          border: "none", // Removed standard border
+
+                          // Text stays above the pseudo-element
+                          "& .MuiChip-label": {
+                            position: "relative",
+                            zIndex: 1,
+                          },
+
+                          // 👇 ACTIVE STATE
+                          ...(selectedIndex === realIndex
                             ? {
                               color: "#fff",
+                              background: "linear-gradient(135deg, #6fa8dc, #5b9bd5)",
+                              boxShadow: "0 8px 18px rgba(0,0,0,0.18)",
 
-                              background:
-                                "linear-gradient(135deg,#6fa8dc,#5b9bd5)",
-
-                              boxShadow:
-                                "0 8px 18px rgba(0,0,0,0.18)",
-
-                              border:
-                                "2px solid rgba(255,255,255,0.7)",
+                              "&::before": {
+                                content: '""',
+                                position: "absolute",
+                                inset: 0,
+                                borderRadius: "inherit",
+                                padding: "2px", // Thickness for selected
+                                background: 'linear-gradient(90deg, #fffdfd 0%, #76c2f5 100%)',
+                                WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                                WebkitMaskComposite: "xor",
+                                maskComposite: "exclude",
+                                pointerEvents: "none",
+                                zIndex: 0,
+                              },
                             }
+                            // 👇 INACTIVE STATE
                             : {
                               color: "#444",
+                              background: "#f5f5f5",
 
-                              background:
-                                "#f5f5f5",
-
-                              border:
-                                "2px solid #e0e0e0",
+                              "&::before": {
+                                content: '""',
+                                position: "absolute",
+                                inset: 0,
+                                borderRadius: "inherit",
+                                padding: "2px",
+                                background: "linear-gradient(90deg, #b9b9b9 0%, #b9b9b9 100%)",
+                                WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                                WebkitMaskComposite: "xor",
+                                maskComposite: "exclude",
+                                pointerEvents: "none",
+                                zIndex: 0,
+                              },
 
                               "&:hover": {
-                                transform:
-                                  "translateY(-2px)",
-
-                                boxShadow:
-                                  "0 4px 12px rgba(0,0,0,0.1)",
+                                transform: "translateY(-2px)",
+                                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                                background: "#e8e8e8", // Slight hover feedback
                               },
                             }),
                         }}

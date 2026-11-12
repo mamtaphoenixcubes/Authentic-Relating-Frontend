@@ -2535,7 +2535,7 @@ const theme = createTheme({
       subtitle: {
         fontFamily: "var(--font-redhat)",
         fontWeight: 500, // Medium
-        fontSize: { xs: "15px", sm: "18px",md: "20px", xl: "28px" }, // Responsive scaling down to 28px
+        fontSize: { xs: "15px", sm: "18px", md: "20px", xl: "28px" }, // Responsive scaling down to 28px
         lineHeight: "130%",
         letterSpacing: "0%",
         color: "#fff",
@@ -2550,13 +2550,13 @@ const theme = createTheme({
         color: "#fff",
         mt: 1.5,
         mb: { xs: 3, sm: 4, md: 5 },
-        maxWidth: { xs: "100%", sm: 700,md:700, xl: 1050 },
+        maxWidth: { xs: "100%", sm: 700, md: 700, xl: 1050 },
         mx: "auto",
         textAlign: "center",
       },
       input: {
         root: {
-          mb: 0, 
+          mb: 0,
           "& .MuiOutlinedInput-root": {
             backgroundColor: "rgba(255,255,255,0.1)",
             "& fieldset": { borderColor: "rgba(255,255,255,0.4)" },
@@ -2572,7 +2572,7 @@ const theme = createTheme({
       },
       cards: {
         spacing: { xs: 2, sm: 2, md: 3 },
-        
+
         // Shared Card Styles
         newsletter: {
           flex: 1,
@@ -2699,7 +2699,7 @@ const theme = createTheme({
           fontFamily: "var(--font-redhat)",
           fontWeight: 600,
           fontSize: "13px",
-          width: "100%", 
+          width: "100%",
           "&:hover": { background: "#1976d2" },
         },
         socialSpacing: 1.5,
@@ -2723,7 +2723,7 @@ const theme = createTheme({
           color: "#fff",
           px: 2,
           py: 0.75,
-          fontSize:{ xs: "8px", sm: "8px", md: "12px", xl: "15px" },
+          fontSize: { xs: "8px", sm: "8px", md: "12px", xl: "15px" },
           "&:hover": { background: "#1976d2" },
         },
       },
@@ -3628,7 +3628,7 @@ const theme = createTheme({
         color: colors.clientTestimonial.textColor,
         display: "flex",
         flexDirection: "column",
-        minHeight: { md: "220px" },
+        minHeight: { md: "250px" },border: "2px solid #ffffff",
       },
       text: {
         fontFamily: typography.clientTestimonial.text.fontFamily,
@@ -4365,14 +4365,13 @@ const theme = createTheme({
         color: "#000000",
         fontFamily: '"Red Hat Display", sans-serif',
         fontWeight: 600,
-        textDecoration: "underline",
-        textUnderlineOffset: "4px",
+        textDecoration: "none",
         textDecorationThickness: "2px",
         cursor: "pointer",
         transition: "all 0.2s ease",
         "&:hover": {
           color: "#333333",
-          textDecorationColor: "#333333",
+          textDecoration: "none",
           transform: "translateX(4px)",
         },
       },

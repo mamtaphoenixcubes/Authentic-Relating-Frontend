@@ -134,7 +134,7 @@ export default function Hero() {
                             fontFamily:
                               titleStyles.fontFamily ||
                               '"Red Hat Display", sans-serif',
-                            fontWeight: titleStyles.fontWeight || 900,
+                            fontWeight: titleStyles.fontWeight || 700,
                             fontSize: {
                               xs: '22px',
                               sm: '28px',
@@ -171,7 +171,7 @@ export default function Hero() {
                             fontFamily:
                               subtitleStyles.fontFamily ||
                               '"Red Hat Display", sans-serif',
-                            fontWeight: subtitleStyles.fontWeight || 400,
+                            fontWeight: subtitleStyles.fontWeight || 500,
                             fontSize: {
                               xs: '16px',
                               sm: '22px',
@@ -209,7 +209,7 @@ export default function Hero() {
                             fontFamily:
                               authorStyles.fontFamily ||
                               '"Red Hat Display", sans-serif',
-                            fontWeight: authorStyles.fontWeight || 400,
+                            fontWeight: authorStyles.fontWeight || 700,
                             fontStyle: 'italic',
                             fontSize: {
                               xs: '12px',

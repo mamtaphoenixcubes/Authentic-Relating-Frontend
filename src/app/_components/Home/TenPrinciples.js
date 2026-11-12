@@ -152,7 +152,7 @@ export default function TenPrinciples() {
 
           <Typography
             sx={{
-              ...text.author,
+              ...text.introducing,
               color: color.title,
               mt: {
                 xs: 1.5,

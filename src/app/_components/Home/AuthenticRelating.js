@@ -551,6 +551,7 @@ export const AuthenticRelating = () => {
 
                   "& .bold": {
                     fontWeight: 700,
+                     "& .lead": { fontStyle: "italic" },
                   },
                 }}
               >

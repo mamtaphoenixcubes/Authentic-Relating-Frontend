@@ -157,7 +157,6 @@ export const AuthenticRelatingSection = () => {
                   height: { xs: 180, sm: 180, md: 220, lg: 300, xl: 300 },
                   background: '#FFE4D5',
                   borderRadius: '50%',
-                  boxShadow: '0px 0px 50px 0px #00497F4D',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -413,12 +412,41 @@ export const AuthenticRelatingSection = () => {
                         whileTap={{ scale: 0.95 }}
                         sx={{
                           width: { xs: '100%', sm: 'auto' }, // 3. Make the animation wrapper full width on mobile
-                          display: 'flex'
+                          display: 'flex',
                         }}
                       >
                         <EventButton
                           variant="glass"
-                          sx={{ width: { xs: '100%', sm: 'auto' } }} // 4. Stretch the button itself
+                          sx={{
+                            width: { xs: '100%', sm: 'auto' },
+                            borderRadius: '11px',
+                            background: 'rgba(255, 255, 255, 0.15)',
+
+                            // 👇 ADD THIS LINE to kill the default border from the glass variant
+                            border: 'none !important',
+
+                            position: 'relative',
+
+                            '&::before': {
+                              content: '""',
+                              position: 'absolute',
+                              inset: 0,
+                              borderRadius: 'inherit',
+                              padding: '1.5px',
+                              background: 'linear-gradient(90deg, #ffffff 0%, #fcb8b8 100%)',
+                              WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                              WebkitMaskComposite: 'xor',
+                              maskComposite: 'exclude',
+                              pointerEvents: 'none',
+                            },
+
+                            '&:hover': {
+                              background: 'rgba(255, 255, 255, 0.22)',
+                              '&::before': {
+                                background: '#FFFFFF',
+                              },
+                            },
+                          }}
                         >
                           {item.text}
                         </EventButton>

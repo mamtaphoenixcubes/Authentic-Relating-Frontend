@@ -94,6 +94,10 @@ export default function ClientTestimonial() {
                 }
                 sx={{
                   ...testimonial.card,
+                  backdropFilter: "blur(260px)",
+                  WebkitBackdropFilter: "blur(260px)",
+                  boxShadow: "0px 4px 7.3px 1px #0000001A",
+                  border: "2px solid #ffffff",
                   minHeight: {
                     xs: "auto",
                     md: testimonial.card.minHeight.md,
@@ -104,39 +108,39 @@ export default function ClientTestimonial() {
                   },
                 }}
               >
-                  <Typography
-                    sx={{
-                      ...testimonial.text,
-                      mb: {
-                        xs: spacing.clientTestimonial.textBottom.xs / 4,
-                        md: spacing.clientTestimonial.textBottom.md / 4,
-                      },
-                    }}
-                  >
-                    {item.text}
-                  </Typography>
+                <Typography
+                  sx={{
+                    ...testimonial.text,
+                    mb: {
+                      xs: spacing.clientTestimonial.textBottom.xs / 4,
+                      md: spacing.clientTestimonial.textBottom.md / 4,
+                    },
+                  }}
+                >
+                  {item.text}
+                </Typography>
 
+                <Box
+                  sx={{
+                    ...testimonial.userInfo,
+                    mt: { xs: "auto", md: 2 },
+                  }}
+                >
                   <Box
-                    sx={{
-                      ...testimonial.userInfo,
-                      mt: { xs: "auto", md: 2 },
-                    }}
-                  >
-                    <Box
-                      component="img"
-                      src={item.avatar}
-                      alt={item.name}
-                      sx={{ ...testimonial.avatar }}
-                    />
-                    <Box>
-                      <Typography sx={{ ...testimonial.userName }}>
-                        {item.name}
-                      </Typography>
-                      <Typography sx={{ ...testimonial.userRole }}>
-                        {item.role}
-                      </Typography>
-                    </Box>
+                    component="img"
+                    src={item.avatar}
+                    alt={item.name}
+                    sx={{ ...testimonial.avatar }}
+                  />
+                  <Box>
+                    <Typography sx={{ ...testimonial.userName }}>
+                      {item.name}
+                    </Typography>
+                    <Typography sx={{ ...testimonial.userRole }}>
+                      {item.role}
+                    </Typography>
                   </Box>
+                </Box>
               </MotionBox>
             </SwiperSlide>
           ))}

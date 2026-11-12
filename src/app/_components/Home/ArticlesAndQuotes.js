@@ -235,7 +235,6 @@ export const ArticlesAndQuotes = () => {
                                     </Typography>
                                 </MotionBox>
                             </Box>
-
                             <MotionButton
                                 onClick={() => router.push(`/blogpage`)}
                                 variant="default"
@@ -258,14 +257,47 @@ export const ArticlesAndQuotes = () => {
                                     },
                                     height: { xs: "48px", sm: "44px", md: "48px" },
                                     px: { xs: 2.5, sm: 1.5, md: 2.5 },
-                                    fontSize: { xs: "13px", sm: "12px", md: "14px" },
+                                    fontSize: { xs: "13px", sm: "14px", md: "15px" },
+                                    fontWeight: 700,
+                                    textTransform: "none",
                                     borderRadius: "12px",
-                                    background: "linear-gradient(135deg, #83c6fdff, #42a5f5)",
-                                    backdropFilter: "blur(12px)",
-                                    WebkitBackdropFilter: "blur(12px)",
-                                    border: "none",
+                                    color: "#ffffff",
+
+                                    // 👇 BACKGROUND & GRADIENT BORDER SETUP
+                                    background: "#82B4E2", // The sky blue background
+                                    border: "none", // Kill standard border
+                                    position: "relative",
+                                    overflow: "hidden",
+                                    transform: "translateZ(0)", // Fixes zoom glitch
+                                    boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.15)",
+
+                                    // The Gradient Border Mask (Matching EventButton)
+                                    "&::before": {
+                                        content: '""',
+                                        position: "absolute",
+                                        inset: 0,
+                                        borderRadius: "inherit",
+                                        padding: "2px", // Thickness of the border
+                                        background: "linear-gradient(90deg, #ffffff 0%, #90b2fc 100%)", // White to soft pink gradient
+                                        WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                                        WebkitMaskComposite: "xor",
+                                        maskComposite: "exclude",
+                                        pointerEvents: "none",
+                                        zIndex: 0,
+                                    },
+
+                                    // Keep text above the border
+                                    "& .MuiButton-label, & > *": {
+                                        position: "relative",
+                                        zIndex: 1,
+                                    },
+
                                     "&:hover": {
-                                        background: "linear-gradient(135deg, #64b5f6, #1e88e5)",
+                                        background: "#70a5d6", // Slightly darker blue on hover
+                                        boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                                        "&::before": {
+                                            background: "#FFFFFF", // Turns solid white on hover
+                                        },
                                     },
                                 }}
                             >
