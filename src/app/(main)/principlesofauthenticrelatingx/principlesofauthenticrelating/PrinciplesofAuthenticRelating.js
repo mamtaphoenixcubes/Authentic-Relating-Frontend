@@ -102,8 +102,8 @@ export const PrinciplesofAuthenticRelating = () => {
               fontFamily: 'Red Hat Display, sans-serif',
               fontWeight: 700,
               fontSize: { xs: "28px", md: "40px" },
-              mb: 2,
-              color: '#0077D1'
+              mb: 2, mt: 0,
+              color: '#0077D1',
             }}
           >
             Introducing 10 Principles of

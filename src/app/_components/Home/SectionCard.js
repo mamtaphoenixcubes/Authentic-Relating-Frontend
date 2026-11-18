@@ -125,11 +125,28 @@ export default function SectionCard() {
 
             {/* CONTENT */}
             <Box className="section-card-content" sx={{ ...styles.content }}>
-              <Typography component="h2" sx={{ ...styles.title }}>
+              <Typography
+                component="h2"
+                sx={{
+                  ...styles.title,
+                  Color: '#F9F9F9',
+                  fontFamily: '"Red Hat Display", sans-serif',
+                  fontWeight: 700,
+                  verticalAlign: 'middle',
+                }}
+              >
                 {item.title}
               </Typography>
-
-              <Typography component="p" sx={{ ...styles.description }}>
+              <Typography
+                component="p"
+                sx={{
+                  ...styles.description,
+                  Color: '#F9F9F9',
+                  fontFamily: '"Red Hat Display", sans-serif',
+                  fontWeight: 500,
+                  verticalAlign: 'middle',
+                }}
+              >
                 {item.desc}
               </Typography>
 
@@ -137,6 +154,51 @@ export default function SectionCard() {
                 <EventButton
                   variant="glass"
                   onClick={() => handleNavigate(item.href)}
+                  sx={{
+                    minWidth: { xs: "100%", sm: "120px", md: "140px" },
+                    height: { xs: "44px", sm: "42px", md: "46px" },
+                    px: 2,
+                    borderRadius: "12px",
+                    color: "#fff",
+                    fontSize: { xs: "13px", sm: "13px", md: "14px" },
+                    fontWeight: 600,
+                    textTransform: "none",
+                    whiteSpace: "nowrap",
+                    position: "relative",
+                    background: "rgba(255, 255, 255, 0.15)",
+                    border: "none !important",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    transform: "translateZ(0)",
+                    transition: "background 0.3s ease",
+
+                    // 👇 Gradient border
+                    "&::before": {
+                      content: '""',
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: "inherit",
+                      padding: "1.5px",
+                      background: "linear-gradient(90deg, #ffffff 0%, #c9e9a56b 100%)",
+                      WebkitMask:
+                        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                      WebkitMaskComposite: "xor",
+                      maskComposite: "exclude",
+                      pointerEvents: "none",
+                      zIndex: 0,
+                    },
+
+                    "& > *": {
+                      position: "relative",
+                      zIndex: 1,
+                    },
+
+                    "&:hover": {
+                      background: "rgba(255, 255, 255, 0.25)",
+                      "&::before": {
+                        background: "#FFFFFF",
+                      },
+                    },
+                  }}
                 >
                   Explore
                 </EventButton>
@@ -153,7 +215,7 @@ export default function SectionCard() {
             onClick={() => handleNavigate("/contactus")}
             sx={{ ...styles.footerLink }}
           >
-           View More
+            View More
             <Box component="span">
               →
             </Box>

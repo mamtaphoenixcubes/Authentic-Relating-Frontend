@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Box,
-  Card,
-  Grid,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Card, Grid, Typography, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -71,7 +65,6 @@ export const CommunityUnique = () => {
         </Box>
       </MotionBox>
 
-      {/* ================= IMAGE SECTION ================= */}
       {/* ================= IMAGE SECTION ================= */}
       <MotionBox {...cu.motion.meetBanner} sx={cu.meetBanner}>
         <Box sx={cu.meetOverlay} />

@@ -190,7 +190,7 @@ export default function AmitabhaProfile() {
             initial="hidden"
             whileInView="show"
             viewport={viewportConfig}
-            className="font-redhat font-bold text-[26px] sm:text-[32px] md:text-[38px] lg:text-[44px] mb-4"
+            className="font-redhat font-bold text-[26px] sm:text-[32px] md:text-[38px] lg:text-[44px] mb-4 text-[#000000]"
           >
             Amitabha Bhatia
           </motion.h1>
@@ -354,7 +354,7 @@ function Tag({ text, variant = 'gold' }) {
         gap: '10px',
       }}
     >
-      <p 
+      <p
         // CHANGED: Made text slightly smaller to match your image's proportions
         className="font-redhat text-white text-left text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px]"
         style={{

@@ -438,20 +438,46 @@ export default function GiftsSection() {
                     </Typography>
 
                     {/* CARD */}
+                    {/* CARD — GLASS EFFECT */}
                     <MotionBox
                       className="gift-card"
                       whileHover={{ y: -6 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
                       sx={{
-                        borderRadius: "12px",
-                        border: `1px solid ${colors.gifts.cardBorder}`,
-                        backgroundColor: colors.gifts.cardBackground,
-                        boxShadow: colors.gifts.cardShadow,
+                        position: "relative",
+                        borderRadius: "9.28px",
+                        background: "#FFFFFF38",
+                        backdropFilter: "blur(98.79px)",
+                        WebkitBackdropFilter: "blur(98.79px)",
+                        boxShadow: "0px 2.86px 5.21px 0.71px #0000001A",
+                        border: "none", // gradient border handled via ::before
                         overflow: "hidden",
                         display: "flex",
                         flexDirection: "column",
                         height: "100%",
                         flex: 1,
+                        transition: "box-shadow 0.3s ease, transform 0.3s ease",
+
+                        // 👇 Gradient border (0.93px, exact Figma spec)
+                        "&::before": {
+                          content: '""',
+                          position: "absolute",
+                          inset: 0,
+                          borderRadius: "inherit",
+                          padding: "1px",
+                          background:
+                            "linear-gradient(122.64deg, rgba(68, 68, 68, 0.1) 20.34%, rgba(68, 68, 68, 0.01) 103.19%)",
+                          WebkitMask:
+                            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                          WebkitMaskComposite: "xor",
+                          maskComposite: "exclude",
+                          pointerEvents: "none",
+                          zIndex: 1,
+                        },
+
+                        "&:hover": {
+                          boxShadow: "0px 8px 18px 1px #00000026",
+                        },
                       }}
                     >
                       {/* IMAGE */}
@@ -631,8 +657,8 @@ export default function GiftsSection() {
                           {isVideo
                             ? "Watch Now"
                             : isAudio
-                            ? "Listen Now"
-                            : "View Document"}
+                              ? "Listen Now"
+                              : "View Document"}
                         </Button>
                       </Box>
                     </MotionBox>
@@ -768,29 +794,29 @@ export default function GiftsSection() {
               {/* Video */}
               {(modalItem.category === "Free Videos" ||
                 modalItem.category === "My Video Collection") && (
-                <Box
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    bgcolor: "#000",
-                  }}
-                >
                   <Box
-                    component="video"
-                    src={getFileUrl(modalItem.fileUrl)}
-                    controls
-                    autoPlay
-                    playsInline
                     sx={{
-                      display: "block",
                       width: "100%",
-                      maxHeight: "70vh",
-                      objectFit: "contain",
+                      display: "flex",
+                      justifyContent: "center",
+                      bgcolor: "#000",
                     }}
-                  />
-                </Box>
-              )}
+                  >
+                    <Box
+                      component="video"
+                      src={getFileUrl(modalItem.fileUrl)}
+                      controls
+                      autoPlay
+                      playsInline
+                      sx={{
+                        display: "block",
+                        width: "100%",
+                        maxHeight: "70vh",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Box>
+                )}
 
               {/* Audio */}
               {modalItem.category === "Free Audios" && (

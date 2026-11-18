@@ -116,7 +116,7 @@ const colors = {
   // CLIENT TESTIMONIAL
   // =====================================================
   clientTestimonial: {
-    title: "#F18700",
+    title: "#FF9916",
     textColor: "#ffffff",
     cardBackground: "linear-gradient(90deg, #F39C12 0%, #F7B267 100%)",
     cardShadow: "0px 10px 30px rgba(0,0,0,0.15)",
@@ -129,7 +129,7 @@ const colors = {
   // =====================================================
   signatureOfferings: {
     title: "#458001",
-    subtitle: "#666666",
+    subtitle: "#444444",
     cardShadow: "0 4px 12px rgba(0,0,0,0.1)",
     cardOverlay: "linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2))",
     cardTitle: "#ffffff",
@@ -155,9 +155,9 @@ const colors = {
     cardShadowHover: "0px 8px 18px rgba(0,0,0,0.16)",
     titleColor: "#ffffff",
     descriptionColor: "#ffffff",
-    footerColor: "#000000",
-    linkColor: "#000000",
-    linkHoverColor: "#333333",
+    footerColor: "#444444",
+    linkColor: "#444444",
+    linkHoverColor: "#444444",
   },
 
   // =====================================================
@@ -715,7 +715,7 @@ const colors = {
   podcastSection: {
     title: "#B678F3",
     description: "#444444",
-    topTitle: "#B678F3",
+    topTitle: "#A36CDA",
 
     // Left image card
     imageBorder: "3px solid #ffffff",
@@ -1021,7 +1021,7 @@ const colors = {
   // =====================================================
   frameworkHero: {
     title: "#0077D1",
-    description: "#000000",
+    description: "#535353",
     bodyTitle: "#000000",
     author: "#000000",
     bodyText: "#000000",
@@ -1033,7 +1033,7 @@ const colors = {
     sectionPt: { xs: 2 },
     sectionPb: { xs: 2, md: 3 },
     rowMb: { xs: 6, md: 10 },
-    title: "#1a1a1a",
+    title: "#000000",
     description: "#444444",
     quote: "#666666",
     quoteBorder: "#40E0D0",
@@ -1078,7 +1078,7 @@ const colors = {
     cardBackdropFilter: "blur(138.4px)",
     cardBoxShadow: "0px 4px 7.3px 1px rgba(0,0,0,0.10)",
     cardRadius: "24px",
-    cardText: "#ffffff",
+    cardText: "#FFFFFF",
 
     cardSkew: "skewX(-10deg)",
     cardSkewChild: "skewX(10deg)",
@@ -1089,7 +1089,7 @@ const colors = {
     ctaBorderGradient:
       "linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 30%, rgba(255,123,123,0.65) 70%, rgba(255,99,99,0.85) 100%)",
     ctaRadius: "30px",
-    ctaText: "#ffffff",
+    ctaText: "#FFFFFF",
 
     // ---- Buttons ----
     btnGlassBorderGradient:
@@ -1155,6 +1155,7 @@ const colors = {
 
     rightPanelBg: "rgba(255, 255, 255, 0.3)",
     rightPanelBorder: "2px solid rgba(255,255,255,0.8)",
+
 
     coachingCardGradient: "linear-gradient(135deg, #FFC566, #F9A629)",
     coachingCardShadow: "0 4px 10px rgba(0,0,0,0.15)",
@@ -1225,6 +1226,9 @@ const colors = {
     greyPanelImage: "/facilitation/arfacilitation.png",
     bulletDotGradient: "linear-gradient(98.48deg, #95C4FF 0%, #087EDF 100%)",
     bulletDotBorder: "#ffffff",
+    cardBorderGradient: "linear-gradient(105.94deg, #FFFFFF 2.2%, #999999 100%)",
+    cardBorderWidth: 2,
+    cardBorderRadius: 43,
   },
   // =====================================================
   // FACILITATION HEADER SECTION
@@ -1238,10 +1242,10 @@ const colors = {
   // LEADERSHIP SECTION
   // =====================================================
   leadership: {
-    itemTitle: "#1a1a1a",
-    itemDescription: "#444444",
-    richDescHeading: "#1a1a1a",
-    richDescBulletBorder: "#2196F3",
+    itemTitle: "#000000",
+    itemDescription: "#000000",
+    richDescHeading: "#000000",
+    richDescBulletBorder: "#000000",
     imagePlaceholderBg: "#d0d0d0",
     imagePlaceholderBgEmpty: "#e0e0e0",
 
@@ -1352,10 +1356,10 @@ const colors = {
   // =====================================================
   authenticRelatingUI: {
     introBg: "linear-gradient(180deg, #F7B548 0%, #F3A332 100%)",
-    introTitle: "#ffffff",
-    introBody: "rgba(255,255,255,0.95)",
+    introTitle: "#F9F9F9",
+    introBody: "#F9F9F9",
     imagePlaceholderBg: "#cfcfcf",
-    body: "#555555",
+    body: "#444444",
     titleColors: [
       "#F9998D",
       "#00B9C7",
@@ -1371,9 +1375,9 @@ const colors = {
   principlesOfAuthenticRelating: {
     sectionBg: "#D6D6D6",
     title: "#0077D1",
-    subtitle: "#000000",
+    subtitle: "#535353",
     body: "#000000",
-    cardBg: "#cfcfcf",
+    cardBg: "#000000",
     cardShadow: "0 10px 30px rgba(0,0,0,0.1)",
   },
   // =====================================================

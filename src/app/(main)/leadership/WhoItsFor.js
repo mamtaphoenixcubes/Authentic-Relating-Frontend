@@ -180,7 +180,21 @@ export const WhoItsFor = () => {
                           },
                         }}
                         whileTap={{ scale: 0.95 }}
-                        sx={{ ...who.button, ...who.button2 }}
+                        sx={{
+                          ...who.button,
+                          ...who.button2,
+                          position: "relative",
+                          border: "2px solid transparent", // 2px width
+                          backgroundImage: `
+      ${who.button2.background || "none"}, 
+      linear-gradient(91.44deg, #f8f2f1 0%, #DE472F 100%)
+    `,
+                          backgroundOrigin: "border-box",
+                          backgroundClip: "padding-box, border-box",
+                          "&::before": {
+                            display: "none",
+                          },
+                        }}
                       >
                         Download Leadership PDF
                       </MotionButton>

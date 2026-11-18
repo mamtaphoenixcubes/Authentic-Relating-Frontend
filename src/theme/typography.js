@@ -440,7 +440,7 @@ const typography = {
     sectionSubtitle: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 400,
-      fontSize: { xs: "13px", sm: "14px", md: "15px", lg: "16px" },
+      fontSize: { xs: "13px", sm: "14px", md: "15px", lg: "18px" },
       lineHeight: { xs: 1.6, md: 1.7 },
       letterSpacing: 0,
       textAlign: "center",
@@ -949,27 +949,27 @@ const typography = {
   podcastSection: {
     title: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 600,
+      fontWeight: 700,
       fontSize: { xs: "28px", sm: "32px", md: "34px", lg: "40px", xl: "44px" },
       lineHeight: 1.1,
       letterSpacing: "0%",
     },
     description: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 400,
+      fontWeight: 500,
       fontSize: { xs: "14px", sm: "14px", md: "12px", lg: "14px", xl: "16px" },
       lineHeight: { xs: 1.7, md: 1.75 },
       letterSpacing: "0%",
     },
     topTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 600,
+      fontWeight: 700,
       fontSize: { xs: "16px", md: "14px", lg: "16px", xl: "18px" },
       lineHeight: 1.2,
     },
     episodeTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 600,
+      fontWeight: 400,
       fontSize: { xs: "11px", sm: "13px", md: "11px", lg: "13px", xl: "14px" },
       lineHeight: 1.3,
     },
@@ -981,7 +981,7 @@ const typography = {
     },
     playButton: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 500,
+      fontWeight: 400,
       fontSize: { xs: "9px", sm: "11px", md: "9px", lg: "11px", xl: "12px" },
       lineHeight: 1,
       textTransform: "none",
@@ -1441,7 +1441,7 @@ const typography = {
       fontSize: { xs: 14, sm: 14, md: 15, lg: 16 },
       lineHeight: 1.7,
       letterSpacing: 0,
-      color: "#444444",
+      color: "#000000",
     },
     ctaTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
@@ -1494,9 +1494,13 @@ const typography = {
     body: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 400,
-      fontSize: { xs: "11px", sm: "12px", md: "14px", lg: "16px" },
+      fontSize: { xs: "11px", sm: "10px", md: "12px", lg: "16px" },
       lineHeight: 1.7,
       letterSpacing: "0%",
+      width: "100%",
+      maxWidth: { xs: "100%", sm: "500px", md: "700px", lg: "920px" },
+      mx: "auto",
+      textAlign: "center",
     },
     subText: {
       fontFamily: '"Red Hat Display", sans-serif',
@@ -1505,6 +1509,7 @@ const typography = {
       lineHeight: 1.6,
       letterSpacing: "0%",
       textAlign: "left",
+      pl: { xs: 1, sm: 1.5, md: 1, lg: 5 },
     },
     bulletText: {
       fontFamily: '"Red Hat Display", sans-serif',
@@ -1859,7 +1864,7 @@ const typography = {
     },
     description: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 400,
+      fontWeight: 500,
       fontSize: { xs: "14px", md: "16px" },
       lineHeight: 1.6,
     },
@@ -1901,7 +1906,7 @@ const typography = {
     },
     description: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 500,
+      fontWeight: 400,
       fontSize: { xs: "14px", md: "16px", lg: "17px" },
       lineHeight: { xs: "22px", md: "24px", lg: "26px" },
     },
@@ -1924,7 +1929,7 @@ const typography = {
     },
     cardTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 700,
+      fontWeight: 800,
       fontSize: { xs: 16, md: 18 },
     },
     cardDescription: {
@@ -1936,7 +1941,7 @@ const typography = {
     ctaTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 700,
-      fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" },
+      fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem", xl: "3rem" },
       lineHeight: 1.3,
     },
     ctaBody: {
@@ -1963,15 +1968,15 @@ const typography = {
     },
     headerSubtitle: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 400,
+      fontWeight: 500,
       fontSize: { xs: "14px", md: "18px" },
       lineHeight: 1.6,
       textAlign: "center",
     },
     cardTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 800,
-      fontSize: { xs: "26px", md: "36px" },
+      fontWeight: 700,
+      fontSize: { xs: "26px", md: "28px", xl: "36px" },
       lineHeight: 1.2,
     },
     body: {
@@ -1997,8 +2002,8 @@ const typography = {
       fontSize: { xs: "22px", sm: "28px", md: "46.7px" },
     },
     introBody: {
-      fontFamily: 'var(--font-dm-sans), "DM Sans", sans-serif',
-      fontWeight: 200,
+      fontFamily: ' "DM Sans", sans-serif',
+      fontWeight: 400,
       fontSize: { xs: "14px", md: "20.4px" },
       lineHeight: { xs: "24px", md: "32.71px" },
       textAlign: "center",

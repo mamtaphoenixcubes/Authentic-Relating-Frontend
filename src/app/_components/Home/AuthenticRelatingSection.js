@@ -184,17 +184,18 @@ export const AuthenticRelatingSection = () => {
               <Typography
                 sx={{
                   mt: { xs: 0.5, sm: 1 },
-                  fontWeight: 600,
+                  fontWeight: 700,
                   textAlign: 'center',
                   fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem', lg: '1.3rem', xl: '1.4rem' },
                 }}
               >
-                Amitabh Bhatia
+                By Amitabha Bhatia
               </Typography>
 
               <Typography
                 sx={{
                   opacity: 0.9,
+                  fontWeight: 400,
                   textAlign: 'center',
                   fontSize: { xs: '0.75rem', sm: '0.75rem', md: '0.9rem', lg: '1rem', xl: '1.1rem' },
                   mt: { xs: 0.25, sm: 0.5 },
@@ -377,26 +378,24 @@ export const AuthenticRelatingSection = () => {
                     md: 'flex-start',
                   },
                   alignItems: 'center',
-                  // Ensure the parent container allows full width on mobile
                   width: '100%',
                 }}
               >
                 {buttons.map((item, index) => (
-                  // 1. Wrap the Link in a Box to control responsive width safely
                   <Box
                     key={index}
                     sx={{
                       width: { xs: '100%', sm: 'auto' },
-                      display: 'flex'
+                      display: 'flex',
                     }}
                   >
                     <Link
                       href={item.url}
                       style={{
                         textDecoration: 'none',
-                        width: '100%', // 2. Make the Link full width on mobile
+                        width: '100%',
                         display: 'flex',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
                       }}
                     >
                       <MotionBox
@@ -411,20 +410,36 @@ export const AuthenticRelatingSection = () => {
                         }}
                         whileTap={{ scale: 0.95 }}
                         sx={{
-                          width: { xs: '100%', sm: 'auto' }, // 3. Make the animation wrapper full width on mobile
+                          width: { xs: '100%', sm: 'auto' },
                           display: 'flex',
                         }}
                       >
                         <EventButton
                           variant="glass"
                           sx={{
-                            width: { xs: '100%', sm: 'auto' },
+                            width: {
+                              xs: '100%',
+                              sm: '160px',
+                              md: '180px',
+                              lg: '220px',
+                              xl: '240px',
+                            },
+                            minWidth: {
+                              sm: 160,
+                              md: 180,
+                              lg: 220,
+                              xl: 240,
+                            },
+                            px: { sm: 2, md: 2.5, lg: 3, xl: 3.5 },
+
                             borderRadius: '11px',
-                            background: 'rgba(255, 255, 255, 0.15)',
 
-                            // 👇 ADD THIS LINE to kill the default border from the glass variant
+                            // ✅ Solid smoking-white background
+                            background: '#f9f9f95d',
+                            color: '#FFFFFF',                 // 👈 dark text so it's readable on white
+                            fontWeight: 700,
+
                             border: 'none !important',
-
                             position: 'relative',
 
                             '&::before': {
@@ -433,17 +448,20 @@ export const AuthenticRelatingSection = () => {
                               inset: 0,
                               borderRadius: 'inherit',
                               padding: '1.5px',
-                              background: 'linear-gradient(90deg, #ffffff 0%, #fcb8b8 100%)',
-                              WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                              background: 'linear-gradient(90deg, #f3f2f2 0%, #f8c0b2 100%)',
+                              WebkitMask:
+                                'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
                               WebkitMaskComposite: 'xor',
                               maskComposite: 'exclude',
                               pointerEvents: 'none',
+                              fontWeight: 600,
                             },
 
                             '&:hover': {
-                              background: 'rgba(255, 255, 255, 0.22)',
+                              background: '#f9f9f95d',        // 👈 pure white on hover
+                              color: '#eee5e5',
                               '&::before': {
-                                background: '#FFFFFF',
+                                background: '#f9f9f95d',
                               },
                             },
                           }}

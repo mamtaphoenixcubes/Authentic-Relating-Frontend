@@ -80,7 +80,13 @@ export default function FAQSection() {
             >
               Frequently Asked Questions
             </Typography>
-            <Typography sx={theme => theme.custom.faq.description}>
+            <Typography
+              sx={theme => ({
+                ...theme.custom.faq.description,
+                fontFamily: '"Red Hat Display", sans-serif',
+                fontWeight: 400,
+              })}
+            >
               Welcome to our FAQ section, where you'll find answers to all your burning questions!
             </Typography>
           </Box>
@@ -106,8 +112,8 @@ export default function FAQSection() {
                   sx={theme => ({
                     ...theme.custom.faq.topicItem,
                     borderColor: selectedTopic === topic._id ? "#F45B4F" : "transparent",
-                    fontWeight: selectedTopic === topic._id ? 800 : 400,
-                    color: selectedTopic === topic._id ? "#0077D1" : "#374151",
+                    fontWeight: selectedTopic === topic._id ? 700 : 400,
+                    color: selectedTopic === topic._id ? "#0077D1" : "#444444",
                   })}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -146,12 +152,15 @@ export default function FAQSection() {
                       ? theme.custom.faq.accordionExpanded
                       : theme.custom.faq.accordionCollapsed),
 
-                    // ✅ Border color override
+                    // ✅ Overrides
+                    opacity: 1,
+                    borderRadius: '10px',
                     border: '2px solid #ffc8c0',
                     '&:before': {
                       display: 'none',
                     },
                     '&.Mui-expanded': {
+                      borderRadius: '10px',
                       border: '2px solid #ffc8c0',
                     },
                   })}
@@ -164,7 +173,7 @@ export default function FAQSection() {
                     expandIcon={
                       <ExpandMoreIcon
                         sx={theme => ({
-                          color: expanded === item._id ? '#fff' : '#6B7280',
+                          color: expanded === item._id ? '#fff' : '#444444',
                         })}
                       />
                     }

@@ -24,7 +24,7 @@ const CoreValues = () => {
                 const sorted = (res?.data?.detailsOfVisions || []).sort(
                     (a, b) => a.index_position - b.index_position
                 );
-                console.log(sorted)
+                console.log(sorted);
                 setValues(sorted);
             } catch (error) {
                 console.error('API error:', error);
@@ -34,18 +34,17 @@ const CoreValues = () => {
     }, []);
 
     return (
-        <Section sx={{ pt: 0, mt: 10 }}> 
-            <SiteContainer >
+        <Section sx={{ pt: 0, mt:{xs:4 , sm:4, md:8} }}>
+            <SiteContainer>
                 {/* Heading + Subheading */}
-                <SectionHeader
-                    align="center"
-                    title="Core Values of AuthenticRelating.com"
-                    subtitle="A living compass for human connection, personal growth, and cultural transformation."
-                    titleSx={cv.headerTitle}
-                    subtitleSx={cv.headerSubtitle}
-                    sx={cv.header}
-                />
-
+                <Box sx={{ mb: 5 }}> {/* Outer container gap */}
+                    <Typography sx={{ ...cv.headerTitle, mb: 1 }}> {/* 👈 Gap below title */}
+                        Core Values of AuthenticRelating.com
+                    </Typography>
+                    <Typography sx={{ ...cv.headerSubtitle, mt: 2 }}> {/* 👈 Gap above subtitle */}
+                        A living compass for human connection, personal growth, and cultural transformation.
+                    </Typography>
+                </Box>
                 {/* Cards Grid */}
                 <Grid container {...cv.grid}>
                     {values.map((value, index) => (
@@ -59,7 +58,7 @@ const CoreValues = () => {
                             xl={4}
                             sx={{
                                 ...cv.gridItem,
-                                display: 'flex', // 1. Make the grid item a flex container
+                                display: 'flex',
                             }}
                         >
                             <motion.div
@@ -67,25 +66,31 @@ const CoreValues = () => {
                                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                                style={{ 
+                                style={{
                                     width: '100%',
-                                    height: '100%', // 2. Make the animation wrapper fill the height
-                                    display: 'flex', // Allows the inner box to stretch
+                                    height: '100%',
+                                    display: 'flex',
                                 }}
                             >
                                 <Box
                                     sx={{
                                         ...cv.card,
-                                        width: '100%', // 3. Ensure the card takes full width
-                                        height: '100%', // 4. Stretch the card to match the tallest sibling
+                                        width: '100%',
+                                        height: '100%',
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        // CSS variables let us keep gradient values dynamic per-card
+
+                                        // 👇 NEW: border, blur, shadow
+                                        border: '2px solid #FFFFFF',
+                                        backdropFilter: 'blur(260px)',
+                                        WebkitBackdropFilter: 'blur(260px)',
+                                        boxShadow: '0px 4px 7.3px 1px #0000001A',
+
+                                        // Per-card dynamic gradient values
                                         '--cv-start': value.gradientStart,
                                         '--cv-end': value.gradientEnd,
                                     }}
                                 >
-
                                     <motion.div
                                         initial={{ scale: 0, rotate: -45, opacity: 0 }}
                                         whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
@@ -99,7 +104,7 @@ const CoreValues = () => {
                                         }}
                                         whileHover={{ scale: 1.15, rotate: 8 }}
                                         whileTap={{ scale: 0.9 }}
-                                        style={{ display: 'inline-flex' }}// Keeps icon aligned left
+                                        style={{ display: 'inline-flex' }}
                                     >
                                         <Box
                                             component="img"

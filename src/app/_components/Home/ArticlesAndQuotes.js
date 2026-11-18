@@ -195,7 +195,7 @@ export const ArticlesAndQuotes = () => {
                                         variant={{ xs: 'h5', sm: 'h4', md: 'h3' }}
                                         fontWeight={700}
                                         sx={{
-                                            color: '#1976d2',
+                                            color: '#0077D1',
                                             mb: 1,
                                             fontSize: {
                                                 xs: '1.5rem',
@@ -216,18 +216,21 @@ export const ArticlesAndQuotes = () => {
                                     </Typography>
 
                                     <Typography
+                                        fontWeight={500}
                                         sx={{
-                                            color: '#555',
+                                            color: '#444444',
                                             fontSize: {
                                                 xs: '13px',
                                                 sm: '14px',
                                                 md: '15px'
                                             },
+
                                             lineHeight: {
                                                 xs: '1.5',
                                                 sm: '1.5',
                                                 md: '1.6'
-                                            }
+                                            },
+                                            mt: { xs: 1, sm: 1.5, md: 2 },
                                         }}
                                     >
                                         Morbi varius ornare ante non posuere. Morbi lacus lacus,
@@ -261,7 +264,7 @@ export const ArticlesAndQuotes = () => {
                                     fontWeight: 700,
                                     textTransform: "none",
                                     borderRadius: "12px",
-                                    color: "#ffffff",
+                                    color: "#F9F9F9",
 
                                     // 👇 BACKGROUND & GRADIENT BORDER SETUP
                                     background: "#82B4E2", // The sky blue background
@@ -335,7 +338,8 @@ export const ArticlesAndQuotes = () => {
                                             sx={{
                                                 p: 2,
                                                 borderRadius: "16px",
-                                                background: "linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 30%, #90CAF9 70%, #64B5F6 100%)",
+                                                background:
+                                                    "linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 30%, #90CAF9 70%, #64B5F6 100%)",
                                                 boxShadow: "0 8px 24px rgba(100, 181, 246, 0.3)",
                                                 display: "flex",
                                                 flexDirection: "column",
@@ -343,6 +347,33 @@ export const ArticlesAndQuotes = () => {
                                                 overflow: "hidden",
                                                 height: "100%",
                                                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
+
+                                                // 👇 Remove default border — replaced by gradient ::before
+                                                border: "none",
+
+                                                // 👇 GRADIENT BORDER (2px, 180deg)
+                                                "&::before": {
+                                                    content: '""',
+                                                    position: "absolute",
+                                                    inset: 0,
+                                                    borderRadius: "inherit",
+                                                    padding: "2px",
+                                                    background: 'linear-gradient(180deg, #fff 0%, #d3e9fd 30%, #90CAF9 70%, #6dc0f0 100%)',
+                                                    WebkitMask:
+                                                        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                                                    WebkitMaskComposite: "xor",
+                                                    maskComposite: "exclude",
+                                                    pointerEvents: "none",
+                                                    zIndex: 1,
+                                                },
+
+
+                                                // 👇 Keep all inner content above the gradient border
+                                                "& > *": {
+                                                    position: "relative",
+                                                    zIndex: 2,
+                                                },
+
                                                 "&:hover": {
                                                     transform: "translateY(-6px)",
                                                     boxShadow: "0 16px 40px rgba(100, 181, 246, 0.4)",
@@ -378,7 +409,7 @@ export const ArticlesAndQuotes = () => {
                                                     fontFamily: '"Red Hat Display", sans-serif',
                                                     fontWeight: 700,
                                                     fontSize: { xs: "16px", md: "18px" },
-                                                    color: "#fff",
+                                                    color: "#F9F9F9",
                                                     mb: 1,
                                                     minHeight: "48px",
                                                     display: "-webkit-box",
@@ -395,10 +426,10 @@ export const ArticlesAndQuotes = () => {
                                                 <Typography
                                                     sx={{
                                                         fontFamily: '"Red Hat Display", sans-serif',
-                                                        fontWeight: 400,
+                                                        fontWeight: 500,
                                                         fontSize: { xs: "12px", md: "13px" },
                                                         lineHeight: 1.6,
-                                                        color: "rgba(255,255,255,0.9)",
+                                                        color: "#F9F9F9",
                                                         display: "-webkit-box",
                                                         WebkitLineClamp: 3,
                                                         WebkitBoxOrient: "vertical",
@@ -420,7 +451,7 @@ export const ArticlesAndQuotes = () => {
                                                         px: 3,
                                                         borderRadius: "10px",
                                                         fontSize: "14px",
-                                                        fontWeight: 500,
+                                                        fontWeight: 700,
                                                         fontFamily: '"Red Hat Display", sans-serif',
                                                         color: "#fff",
                                                         position: "relative",
@@ -478,7 +509,7 @@ export const ArticlesAndQuotes = () => {
                                 <Typography
                                     variant="h4"
                                     fontWeight={700}
-                                    sx={{ color: quoteCategory?.titleColor || '#1976d2' }}
+                                    sx={{ color: quoteCategory?.titleColor || '#F0A634' }}
                                 >
                                     Quotes
                                 </Typography>
@@ -497,10 +528,11 @@ export const ArticlesAndQuotes = () => {
                                 {/* Description on the left */}
                                 <Typography
                                     sx={{
-                                        color: '#555',
+                                        color: '#444444',
                                         maxWidth: 520,
                                         fontSize: 15,
                                         flex: 1,
+                                        fontWeight: 500,
                                     }}
                                 >
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed urna elit. Ut in tincidunt lacus, at convallis risus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
@@ -519,7 +551,7 @@ export const ArticlesAndQuotes = () => {
                                             cursor: canScrollLeft ? "pointer" : "not-allowed",
                                             opacity: canScrollLeft ? 1 : 0.3,
                                             fontSize: { xs: 20, sm: 24 },
-                                            color: "#F5A623",
+                                            color: "#F0A634",
                                             transition: "all 0.2s ease",
                                             "&:hover": {
                                                 transform: canScrollLeft ? "scale(1.15)" : "none",
@@ -534,7 +566,7 @@ export const ArticlesAndQuotes = () => {
                                             cursor: canScrollRight ? "pointer" : "not-allowed",
                                             opacity: canScrollRight ? 1 : 0.3,
                                             fontSize: { xs: 20, sm: 24 },
-                                            color: "#F5A623",
+                                            color: "#F0A634",
                                             transition: "all 0.2s ease",
                                             "&:hover": {
                                                 transform: canScrollRight ? "scale(1.15)" : "none",
@@ -576,7 +608,7 @@ export const ArticlesAndQuotes = () => {
                                                 p: 3,
                                                 borderRadius: 3,
                                                 background: quoteCategory?.cardBackground || 'linear-gradient(135deg, #1976d2, #42a5f5)',
-                                                color: '#fff',
+                                                color: '#F9F9F9',
                                                 boxShadow: '0px 6px 16px rgba(0,0,0,0.15)',
                                                 display: 'flex',
                                                 alignItems: 'center',

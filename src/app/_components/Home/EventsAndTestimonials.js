@@ -356,30 +356,50 @@ export const EventsAndTestimonials = () => {
       <Box
         sx={{
           width: "100%",
-          p: {
-            xs: 2.5,
-            sm: 3,
-            md: 4,
-          },
+          p: { xs: 2.5, sm: 3, md: 4 },
           borderRadius: "16px",
           color: "#fff",
 
-          // 👇 THIS MATCHES THE SCREENSHOT EXACTLY
-          background: 'linear-gradient(135deg, rgba(131, 194, 247, 0.85) 0%, rgba(52, 152, 252, 0.85),rgba(181, 217, 253, 0.85) 100%)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-          border: '1.5px solid rgba(255, 255, 255, 0.6)',
+          background:
+            "linear-gradient(135deg, rgba(131, 194, 247, 0.85) 0%, rgba(52, 152, 252, 0.85), rgba(181, 217, 253, 0.85) 100%)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
+
+          // 👇 Remove the solid border — replaced by gradient ::before
+          border: "none",
 
           position: "relative",
           overflow: "hidden",
           zIndex: 0,
+
+          // 👇 GRADIENT BORDER (105.94deg, #FFFFFF → #0077D1, 2px)
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            borderRadius: "inherit",
+            padding: "2px",
+            background:
+              "linear-gradient(105.94deg, #FFFFFF 2.2%, #9ed2fa 100%)",
+            WebkitMask:
+              "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude",
+            pointerEvents: "none",
+            zIndex: 3, // above card content edge
+          },
+
+          // 👇 Keep all inner content above the gradient border
+          "& > *": {
+            position: "relative",
+            zIndex: 1,
+          },
         }}
       >
         {/* ==================================================
             EVENT TITLE
         ================================================== */}
-
         <Typography
           sx={{
             fontSize: {
@@ -390,14 +410,15 @@ export const EventsAndTestimonials = () => {
             fontWeight: 700,
             mb: 1,
             lineHeight: 1.3,
+            color: "#F9F9F9", // 👈 added
           }}
         >
           {event?.event_name || "Event Name"}
         </Typography>
 
         {/* ==================================================
-            EVENT DESCRIPTION
-        ================================================== */}
+    EVENT DESCRIPTION
+================================================== */}
 
         {event?.event_description && (
           <Typography
@@ -409,17 +430,18 @@ export const EventsAndTestimonials = () => {
               },
               mb: 3, // Adjusted spacing based on screenshot
               opacity: 0.95,
+              fontWeight: 500,
               lineHeight: 1.6,
               display: "-webkit-box",
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
+              color: "#F9F9F9", // 👈 added
             }}
           >
             {event.event_description}
           </Typography>
         )}
-
         {/* ==================================================
             EVENT INFORMATION
         ================================================== */}
@@ -442,6 +464,7 @@ export const EventsAndTestimonials = () => {
                   sm: 20,
                 },
                 flexShrink: 0,
+                color: "#F9F9F9",
               }}
             />
 
@@ -453,9 +476,12 @@ export const EventsAndTestimonials = () => {
                   md: 14,
                 },
                 lineHeight: 1.5,
+                color: "#F9F9F9",
               }}
             >
-              Time:{" "}
+              <Box component="span" sx={{ fontWeight: 600 }}>
+                Time:
+              </Box>{" "}
               {formatEventDateTime(
                 event?.start_date,
                 event?.end_date
@@ -477,6 +503,7 @@ export const EventsAndTestimonials = () => {
                   sm: 20,
                 },
                 flexShrink: 0,
+                color: "#F9F9F9",
               }}
             />
 
@@ -492,9 +519,13 @@ export const EventsAndTestimonials = () => {
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical",
                 overflow: "hidden",
+                color: "#F9F9F9",
               }}
             >
-              Address: {formatLocation(event) || "Bangalore, India"}
+              <Box component="span" sx={{ fontWeight: 600 }}>
+                Address:
+              </Box>{" "}
+              {formatLocation(event) || "Bangalore, India"}
             </Typography>
           </Stack>
         </Stack>
@@ -550,7 +581,7 @@ export const EventsAndTestimonials = () => {
                 sm: "13px",
                 md: "14px",
               },
-              fontWeight: 600,
+              fontWeight: 700,
               textTransform: "none",
               cursor: "pointer",
               whiteSpace: "nowrap",
@@ -634,7 +665,7 @@ export const EventsAndTestimonials = () => {
                 sm: "13px",
                 md: "14px",
               },
-              fontWeight: 600,
+              fontWeight: 700,
               textTransform: "none",
               cursor: "pointer",
               whiteSpace: "nowrap",
@@ -757,7 +788,7 @@ export const EventsAndTestimonials = () => {
                     lg: 50,
                   },
 
-                  fontWeight: 500,
+                  fontWeight: 400,
 
                   color: "#2879d6",
 
@@ -769,7 +800,7 @@ export const EventsAndTestimonials = () => {
                   component="span"
                   sx={{
                     fontWeight: 800,
-                    color: "#1565c0",
+                    color: "#0077D1",
                   }}
                 >
                   Programs
@@ -789,9 +820,9 @@ export const EventsAndTestimonials = () => {
                     lg: 50,
                   },
 
-                  fontWeight: 800,
+                  fontWeight: 700,
 
-                  color: "#1565c0",
+                  color: "#0077D1",
 
                   lineHeight: 1.2,
 
@@ -812,7 +843,7 @@ export const EventsAndTestimonials = () => {
                     sm: 420,
                   },
 
-                  color: "#666",
+                  color: "#444444",
 
                   fontSize: {
                     xs: 12,
@@ -844,6 +875,12 @@ export const EventsAndTestimonials = () => {
                   border: 'none !important',
                   position: 'relative',
                   transition: 'transform 0.3s ease, background 0.3s ease',
+
+                  // 👇 ONLY THESE THREE LINES ADDED (text styling)
+                  fontFamily: '"Red Hat Display", sans-serif',
+                  fontWeight: 700,
+                  fontStyle: 'bold',
+                  boxShadow: '0px 0.69px 2.77px 0px #0000001A',
 
                   '&::before': {
                     content: '""',
@@ -918,32 +955,19 @@ export const EventsAndTestimonials = () => {
                   ================================================== */}
 
                   <ChevronLeftIcon
-                    onClick={
-                      !disablePrev
-                        ? handlePrevClick
-                        : undefined
-                    }
+                    onClick={!disablePrev ? handlePrevClick : undefined}
                     sx={{
-                      cursor: disablePrev
-                        ? "not-allowed"
-                        : "pointer",
-
+                      color: '#0077D1',
+                      cursor: disablePrev ? 'not-allowed' : 'pointer',
                       opacity: disablePrev ? 0.3 : 1,
-
                       flexShrink: 0,
-
                       fontSize: {
                         xs: 20,
                         sm: 24,
                       },
-
-                      transition:
-                        "transform 0.2s ease",
-
-                      "&:hover": {
-                        transform: !disablePrev
-                          ? "scale(1.1)"
-                          : "none",
+                      transition: 'transform 0.2s ease',
+                      '&:hover': {
+                        transform: !disablePrev ? 'scale(1.1)' : 'none',
                       },
                     }}
                   />
@@ -1035,7 +1059,7 @@ export const EventsAndTestimonials = () => {
                             // 👇 INACTIVE STATE
                             : {
                               color: "#444",
-                              background: "#f5f5f5",
+                              background: "#FFFFFF",
 
                               "&::before": {
                                 content: '""',
@@ -1080,6 +1104,7 @@ export const EventsAndTestimonials = () => {
                       opacity: disableNext ? 0.3 : 1,
 
                       flexShrink: 0,
+                      color: '#0077D1',
 
                       fontSize: {
                         xs: 20,

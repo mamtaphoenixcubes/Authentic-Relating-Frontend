@@ -11,10 +11,8 @@ import Section from "@/app/_components/common/Section";
 export default function WhatYouWillFindInside() {
   const router = useRouter();
   const theme = useTheme();
-  // Ensure you have these styles defined in your theme or replace with inline styles
   const styles = theme.custom.whatYouWillFindInside;
 
-  // Updated items to match the image provided
   const items = [
     {
       title: "45 Practices",
@@ -40,14 +38,20 @@ export default function WhatYouWillFindInside() {
         {/* ===================================================== */}
         {/* TOP PANEL — What You'll Find Inside                    */}
         {/* ===================================================== */}
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5 }}
         >
-          <Box sx={styles.panel}>
+          <Box
+            sx={{
+              ...styles.panel,
+              backdropFilter: "blur(260px)",
+              WebkitBackdropFilter: "blur(260px)",
+              boxShadow: "0px 4px 7.3px 1px #0000001A",
+            }}
+          >
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -98,8 +102,7 @@ export default function WhatYouWillFindInside() {
                     <Typography sx={styles.cardTitle}>
                       {item.title}
                     </Typography>
-
-                    <Typography sx={styles.cardDescription}>
+                    <Typography sx={{ ...styles.cardDescription, color: "#ffffff" }}>
                       {item.desc}
                     </Typography>
                   </Box>
@@ -108,7 +111,6 @@ export default function WhatYouWillFindInside() {
             </Box>
           </Box>
         </motion.div>
-
 
         {/* ===================================================== */}
         {/* CTA BANNER — Ready to Embark on the Journey?           */}
@@ -119,7 +121,14 @@ export default function WhatYouWillFindInside() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Box sx={styles.ctaBanner}>
+          <Box
+            sx={{
+              ...styles.ctaBanner,
+              backdropFilter: "blur(260px)",
+              WebkitBackdropFilter: "blur(260px)",
+              boxShadow: "0px 4px 7.3px 1px #0000001A",
+            }}
+          >
             <Box sx={styles.ctaFlex}>
               {/* LEFT SIDE — TEXT */}
               <Box sx={styles.ctaLeft}>
@@ -140,7 +149,6 @@ export default function WhatYouWillFindInside() {
                   spacing={styles.ctaButtonStack?.spacing || 2}
                   sx={styles.ctaButtonStack?.sx}
                 >
-                  {/* Glass button */}
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -158,7 +166,6 @@ export default function WhatYouWillFindInside() {
                     </Button>
                   </motion.div>
 
-                  {/* Workshop button */}
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -176,7 +183,6 @@ export default function WhatYouWillFindInside() {
                     </Button>
                   </motion.div>
 
-                  {/* Online course button */}
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}

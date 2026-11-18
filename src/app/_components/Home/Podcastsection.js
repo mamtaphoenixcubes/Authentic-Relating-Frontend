@@ -96,32 +96,72 @@ export default function PodcastSection({
               style={s.image}
             />
 
-           
-              <Box sx={s.logoInner}>
-                <Image
-                  src={logoImage}
-                  alt="Authentic Relating Vibes"
-                  fill
-                  sizes="300px"
-                  style={{ objectFit: "contain" }}
-                />
-              </Box>
-          
+
+            <Box sx={s.logoInner}>
+              <Image
+                src={logoImage}
+                alt="Authentic Relating Vibes"
+                fill
+                sizes="300px"
+                style={{ objectFit: "contain" }}
+              />
+            </Box>
+
           </Box>
 
           {/* ================= RIGHT — CONTENT ================= */}
-          <Box sx={s.content}>
-            <Typography component="h2" sx={s.title}>
+          <Box
+            sx={{
+              ...s.content,           // keeps whatever base styles you already have
+              display: "flex",
+              flexDirection: "column",
+              alignItems: { xs: "center", md: "flex-start" },
+              textAlign: { xs: "center", md: "left" },
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <Typography
+              component="h2"
+              sx={{
+                ...s.title,
+                textAlign: { xs: "center", md: "left" },
+                width: "100%",
+              }}
+            >
               {title}
             </Typography>
 
-            <Typography sx={s.description}>{description}</Typography>
+            <Typography
+              sx={{
+                ...s.description,
+                textAlign: { xs: "center", md: "left" },
+                mx: { xs: "auto", md: 0 },
+                width: "100%",
+              }}
+            >
+              {description}
+            </Typography>
 
-            <Typography component="h3" sx={s.topTitle}>
+            <Typography
+              component="h3"
+              sx={{
+                ...s.topTitle,
+                textAlign: { xs: "center", md: "left" },
+                width: "100%",
+                alignSelf: { xs: "center", md: "flex-start" },
+              }}
+            >
               {topEpisodesTitle}
             </Typography>
 
-            <Box sx={s.episodesGrid}>
+            <Box
+              sx={{
+                ...s.episodesGrid,
+                mx: { xs: "auto", md: 0 },
+                justifyContent: { xs: "center", md: "flex-start" },
+              }}
+            >
               {episodes.map((ep) => (
                 <Box key={ep.id} sx={s.episodeCard}>
                   <Box sx={s.episodeImage}>
@@ -137,9 +177,21 @@ export default function PodcastSection({
                   </Box>
 
                   <Box sx={s.episodeInfo}>
-                    <Typography sx={s.episodeTitle}>{ep.title}</Typography>
+                    <Typography
+                      sx={{
+                        ...s.episodeTitle,
+                        textAlign: { xs: "center", md: "left" },
+                      }}
+                    >
+                      {ep.title}
+                    </Typography>
 
-                    <Box sx={s.episodeMetaRow}>
+                    <Box
+                      sx={{
+                        ...s.episodeMetaRow,
+                        justifyContent: { xs: "center", md: "space-between" },
+                      }}
+                    >
                       <Typography component="span" sx={s.episodeMeta}>
                         {ep.duration}
                       </Typography>
@@ -162,17 +214,57 @@ export default function PodcastSection({
               ))}
             </Box>
 
-            <UnifiedButton
-              variant="default"
-              size="medium"
-              onClick={() => {
-                onViewAll?.();
-                router.push("/podcasts/");
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                justifyContent: { xs: "center", md: "flex-start" },
               }}
-              sx={s.viewAllButton}
             >
-              View All Episodes
-            </UnifiedButton>
+              <UnifiedButton
+                variant="default"
+                size="medium"
+                onClick={() => {
+                  onViewAll?.();
+                  router.push("/podcasts/");
+                }}
+                sx={{
+                  ...s.viewAllButton,
+                  alignSelf: { xs: "center", md: "flex-start" },
+
+                  // 👇 GRADIENT BORDER SETUP
+                  position: "relative",
+                  border: "none !important", // kill any default border
+                  overflow: "hidden",
+                  transform: "translateZ(0)", // fixes zoom glitch on scale
+
+                  // 👇 Gradient border (1.62px, exact Figma spec)
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: "inherit",
+                    padding: "1.62px",
+                    background:
+                      "linear-gradient(122.64deg, #FFFFFF 20.34%, rgba(255, 255, 255, 0.1) 103.19%)",
+                    WebkitMask:
+                      "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                    pointerEvents: "none",
+                    zIndex: 0,
+                  },
+
+                  // 👇 Keep label above the border
+                  "& .MuiButton-label, & > *": {
+                    position: "relative",
+                    zIndex: 1,
+                  },
+                }}
+              >
+                View All Episodes
+              </UnifiedButton>
+            </Box>
           </Box>
         </Box>
       </SiteContainer>

@@ -76,7 +76,7 @@ const spacing = {
     bodyMaxWidthSmall: 450,
     accentMb: 0,
     buttonStackSpacing: 2,
-    buttonHeight: { xs: "48px", sm: "42px", md: "48px" },
+    buttonHeight: { xs: "48px", sm: "42px", md: "49px" },
     buttonPaddingX: { xs: 2.5, sm: 2.5 },
     buttonMaxWidth: { xs: "260px", sm: "180px", md: "220px", lg: "280px" },
     buttonRadius: "12px",
@@ -91,49 +91,59 @@ const spacing = {
   // LEADERSHIP
   // =========================================================
   leadership: {
-    sectionPy: { xs: 4, sm: 6, md: 8, lg: 10 },
-    sectionPb: { xs: 1, md: 1.5 },
+  sectionPy: { xs: 4, sm: 6, md: 8, lg: 10 },
+  sectionPb: { xs: 1, md: 1.5 },
 
-    itemRowGap: { xs: 3, md: 5, lg: 6 },
-    itemRowMb: { xs: 5, md: 8 },
-    imageHeight: { xs: 260, sm: 320, md: 380, lg: 440 },
-    itemMinHeight: { md: 420, lg: 480 },
-    imageCardRadius: "20px",
-    imagePlaceholderBg: "#e8e8e8",
-    imagePlaceholderBgEmpty: "#f0f0f0",
-    imageCardShadow: "0 8px 30px rgba(0,0,0,0.1)",
-    imageCardShadowHover: "0 16px 50px rgba(0,0,0,0.18)",
-    textColumnRadius: "16px",
-    textColumnPadding: { xs: 2, md: 3, lg: 4 },
-    itemTitleMb: { xs: 1.5, md: 2 },
-    richDescriptionMb: 2,
-    richDescParagraphMb: 1.5,
-    richDescHeadingMb: 1.5,
-    richDescHeadingMt: 2,
-    richDescBulletGap: 1.5,
-    richDescBulletMb: 1,
-    richDescBulletSize: 8,
-    richDescBulletBorder: 2,
-    richDescBulletMt: "6px",
+  itemRowGap: { xs: 3, md: 5, lg: 6 },
+  // 👇 REDUCED from 5/8 to 2/4 to pull the banner up
+  itemRowMb: { xs: 2, md: 4 }, 
+  
+  imageHeight: { xs: 260, sm: 320, md: 380, lg: 440 },
+  itemMinHeight: { md: 420, lg: 480 },
+  imageCardRadius: "20px",
+  imagePlaceholderBg: "#e8e8e8",
+  imagePlaceholderBgEmpty: "#f0f0f0",
+  imageCardShadow: "0 8px 30px rgba(0,0,0,0.1)",
+  imageCardShadowHover: "0 16px 50px rgba(0,0,0,0.18)",
+  textColumnRadius: "16px",
+  textColumnPadding: { xs: 2, md: 3, lg: 4 },
+  
+  itemTitleMb: { xs: 1.5, md: 2 },
+  richDescriptionMb: 2,
+  // 👇 REDUCED paragraph gap from 1.5 to 1
+  richDescParagraphMb: 1, 
+  richDescHeadingMb: 1.5,
+  richDescHeadingMt: 2,
+  richDescBulletGap: 1.5,
+  // 👇 REDUCED bullet list gap from 1 to 0.5
+  richDescBulletMb: 0.5, 
+  richDescBulletSize: 8,
+  richDescBulletBorder: 2,
+  richDescBulletMt: "6px",
 
-    ctaContainerMt: { xs: 4, md: 6 },
-    ctaContainerMb: { xs: 1, md: 1.5 },
+  // 👇 REDUCED top margin from 4/6 to 2/3 to pull the banner up
+  ctaContainerMt: { xs: 0, md: 0 }, 
+  ctaContainerMb: { xs: 1, md: 1.5 },
 
-    ctaBannerPadding: { xs: 3, sm: 4, md: 5, lg: 6 },
-    ctaBannerRadius: "20px",
-    ctaRightRadius: "20px",
-    ctaHeadingMb: { xs: 1.5, md: 2 },
-    ctaLeftPadding: { xs: 0, md: 2 },
-    ctaImageMt: 2,
-    ctaImageHeight: { xs: 180, md: 480 },
-    ctaImageRadius: "16px",
-    ctaRightPadding: { xs: 2.5, md: 3.5 },
-    ctaRightGap: { xs: 2, md: 2.5 },
-    coachingHeadingMb: { xs: 2, md: 3 },
-    coachingCardRadius: "14px",
-    coachingCardPadding: { xs: 2, md: 2.5 },
-    coachingCardDescMt: 0.5,
-  },
+  ctaBannerPadding: { xs: 3, sm: 4, md: 5, lg: 6 },
+  ctaBannerRadius: "20px",
+  ctaRightRadius: "20px",
+  ctaHeadingMb: { xs: 1.5, md: 2 },
+  ctaLeftPadding: { xs: 0, md: 2 },
+  ctaImageMt: 2,
+  ctaImageHeight: { xs: 180, md: 480 },
+  ctaImageRadius: "16px",
+  ctaRightPadding: { xs: 2.5, md: 3.5 },
+  
+  // 👇 REDUCED the gap between "You Will" heading and the cards
+  coachingHeadingMb: { xs: 1.5, md: 2 }, 
+  // 👇 REDUCED the gap between the cards themselves
+  ctaRightGap: { xs: 1.5, md: 2 }, 
+  
+  coachingCardRadius: "14px",
+  coachingCardPadding: { xs: 2, md: 2.5 },
+  coachingCardDescMt: 0.5,
+},
 
   // =========================================================
   // REAL RESULTS
@@ -656,7 +666,7 @@ const spacing = {
     sectionPy: { xs: 4, sm: 5, md: 6, lg: 8 },
     gridGap: { xs: 4, sm: 5, md: 6, lg: 8 },
 
-    imageHeight: { xs: 320, sm: 420, md: 400, lg: 460, xl: 520 },
+    imageHeight: { xs: 320, sm: 420, md: 400, lg: 460, xl: 570 },
     imageRadius: { xs: "20px", md: "28px" },
     logoWidth: { xs: "62%", sm: "55%" },
     logoHeight: { xs: 76, sm: 100, md: 100, lg: 120, xl: 130 },
@@ -671,16 +681,16 @@ const spacing = {
 
     episodesGap: { xs: 1, sm: 2, md: 1.5, lg: 2 },
     episodesMb: { xs: 3, md: 4 },
-    episodeCardRadius: "10px",
+    episodeCardRadius: "11px",
     episodeCardPadding: { xs: 0.75, sm: 1, md: 0.75, lg: 1 },
-    episodeImageRadius: "8px",
+    episodeImageRadius: "5.33px",
     episodeImageAspect: "1 / 1",
     episodeInfoMt: 1,
     episodeMetaMt: 0.75,
 
     playPx: { xs: 0.75, sm: 1.25, md: 1, lg: 1.25 },
     playPy: { xs: 0.25, sm: 0.4 },
-    playRadius: "4px",
+    playRadius: "3.8px",
 
     buttonMinWidth: { xs: 180, md: 170, lg: 200 },
     buttonHeight: { xs: "44px", md: "40px", lg: "46px" },
@@ -706,13 +716,13 @@ const spacing = {
     rowGap: { xs: 2, sm: 2.5, md: 3 },
     rowMaxWidth: 1800,
     cardWidth: { xs: "100%", sm: 240, md: 280, lg: 320 },
-    
+
     // 👇 1. Change from { xs: 160, sm: 180, md: 200 } to "auto"
-    cardHeight: "auto", 
-    
+    cardHeight: "auto",
+
     // 👇 2. Increase vertical padding slightly so it looks good when text is short
-    cardPx: { xs: 3, md: 3 }, 
-    
+    cardPx: { xs: 3, md: 3 },
+
     cardRadius: { xs: "14px", md: "18px" },
     cardSkew: { xs: "skewX(0deg)", md: "skewX(-6deg)" },
     cardSkewChild: { xs: "skewX(0deg)", md: "skewX(6deg)" },
@@ -830,52 +840,68 @@ const spacing = {
     cardTitleMb: { xs: 0.5, sm: 0.75, md: 1 },
   },
 
-  // =========================================================
-  // COMMUNITY UNIQUE SECTION
-  // =========================================================
-  communityUnique: {
-    containerPy: { xs: 6, md: 10 },
-    topBoxMb: { xs: 6, md: 10 },
-    topBoxP: { xs: 3, md: 5 },
-    topBoxRadius: "32px",
-    topBoxGap: { xs: 3, sm: 5 },
-    leftColP: { xs: 2, sm: 3 },
-    leftColRadius: 2,
-    leftTitleMb: 2,
-    leftImageMaxWidth: { xs: "280px", sm: "400px", md: "600px", lg: "720px" },
-    leftImageMt: { xs: 2, sm: 4 },
-    leftImageRadius: 2,
-    rightColP: { xs: 2, sm: 3 },
-    rightColRadius: 2,
-    rightColGap: 2,
-    coachingCardP: { xs: 1.5, sm: 2 },
-    coachingCardRadius: 2,
-    meetHeight: { xs: 520, sm: 550, md: 600, lg: 650 },
-    meetRadius: 3,
-    meetPx: 3,
-    meetMb: { xs: 6, md: 10 },
-    meetContentMaxWidth: 800,
-    meetTitleMb: 3,
-    meetBodyMb: 4,
-    meetBodyPx: { xs: 2, sm: 4 },
-    buttonsStackGap: 3,
-    buttonsStackPx: { xs: 2, sm: 0 },
-    primaryButtonMaxWidth: 400,
-    primaryButtonPy: { xs: 2 },
-    primaryButtonPx: { xs: 2, sm: 4 },
-    primaryButtonRadius: "15px",
-    secondaryButtonMaxWidth: 500,
-    secondaryButtonPy: { xs: 2 },
-    secondaryButtonPx: { xs: 2, sm: 4 },
-    secondaryButtonRadius: "15px",
-    finalGridSpacing: { xs: 4, sm: 6, md: 8 },
-    finalImageCardWidth: "100%",
-    finalImageCardMaxWidth: { xs: 320, sm: 400, md: 500, lg: 690 },
-    finalImageCardHeight: { xs: 200, sm: 300, md: 400, lg: 450 },
-    finalTitleMb: 2,
-    finalBodyMb: 2,
-    finalBodyMaxWidth: { xs: "100%", sm: 500, md: 720 },
-  },
+// =========================================================
+// COMMUNITY UNIQUE SECTION
+// =========================================================
+communityUnique: {
+  // Container
+  containerPy: { xs: 6, md: 10 },
+
+  // Top Box
+  topBoxMb: { xs: 6, md: 10 },
+  topBoxP: { xs: 3, md: 5 },
+  topBoxRadius: "32px",
+  topBoxGap: { xs: 3, sm: 5 },
+
+  // Left Column
+  leftColP: { xs: 2, sm: 3 },
+  leftColRadius: 2,
+  leftTitleMb: 2,
+  leftImageMaxWidth: { xs: "280px", sm: "400px", md: "600px", lg: "700px" },
+  leftImageHeight: { xs: "220px", sm: "300px", md: "420px", lg: "480px" },
+  leftImageMt: { xs: 2, sm: 4 },
+  leftImageRadius: 2,
+
+  // Right Column
+  rightColP: { xs: 2, sm: 3 },
+  rightColRadius: 2,
+  rightColGap: { xs: 2, sm: 3, md: 3, lg: 4 },
+
+  // Coaching Cards
+  coachingCardP: { xs: 1.5, sm: 2 },
+  coachingCardRadius: 1,
+
+  // Meet Section
+  meetHeight: { xs: 520, sm: 550, md: 600, lg: 650 },
+  meetRadius: 3,
+  meetPx: 3,
+  meetMb: { xs: 6, md: 10 },
+  meetContentMaxWidth: 800,
+  meetTitleMb: 3,
+  meetBodyMb: 4,
+  meetBodyPx: { xs: 2, sm: 4 },
+
+  // Buttons
+  buttonsStackGap: 3,
+  buttonsStackPx: { xs: 2, sm: 0 },
+  primaryButtonMaxWidth: 400,
+  primaryButtonPy: { xs: 2 },
+  primaryButtonPx: { xs: 2, sm: 4 },
+  primaryButtonRadius: "15px",
+  secondaryButtonMaxWidth: 500,
+  secondaryButtonPy: { xs: 2 },
+  secondaryButtonPx: { xs: 2, sm: 4 },
+  secondaryButtonRadius: "15px",
+
+  // Final Grid / Image Card
+  finalGridSpacing: { xs: 4, sm: 6, md: 8 },
+  finalImageCardWidth: "100%",
+  finalImageCardMaxWidth: { xs: 320, sm: 400, md: 500, lg: 690 },
+  finalImageCardHeight: { xs: 200, sm: 300, md: 400, lg: 450 },
+  finalTitleMb: 2,
+  finalBodyMb: 2,
+  finalBodyMaxWidth: { xs: "100%", sm: 500, md: 720 },
+},
 
   // =========================================================
   // AUTHENTIC RELATING PAGE
@@ -946,8 +972,8 @@ const spacing = {
     outerPb: { xs: 10, md: 14 },
     panelTop: 150,
     panelRadius: 2,
-    cardBottom: 150,
-    cardWidth: { xs: "95%", sm: "100%", md: "100%", lg: "105%" },
+    cardBottom: { xs: "10%", sm: "5%", md: "20%", lg: "22%" },
+    cardWidth: { xs: "95%", sm: "100%", md: "100%", lg: "150%" },
     cardMaxWidth: { xs: 590, sm: 600, md: 800, lg: 1100 },
     cardPadding: { xs: 3, md: 5 },
     cardRadius: 2,
@@ -955,7 +981,7 @@ const spacing = {
     bodyMb: 2,
     subTextMb: 2,
     footerMt: 2,
-    listPl: 5,
+    listPl: { xs: 0, sm: 1, md: 15, lg: 20 },
     bulletIconMinWidth: 30,
     bulletDotSize: 26,
     bulletDotBorderWidth: 4,

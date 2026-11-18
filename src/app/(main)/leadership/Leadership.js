@@ -160,76 +160,76 @@ export const Leadership = () => {
                                                 </motion.div>
 
                                                 {/* Description with split animation - each element appears one by one */}
-                                            <Box sx={{ width: '100%', flex: 1 }}>
-                                                {(() => {
-                                                    // Create a temporary div to parse HTML
-                                                    const tempDiv = document.createElement('div');
-                                                    tempDiv.innerHTML = section.description;
-                                                    const children = Array.from(tempDiv.children);
+                                                <Box sx={{ width: '100%', flex: 1 }}>
+                                                    {(() => {
+                                                        // Create a temporary div to parse HTML
+                                                        const tempDiv = document.createElement('div');
+                                                        tempDiv.innerHTML = section.description;
+                                                        const children = Array.from(tempDiv.children);
 
-                                                    return children.map((child, idx) => (
-                                                        <motion.div
-                                                            key={idx}
-                                                            initial={{ opacity: 0, y: 20 }}
-                                                            whileInView={{ opacity: 1, y: 0 }}
-                                                            viewport={{ once: true }}
-                                                            transition={{ duration: 0.5, delay: 0.4 + (idx * 0.1) }}
-                                                            style={{ width: '100%' }}
-                                                        >
-                                                            <Box
-                                                                dangerouslySetInnerHTML={{ __html: child.outerHTML }}
-                                                                sx={{
-                                                                    fontFamily: "Red Hat Display, sans-serif",
-                                                                    fontSize: { xs: 14, sm: 14, md: 15, lg: 16 },
-                                                                    lineHeight: 1.7,
-                                                                    color: "#444",
-                                                                    width: '100%',
-                                                                    mb: 2,
+                                                        return children.map((child, idx) => (
+                                                            <motion.div
+                                                                key={idx}
+                                                                initial={{ opacity: 0, y: 20 }}
+                                                                whileInView={{ opacity: 1, y: 0 }}
+                                                                viewport={{ once: true }}
+                                                                transition={{ duration: 0.5, delay: 0.4 + (idx * 0.1) }}
+                                                                style={{ width: '100%' }}
+                                                            >
+                                                                <Box
+                                                                    dangerouslySetInnerHTML={{ __html: child.outerHTML }}
+                                                                    sx={{
+                                                                        fontFamily: "Red Hat Display, sans-serif",
+                                                                        fontSize: { xs: 14, sm: 14, md: 15, lg: 16 },
+                                                                        lineHeight: 1.8,
+                                                                        color: "#00000",
+                                                                        width: '100%',
+                                                                        mb: 2,
 
-                                                                    "& p": {
-                                                                        mb: 1.5,
-                                                                        '&:last-child': {
-                                                                            mb: 0
+                                                                        "& p": {
+                                                                            mb: 1.5,
+                                                                            '&:last-child': {
+                                                                                mb: 0
+                                                                            }
+                                                                        },
+
+                                                                        "& h3, & h4": {
+                                                                            fontSize: { xs: 18, md: 20 },
+                                                                            fontWeight: 600,
+                                                                            mb: 1.5,
+                                                                            mt: 2,
+                                                                            color: '#000000'
+                                                                        },
+
+                                                                        "& ul": {
+                                                                            pl: 0,
+                                                                            mt: 1,
+                                                                            listStyle: "none"
+                                                                        },
+
+                                                                        "& li": {
+                                                                            display: "flex",
+                                                                            alignItems: "flex-start",
+                                                                            gap: 1.5,
+                                                                            mb: 1.5,
+                                                                            fontSize: { xs: 13, sm: 13, md: 14 },
+
+                                                                            "&::before": {
+                                                                                content: '""',
+                                                                                width: 18,
+                                                                                height: 18,
+                                                                                borderRadius: "50%",
+                                                                                border: "3px solid #2196F3",
+                                                                                marginTop: "4px",
+                                                                                flexShrink: 0
+                                                                            }
                                                                         }
-                                                                    },
-
-                                                                    "& h3, & h4": {
-                                                                        fontSize: { xs: 18, md: 20 },
-                                                                        fontWeight: 600,
-                                                                        mb: 1.5,
-                                                                        mt: 2,
-                                                                        color: '#1a1a1a'
-                                                                    },
-
-                                                                    "& ul": {
-                                                                        pl: 0,
-                                                                        mt: 1,
-                                                                        listStyle: "none"
-                                                                    },
-
-                                                                    "& li": {
-                                                                        display: "flex",
-                                                                        alignItems: "flex-start",
-                                                                        gap: 1.5,
-                                                                        mb: 1.5,
-                                                                        fontSize: { xs: 13, sm: 13, md: 14 },
-
-                                                                        "&::before": {
-                                                                            content: '""',
-                                                                            width: 18,
-                                                                            height: 18,
-                                                                            borderRadius: "50%",
-                                                                            border: "3px solid #2196F3",
-                                                                            marginTop: "4px",
-                                                                            flexShrink: 0
-                                                                        }
-                                                                    }
-                                                                }}
-                                                            />
-                                                        </motion.div>
-                                                    ));
-                                                })()}
-                                            </Box>
+                                                                    }}
+                                                                />
+                                                            </motion.div>
+                                                        ));
+                                                    })()}
+                                                </Box>
                                             </Box>
                                         </motion.div>
                                     </Box>
@@ -239,7 +239,6 @@ export const Leadership = () => {
                     })}
                 </Box>
 
-                {/* Bottom CTA Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -247,7 +246,33 @@ export const Leadership = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <Box sx={{ ...lead.ctaContainer, mb: { xs: 2, md: 3 } }}>
-                        <Box sx={lead.ctaBanner}>
+                        <Box
+                            sx={{
+                                ...lead.ctaBanner,
+
+                                // 👇 FIXED GRADIENT BORDER (No masks, perfectly smooth)
+                                position: "relative",
+                                borderRadius: "43px",
+                                overflow: "hidden",
+
+                                // 1. Reserve 2px for the border
+                                border: "2px solid transparent",
+
+                                // 2. Layer the original background on top, gradient on bottom
+                                // Note: If your theme's lead.ctaBanner doesn't use 'background' but 'backgroundColor', change the first line below.
+                                backgroundImage: `
+          ${lead.ctaBanner.background || "none"}, 
+          linear-gradient(105.94deg, #FFFFFF 2.2%, #999999 100%)
+        `,
+                                backgroundOrigin: "border-box",
+                                backgroundClip: "padding-box, border-box",
+
+                                // 3. Disable the old mask trick to prevent clashing
+                                "&::before": {
+                                    display: "none",
+                                },
+                            }}
+                        >
                             {/* LEFT SECTION */}
                             <Box sx={lead.ctaLeft}>
                                 <motion.div
@@ -269,7 +294,10 @@ export const Leadership = () => {
                                 >
                                     <Typography sx={lead.ctaBody}>
                                         At{" "}
-                                        <Box component="span" sx={{ textDecoration: "underline", fontWeight: 600 }}>
+                                        <Box
+                                            component="span"
+                                            sx={{ textDecoration: "underline", fontWeight: 600 }}
+                                        >
                                             AuthenticRelating.com
                                         </Box>
                                         , we offer trainings and coaching to cultivate <br />
@@ -288,7 +316,7 @@ export const Leadership = () => {
                                             src="/leadership/relationallyx.png"
                                             alt="Relational Leadership"
                                             fill
-                                            style={{ objectFit: 'cover' }}
+                                            style={{ objectFit: "cover" }}
                                         />
                                     </Box>
                                 </motion.div>
@@ -302,9 +330,7 @@ export const Leadership = () => {
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.5, delay: 0.1 }}
                                 >
-                                    <Typography sx={lead.coachingHeading}>
-                                        You will:
-                                    </Typography>
+                                    <Typography sx={lead.coachingHeading}>You will:</Typography>
                                 </motion.div>
 
                                 {coachingPoints.map((point, idx) => (

@@ -115,15 +115,15 @@ export const AuthenticRelatingUI = () => {
             <motion.div variants={itemVariants}>
               <Typography sx={styles.introBody}>
                 Authentic Relating is the art of connecting in ways that are deeply
-                human—where presence, truth, and empathy meet. These intentions are
-                not rigid rules but living invitations to show up more fully—as
+                human where presence, truth, and empathy meet. These intentions are
+                not rigid rules but living invitations to show up more fully as
                 ourselves and with each other. They help create a relational field
                 where vulnerability is honored, boundaries are respected, and
                 connection becomes a practice of mutual growth and discovery. While
                 these are some core intentions to guide your practice, you are always
-                free to create your own—ones that speak to your truth, your values,
+                free to create your own ones that speak to your truth, your values,
                 and the kind of connection you wish to cultivate. Let them be a
-                compass, not a constraint—an offering, not an obligation.
+                compass, not a constraint an offering, not an obligation.
               </Typography>
             </motion.div>
           </Box>

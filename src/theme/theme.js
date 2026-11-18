@@ -3628,7 +3628,7 @@ const theme = createTheme({
         color: colors.clientTestimonial.textColor,
         display: "flex",
         flexDirection: "column",
-        minHeight: { md: "250px" },border: "2px solid #ffffff",
+        minHeight: { md: "250px" }, border: "2px solid #ffffff",
       },
       text: {
         fontFamily: typography.clientTestimonial.text.fontFamily,
@@ -4096,11 +4096,12 @@ const theme = createTheme({
           sm: 600,
           md: 800,
           lg: 1000,
-          xl: 1200,
+          xl: 1800,
         },
         marginX: "auto",
         marginBottom: { xs: 4 },
-        color: "#666",
+        color: "#444444",
+        fontWeight: 500,
         paddingX: { xs: 1, sm: 0 },
       },
       button: { marginY: { xs: 5, md: 4, lg: 5, xl: 8 } },
@@ -4205,7 +4206,7 @@ const theme = createTheme({
           title: {
             color: "#fff",
             fontWeight: 500,
-            fontSize: { xs: "18px", md: "22px" },
+            fontSize: { xs: "18px", md: "22px", xl: "29px" },
             lineHeight: "130%",
             textShadow: "0 2px 10px rgba(0,0,0,0.5)",
           },
@@ -4435,10 +4436,10 @@ const theme = createTheme({
         width: "fit-content",
       },
       card: {
-        borderRadius: "12px",
+        borderRadius: "9.28px",
         border: "1px solid #EEEEEE",
         backgroundColor: "#FFFFFF",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+        boxShadow: "linear-gradient(122.64deg, rgba(10, 10, 10, 0.1) 20.34%, rgba(68, 68, 68, 0.01) 103.19%)",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
@@ -5129,18 +5130,18 @@ const theme = createTheme({
         lineHeight: typography.coreValues.sectionTitle.lineHeight,
         letterSpacing: typography.coreValues.sectionTitle.letterSpacing,
         textAlign: typography.coreValues.sectionTitle.textAlign,
-        color: colors.coreValues?.title || "#458001",
+        color: colors.coreValues?.title || "#000000",
       },
       headerSubtitle: {
         fontFamily: typography.coreValues.sectionSubtitle.fontFamily,
         fontWeight: typography.coreValues.sectionSubtitle.fontWeight,
         fontSize: typography.coreValues.sectionSubtitle.fontSize,
-        lineHeight: typography.coreValues.sectionSubtitle.lineHeight,
         letterSpacing: typography.coreValues.sectionSubtitle.letterSpacing,
         textAlign: typography.coreValues.sectionSubtitle.textAlign,
-        color: colors.coreValues?.subtitle || "#666666",
+        color: "#000000", // 👈 Hardcoded to black
         maxWidth: 720,
         mx: "auto",
+        mb: 3
       },
 
       // ---- Grid ----
@@ -5287,7 +5288,7 @@ const theme = createTheme({
       leftImage: {
         width: "100%",
         maxWidth: spacing.communityUnique.leftImageMaxWidth,
-        height: "auto",
+        height: { xs: 200, sm: 140, md: 180, xl: 300 }, // 👈 fixed responsive height
         objectFit: "cover",
         mt: spacing.communityUnique.leftImageMt,
         borderRadius: spacing.communityUnique.leftImageRadius,
@@ -5297,8 +5298,8 @@ const theme = createTheme({
       rightCol: {
         flex: 1,
         border: colors.communityUnique.rightPanelBorder,
-        borderRadius: spacing.communityUnique.rightColRadius,
         p: spacing.communityUnique.rightColP,
+        borderRadius: spacing.communityUnique.rightColRadius,
         display: "flex",
         flexDirection: "column",
         gap: spacing.communityUnique.rightColGap,
@@ -5306,8 +5307,8 @@ const theme = createTheme({
       },
       coachingCard: {
         background: colors.communityUnique.coachingCardGradient,
-        borderRadius: spacing.communityUnique.coachingCardRadius,
         p: spacing.communityUnique.coachingCardP,
+        borderRadius: spacing.communityUnique.coachingCardRadius,
         boxShadow: colors.communityUnique.coachingCardShadow,
       },
       coachingCardTitle: {
@@ -7083,7 +7084,7 @@ const theme = createTheme({
       introBody: {
         ...typography.authenticRelatingUI.introBody,
         color: colors.authenticRelatingUI.introBody,
-        maxWidth: "1024px",
+        maxWidth: "100%",
         mx: "auto",
       },
 

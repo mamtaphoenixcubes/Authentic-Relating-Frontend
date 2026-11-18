@@ -63,7 +63,8 @@ export default function FrameworkHeroSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
         >
-          <Typography sx={heroStyles.body}>
+          {/* 👇 Added mb: 2 (16px) for line spacing */}
+          <Typography sx={{ ...heroStyles.body, mb: { xs: 2, md: 3 } }}>
             We all crave connection that feels real—where we can be fully seen, safely held, and deeply understood. But most of us were never taught how to truly relate. That's where the <strong>Five Dimensions of Authentic Relating </strong>come in.
           </Typography>
         </motion.div>

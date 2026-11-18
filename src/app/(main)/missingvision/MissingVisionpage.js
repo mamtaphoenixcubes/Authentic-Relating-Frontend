@@ -109,7 +109,7 @@ export const MissingVisionpage = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5 }}
         >
-          <Box className="mx-auto pt-12 pb-1">
+          <Box className="mx-auto pt-1 pb-1">
             <Box sx={mv.mission.card}>
 
               {/* Mobile image */}
