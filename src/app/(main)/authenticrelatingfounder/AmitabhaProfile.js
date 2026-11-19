@@ -284,7 +284,7 @@ export default function AmitabhaProfile() {
               whileInView="show"
               viewport={viewportConfig}
             >
-              In a time when the world feels more disconnected than ever, Amitabha Bhatia is offering a vital reconnection , <strong>to ourselves, to each other, and to what truly matters.</strong>
+              In a time when the world feels more disconnected than ever, Amitabha Bhatia is offering a vital reconnection, <strong>to ourselves, to each other, and to what truly matters.</strong>
             </motion.p>
 
             {/* 9 — Blur + rise (closing paragraph) */}
