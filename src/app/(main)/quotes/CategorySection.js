@@ -359,27 +359,39 @@ function CategorySection({
                 >
                   <Card
                     sx={{
+                      // ── sizing ──
                       minWidth: { xs: 200, sm: 200, md: 220, lg: 320 },
                       width: { xs: 180, sm: 250, md: 280, lg: 300 },
                       height: { xs: 220, sm: 220, md: 210, lg: 150 },
                       borderRadius: { xs: 1, sm: 2 },
                       p: { xs: 1.5, sm: 2 },
-                      color: '#fff',
-                      background: cardBackground,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: 'cover',
+                      flexShrink: 0,
+                      boxSizing: 'border-box',
+                      overflow: 'hidden',
+
+                      // ── text ──
+                      color: '#F9F9F9',
+                      lineHeight: { xs: 1.4, sm: 1.5 },
+                      fontStyle: 'italic',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      lineHeight: { xs: 1.4, sm: 1.5 },
-                      fontStyle: 'italic',
-                      flexShrink: 0,
-                      boxSizing: 'border-box',
-                      border: '1px solid #fff',
-                      overflow: 'hidden',
+
+                      // ── background ──
+                      background: cardBackground,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'cover',
+
+                      // ── NEW: border / glass blur / shadow ──
+                      border: '2px solid #FFFFFF',
+                      backdropFilter: 'blur(100.386px)',
+                      WebkitBackdropFilter: 'blur(100.386px)', // Safari support
+                      boxShadow: '0px 2.96px 5.4px 0.74px #0000001A',
+
+                      // ── interaction ──
+                      position: 'relative',
                       transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                       willChange: 'transform',
-                      position: 'relative',
                     }}
                   >
                     <FormatQuoteIcon
@@ -733,7 +745,7 @@ export default function AllCategories() {
                             backgroundColor: '#FFFFFF',
                             border: '1px solid #E5E7EB',
                             boxShadow: '0px 2px 5px rgba(0,0,0,0.04)',
-                            color: '#333333',
+                            color: '#444444',
 
                             transition: 'all 0.25s ease',
 
@@ -780,7 +792,7 @@ export default function AllCategories() {
                   `,
 
                               '& .MuiChip-label': {
-                                color: '#FFFFFF',
+                                color: '#F9F9F9',
                                 fontWeight: 500,
 
                                 // Responsive font size for active chip
@@ -817,7 +829,7 @@ export default function AllCategories() {
                   '& svg': { fontSize: '2rem' }, // Made icon bigger
                 }}
               >
-                
+
                 <ChevronRightIcon />
               </IconButton>
             </motion.div>
@@ -828,7 +840,7 @@ export default function AllCategories() {
               whileTap={{ scale: 0.95 }}
               sx={{
                 position: { xs: 'static', sm: 'absolute' },
-                right:30,
+                right: 30,
                 top: { sm: 'calc(50% - 18px)' },
                 ml: { xs: 'auto', sm: 0 },
               }}

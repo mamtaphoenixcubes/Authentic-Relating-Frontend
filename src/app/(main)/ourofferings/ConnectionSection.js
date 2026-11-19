@@ -247,8 +247,27 @@ export default function ConnectionSection() {
                                         {...t.motion.desktopCard(isEven)}
                                         style={t.desktopCardWrapper(isEven)}
                                     >
-                                        <Box sx={t.desktopCard(section.gradient)}>
-                                            <Box sx={t.desktopCardScroll}>
+                                        <Box
+                                            sx={{
+                                                ...t.desktopCard(section.gradient),
+                                                // ✅ grow with content
+                                                height: "auto",
+                                                minHeight: "400px",
+                                                // ✅ buttons below content
+                                                justifyContent: "flex-start",
+                                                gap: 2,
+                                            }}
+                                        >
+                                            <Box
+                                                sx={{
+                                                    ...t.desktopCardScroll,
+                                                    // ✅ size to content, shrink only if needed
+                                                    flex: "0 1 auto",
+                                                    // ✅ cap so extremely long text scrolls instead of stretching
+                                                    maxHeight: { xs: 220, sm: 260, md: 280, lg: 300 },
+                                                    overflowY: "auto",
+                                                }}
+                                            >
                                                 <Typography sx={t.cardTitle}>{section.title}</Typography>
                                                 <Typography sx={t.cardSubtitle}>{section.subtitle}</Typography>
                                                 <Typography
@@ -257,7 +276,15 @@ export default function ConnectionSection() {
                                                 />
                                             </Box>
 
-                                            <Stack {...t.buttonStack}>
+                                            <Stack
+                                                {...t.buttonStack}
+                                                sx={{
+                                                    ...t.buttonStack?.sx,
+                                                    // ✅ sit right under text; pin to bottom only if spare space
+                                                    mt: 0,
+                                                    marginTop: "auto",
+                                                }}
+                                            >
                                                 <MotionButton
                                                     onClick={() => router.push(`/ourofferings/${section.offeringSlug}`)}
                                                     {...t.motion.buttonHover}
@@ -265,10 +292,7 @@ export default function ConnectionSection() {
                                                 >
                                                     Read More
                                                 </MotionButton>
-                                                <MotionButton
-                                                    {...t.motion.buttonHover}
-                                                    sx={t.eventsButton}
-                                                >
+                                                <MotionButton {...t.motion.buttonHover} sx={t.eventsButton}>
                                                     Events
                                                 </MotionButton>
                                             </Stack>

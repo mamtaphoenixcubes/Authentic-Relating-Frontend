@@ -7,7 +7,7 @@ import axiosInstance from "@/lib/axios";
 
 // Common components
 import Section from "../../_components/common/Section";
-import Container from "../../_components/common/Container";
+import SiteContainer from "../../_components/common/SiteContainer";
 import Card from "../../_components/common/Card";
 import EventButton from "../../_components/buttons/EventButton";
 
@@ -181,17 +181,17 @@ export default function CourseCard() {
   return (
     <Section
       sx={{
-        py: { xs: 2, md: 3 },
-        pt: { xs: 0, md: 1 },
+        pt: { xs: 0, sm: 0.5, md: 2 },
+        pb: { xs: 2, sm: 0, md: 1 },
       }}
     >
-      <Container>
+      <SiteContainer maxWidth="1600px">
 
         {/* HEADER */}
         <Box
           sx={{
             textAlign: "center",
-            mt: { xs: 2, md: 3 },
+            mt: { xs: 2, md: 0 },
             mb: { xs: 2, md: 3 },
           }}
         >
@@ -205,7 +205,7 @@ export default function CourseCard() {
                 md: "42px",
                 lg: "48px",
               },
-              color: "#FF8A7A",
+              color: "#F9998D",
               lineHeight: 1.2,
               mb: 1.5,
             }}
@@ -254,7 +254,7 @@ export default function CourseCard() {
               cursor: "pointer",
               color: "#4A90E2",
               fontSize: "18px",
-              fontWeight: 700,
+              fontWeight: 500,
               px: 1,
             }}
           >
@@ -277,11 +277,11 @@ export default function CourseCard() {
                     : "1px solid #E0E0E0",
                 cursor: "pointer",
                 fontFamily: '"Red Hat Display", sans-serif',
-                fontWeight: 600,
-                fontSize: {
-                  xs: "12px",
-                  md: "13px",
-                },
+                fontWeight: 500,
+                fontSize: "15px",
+                lineHeight: "170%",
+                letterSpacing: "0%",
+                verticalAlign: "middle",
                 transition: "all 0.3s ease",
                 background:
                   activeCategory === cat
@@ -314,13 +314,14 @@ export default function CourseCard() {
               cursor: "pointer",
               color: "#4A90E2",
               fontSize: "18px",
-              fontWeight: 700,
+              fontWeight: 500,
               px: 1,
             }}
           >
             ›
           </Box>
         </Box>
+
 
         {/* LOADING */}
         {loading && (
@@ -380,20 +381,33 @@ export default function CourseCard() {
                       borderRadius: "16px",
                       background:
                         "linear-gradient(100deg, #50B0F0 0%, #80B8F5 50%, #BFC3FA 100%)",
-                      boxShadow:
-                        "0 8px 24px rgba(100,181,246,0.3)",
+
+                      // Figma shadow
+                      boxShadow: "0px 4px 7.3px 1px #0000001A",
+
+                      // Backdrop blur
+                      backdropFilter: "blur(135.8px)",
+                      WebkitBackdropFilter: "blur(135.8px)",
+
                       display: "flex",
                       flexDirection: "column",
                       position: "relative",
                       overflow: "hidden",
                       width: "100%",
                       height: "100%",
-                      transition:
-                        "transform 0.3s ease, box-shadow 0.3s ease",
+
+                      // Gradient border
+                      border: "2px solid transparent",
+                      backgroundImage:
+                        "linear-gradient(100deg, #50B0F0 0%, #80B8F5 50%, #BFC3FA 100%), linear-gradient(100deg, #ffffff 0%, #50B0F0 50%, #BFC3FA 100%)",
+                      backgroundOrigin: "border-box",
+                      backgroundClip: "padding-box, border-box",
+
+                      transition: "transform 0.3s ease, box-shadow 0.3s ease",
+
                       "&:hover": {
                         transform: "translateY(-6px)",
-                        boxShadow:
-                          "0 16px 40px rgba(100,181,246,0.4)",
+                        boxShadow: "0px 8px 16px 1px #00000026",
                       },
                     }}
                   >
@@ -787,7 +801,7 @@ export default function CourseCard() {
             </EventButton>
           </Box>
         )}
-      </Container>
+      </SiteContainer>
     </Section>
   );
 }

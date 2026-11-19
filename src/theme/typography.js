@@ -1431,7 +1431,7 @@ const typography = {
     itemTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 700,
-      fontSize: { xs: 22, sm: 24, md: 32, lg: 38 },
+      fontSize: { xs: 22, sm: 24, md: 30, lg: 38 },
       lineHeight: 1.2,
       letterSpacing: 0,
     },
@@ -1466,7 +1466,7 @@ const typography = {
     },
     coachingCardTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 600,
+      fontWeight: 700,
       fontSize: { xs: "12px", sm: "14px", md: "16px", lg: "18px", xl: "20px" },
       lineHeight: "100%",
       letterSpacing: 0,
@@ -1486,7 +1486,7 @@ const typography = {
     title: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 700,
-      fontSize: { xs: "20px", sm: "22px", md: "28px", lg: "32px" },
+      fontSize: { xs: "20px", sm: "22px", md: "28px", lg: "40px" },
       lineHeight: "110%",
       letterSpacing: "0%",
       textAlign: "center",
@@ -1541,7 +1541,7 @@ const typography = {
     },
     heroBody: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 300,
+      fontWeight: 400,
       fontSize: { xs: "13px", sm: "14px", md: "16px", lg: "20px" },
       lineHeight: { xs: "20px", sm: "22px", md: "24px", lg: "26px" },
       letterSpacing: 0,
@@ -1549,7 +1549,7 @@ const typography = {
     },
     overviewTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 900,
+      fontWeight: 700,
       fontSize: { xs: 20, sm: 20, md: 28, lg: 32 },
       lineHeight: "110%",
       letterSpacing: "0%",
@@ -1589,7 +1589,7 @@ const typography = {
   advancedTraining: {
     title: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 800,
+      fontWeight: 700,
       fontSize: { xs: "22px", sm: "24px", md: "28px", lg: "38px" },
       lineHeight: "110%",
       letterSpacing: "0%",
@@ -1612,7 +1612,7 @@ const typography = {
     },
     button: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 500,
+      fontWeight: 700,
       fontSize: { xs: "13px", sm: "13px", md: "15px" },
       lineHeight: 1,
       letterSpacing: "0%",
@@ -1634,21 +1634,21 @@ const typography = {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 700,
       fontSize: { xs: "26px", sm: "28px", md: "36px", lg: "42px" },
-      lineHeight: "110%",
+      lineHeight: "130%",
     },
     sectionDescription: {
-      fontFamily: '"DM Sans", sans-serif',
+      fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 400,
       fontSize: { xs: "14px", sm: "14px", md: "16px", lg: "18px" },
       lineHeight: { xs: "22px", sm: "24px", md: "26px", lg: "28px" },
     },
     headingTitle: {
       fontWeight: 700,
-      fontSize: { xs: 22, sm: 26, md: 30 },
+      fontSize: { xs: 22, sm: 26, md: 30, lg: 34 },
       lineHeight: 1.1,
     },
     cardTitle: {
-      fontWeight: 600,
+      fontWeight: 700,
       fontSize: { xs: "12px", sm: "13px", md: "14px", lg: "16px", xl: "18px" },
       lineHeight: 1.2,
     },
@@ -1975,8 +1975,8 @@ const typography = {
     },
     cardTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 700,
-      fontSize: { xs: "26px", md: "28px", xl: "36px" },
+      fontWeight: 600,
+      fontSize: { xs: "26px", md: "25px", xl: "36px" },
       lineHeight: 1.2,
     },
     body: {
@@ -2207,7 +2207,7 @@ const typography = {
     },
     coachingPointTitle: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 600,
+      fontWeight: 700,
       fontSize: { xs: 11, sm: 12, md: 16 },
     },
     meetTitle: {
@@ -2258,7 +2258,7 @@ const typography = {
   whoItsFor: {
     heading: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 800,
+      fontWeight: 700,
       fontSize: { xs: 24, md: 30, lg: 38, xl: 52 },
       lineHeight: 1.2,
       letterSpacing: 0,
@@ -2274,7 +2274,7 @@ const typography = {
     },
     cardText: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 500,
+      fontWeight: 700,
       fontSize: { xs: 12, sm: 11, md: 13, lg: 14, xl: 17 },
       lineHeight: 1.2,
       letterSpacing: 0,
@@ -2290,9 +2290,10 @@ const typography = {
     blockTitleSmall: {
       fontFamily: '"Red Hat Display", sans-serif',
       fontWeight: 700,
-      fontSize: { xs: 22, sm: 24, md: 30 },
+      fontSize: { xs: 22, sm: 24, md: 38 },
       lineHeight: 1.3,
       letterSpacing: 0,
+      color: "#000000",
     },
     body: {
       fontFamily: '"Red Hat Display", sans-serif',
@@ -2310,7 +2311,7 @@ const typography = {
     },
     button: {
       fontFamily: '"Red Hat Display", sans-serif',
-      fontWeight: 500,
+      fontWeight: 700,
       fontSize: { xs: "13px", sm: "14px" },
       lineHeight: 1,
       letterSpacing: 0,

@@ -60,7 +60,7 @@ const spacing = {
     subtitleMaxWidth: 520,
     pillsGridSpacing: 2,
     pillHeight: { xs: 100, sm: 100, md: 100, lg: 150 },
-    pillMaxWidth: { xs: "100%", sm: 200, md: 200, lg: 280 },
+    pillMaxWidth: { xs: "100%", sm: 200, md: 200, lg: 300 },
     pillRadius: "12px",
     pillPaddingX: { xs: 2, sm: 1.5, md: 2, lg: 4 },
     pillHoverTranslateY: -8,
@@ -80,7 +80,7 @@ const spacing = {
     buttonPaddingX: { xs: 2.5, sm: 2.5 },
     buttonMaxWidth: { xs: "260px", sm: "180px", md: "220px", lg: "280px" },
     buttonRadius: "12px",
-    imageCardMaxWidth: 720,
+    imageCardMaxWidth: { xs: "460px", sm: "348px", md: "750px", lg: "770px" },
     imageCardHeight: { xs: 220, sm: 300, md: 420 },
     imageCardRadius: "14px",
     imageCardPlaceholderBg: "#cfcfcf",
@@ -90,59 +90,56 @@ const spacing = {
   // =========================================================
   // LEADERSHIP
   // =========================================================
-  leadership: {
-  sectionPy: { xs: 4, sm: 6, md: 8, lg: 10 },
-  sectionPb: { xs: 1, md: 1.5 },
 
-  itemRowGap: { xs: 3, md: 5, lg: 6 },
-  // 👇 REDUCED from 5/8 to 2/4 to pull the banner up
-  itemRowMb: { xs: 2, md: 4 }, 
-  
-  imageHeight: { xs: 260, sm: 320, md: 380, lg: 440 },
-  itemMinHeight: { md: 420, lg: 480 },
-  imageCardRadius: "20px",
-  imagePlaceholderBg: "#e8e8e8",
-  imagePlaceholderBgEmpty: "#f0f0f0",
-  imageCardShadow: "0 8px 30px rgba(0,0,0,0.1)",
-  imageCardShadowHover: "0 16px 50px rgba(0,0,0,0.18)",
-  textColumnRadius: "16px",
-  textColumnPadding: { xs: 2, md: 3, lg: 4 },
-  
-  itemTitleMb: { xs: 1.5, md: 2 },
-  richDescriptionMb: 2,
-  // 👇 REDUCED paragraph gap from 1.5 to 1
-  richDescParagraphMb: 1, 
-  richDescHeadingMb: 1.5,
-  richDescHeadingMt: 2,
-  richDescBulletGap: 1.5,
-  // 👇 REDUCED bullet list gap from 1 to 0.5
-  richDescBulletMb: 0.5, 
-  richDescBulletSize: 8,
-  richDescBulletBorder: 2,
-  richDescBulletMt: "6px",
+leadership: {
+    // Section spacing
+    sectionPy: { xs: 0, sm: 0, md: 0, lg: 0 },
+    sectionPt: { xs: 0, sm: 1, md: 1, lg: 2 },
+    sectionPb: { xs: 0, sm: 0, md: 0, lg: 0 },
 
-  // 👇 REDUCED top margin from 4/6 to 2/3 to pull the banner up
-  ctaContainerMt: { xs: 0, md: 0 }, 
-  ctaContainerMb: { xs: 1, md: 1.5 },
+    itemRowGap: { xs: 3, md: 5, lg: 6 },
+    itemRowMb: { xs: 2, md: 3 },
 
-  ctaBannerPadding: { xs: 3, sm: 4, md: 5, lg: 6 },
-  ctaBannerRadius: "20px",
-  ctaRightRadius: "20px",
-  ctaHeadingMb: { xs: 1.5, md: 2 },
-  ctaLeftPadding: { xs: 0, md: 2 },
-  ctaImageMt: 2,
-  ctaImageHeight: { xs: 180, md: 480 },
-  ctaImageRadius: "16px",
-  ctaRightPadding: { xs: 2.5, md: 3.5 },
-  
-  // 👇 REDUCED the gap between "You Will" heading and the cards
-  coachingHeadingMb: { xs: 1.5, md: 2 }, 
-  // 👇 REDUCED the gap between the cards themselves
-  ctaRightGap: { xs: 1.5, md: 2 }, 
-  
-  coachingCardRadius: "14px",
-  coachingCardPadding: { xs: 2, md: 2.5 },
-  coachingCardDescMt: 0.5,
+    imageHeight: { xs: 260, sm: 320, md: 380, lg: 440 },
+    itemMinHeight: { md: 420, lg: 480 },
+    imageCardRadius: "20px",
+    imagePlaceholderBg: "#e8e8e8",
+    imagePlaceholderBgEmpty: "#f0f0f0",
+    imageCardShadow: "0 8px 30px rgba(0,0,0,0.1)",
+    imageCardShadowHover: "0 16px 50px rgba(0,0,0,0.18)",
+    textColumnRadius: "16px",
+    textColumnPadding: { xs: 2, md: 3, lg: 4 },
+
+    itemTitleMb: { xs: 1.5, md: 2 },
+    richDescriptionMb: 2,
+    richDescParagraphMb: 1,
+    richDescHeadingMb: 1.5,
+    richDescHeadingMt: 2,
+    richDescBulletGap: 1.5,
+    richDescBulletMb: 0.5,
+    richDescBulletSize: 8,
+    richDescBulletBorder: 2,
+    richDescBulletMt: "6px",
+
+    ctaContainerMt: { xs: 0, md: 0 },
+    ctaContainerMb: { xs: 1, md: 1 },
+
+    ctaBannerPadding: { xs: 3, sm: 4, md: 5, lg: 6 },
+    ctaBannerRadius: "20px",
+    ctaRightRadius: "20px",
+    ctaHeadingMb: { xs: 1.5, md: 2 },
+    ctaLeftPadding: { xs: 0, md: 2 },
+    ctaImageMt: 2,
+    ctaImageHeight: { xs: 180, md: 480 },
+    ctaImageRadius: "16px",
+    ctaRightPadding: { xs: 2.5, md: 3.5 },
+
+    coachingHeadingMb: { xs: 1.5, md: 2 },
+    ctaRightGap: { xs: 1.5, md: 2 },
+
+    coachingCardRadius: "14px",
+    coachingCardPadding: { xs: 2, md: 2.5 },
+    coachingCardDescMt: 0.5,
 },
 
   // =========================================================
@@ -840,68 +837,68 @@ const spacing = {
     cardTitleMb: { xs: 0.5, sm: 0.75, md: 1 },
   },
 
-// =========================================================
-// COMMUNITY UNIQUE SECTION
-// =========================================================
-communityUnique: {
-  // Container
-  containerPy: { xs: 6, md: 10 },
+  // =========================================================
+  // COMMUNITY UNIQUE SECTION
+  // =========================================================
+  communityUnique: {
+    // Container
+    containerPy: { xs: 6, md: 10 },
 
-  // Top Box
-  topBoxMb: { xs: 6, md: 10 },
-  topBoxP: { xs: 3, md: 5 },
-  topBoxRadius: "32px",
-  topBoxGap: { xs: 3, sm: 5 },
+    // Top Box
+    topBoxMb: { xs: 6, md: 10 },
+    topBoxP: { xs: 3, md: 5 },
+    topBoxRadius: "32px",
+    topBoxGap: { xs: 3, sm: 5 },
 
-  // Left Column
-  leftColP: { xs: 2, sm: 3 },
-  leftColRadius: 2,
-  leftTitleMb: 2,
-  leftImageMaxWidth: { xs: "280px", sm: "400px", md: "600px", lg: "700px" },
-  leftImageHeight: { xs: "220px", sm: "300px", md: "420px", lg: "480px" },
-  leftImageMt: { xs: 2, sm: 4 },
-  leftImageRadius: 2,
+    // Left Column
+    leftColP: { xs: 2, sm: 3 },
+    leftColRadius: 2,
+    leftTitleMb: 2,
+    leftImageMaxWidth: { xs: "280px", sm: "400px", md: "600px", lg: "700px" },
+    leftImageHeight: { xs: "220px", sm: "300px", md: "420px", lg: "480px" },
+    leftImageMt: { xs: 2, sm: 4 },
+    leftImageRadius: 2,
 
-  // Right Column
-  rightColP: { xs: 2, sm: 3 },
-  rightColRadius: 2,
-  rightColGap: { xs: 2, sm: 3, md: 3, lg: 4 },
+    // Right Column
+    rightColP: { xs: 2, sm: 3 },
+    rightColRadius: 2,
+    rightColGap: { xs: 2, sm: 3, md: 3, lg: 4 },
 
-  // Coaching Cards
-  coachingCardP: { xs: 1.5, sm: 2 },
-  coachingCardRadius: 1,
+    // Coaching Cards
+    coachingCardP: { xs: 1.5, sm: 2 },
+    coachingCardRadius: 1,
 
-  // Meet Section
-  meetHeight: { xs: 520, sm: 550, md: 600, lg: 650 },
-  meetRadius: 3,
-  meetPx: 3,
-  meetMb: { xs: 6, md: 10 },
-  meetContentMaxWidth: 800,
-  meetTitleMb: 3,
-  meetBodyMb: 4,
-  meetBodyPx: { xs: 2, sm: 4 },
+    // Meet Section
+    meetHeight: { xs: 520, sm: 550, md: 600, lg: 650 },
+    meetRadius: 3,
+    meetPx: 3,
+    meetMb: { xs: 6, md: 10 },
+    meetContentMaxWidth: 800,
+    meetTitleMb: 3,
+    meetBodyMb: 4,
+    meetBodyPx: { xs: 2, sm: 4 },
 
-  // Buttons
-  buttonsStackGap: 3,
-  buttonsStackPx: { xs: 2, sm: 0 },
-  primaryButtonMaxWidth: 400,
-  primaryButtonPy: { xs: 2 },
-  primaryButtonPx: { xs: 2, sm: 4 },
-  primaryButtonRadius: "15px",
-  secondaryButtonMaxWidth: 500,
-  secondaryButtonPy: { xs: 2 },
-  secondaryButtonPx: { xs: 2, sm: 4 },
-  secondaryButtonRadius: "15px",
+    // Buttons
+    buttonsStackGap: 3,
+    buttonsStackPx: { xs: 2, sm: 0 },
+    primaryButtonMaxWidth: 400,
+    primaryButtonPy: { xs: 2 },
+    primaryButtonPx: { xs: 2, sm: 4 },
+    primaryButtonRadius: "15px",
+    secondaryButtonMaxWidth: 500,
+    secondaryButtonPy: { xs: 2 },
+    secondaryButtonPx: { xs: 2, sm: 4 },
+    secondaryButtonRadius: "15px",
 
-  // Final Grid / Image Card
-  finalGridSpacing: { xs: 4, sm: 6, md: 8 },
-  finalImageCardWidth: "100%",
-  finalImageCardMaxWidth: { xs: 320, sm: 400, md: 500, lg: 690 },
-  finalImageCardHeight: { xs: 200, sm: 300, md: 400, lg: 450 },
-  finalTitleMb: 2,
-  finalBodyMb: 2,
-  finalBodyMaxWidth: { xs: "100%", sm: 500, md: 720 },
-},
+    // Final Grid / Image Card
+    finalGridSpacing: { xs: 4, sm: 6, md: 8 },
+    finalImageCardWidth: "100%",
+    finalImageCardMaxWidth: { xs: 320, sm: 400, md: 500, lg: 690 },
+    finalImageCardHeight: { xs: 200, sm: 300, md: 400, lg: 450 },
+    finalTitleMb: 2,
+    finalBodyMb: 2,
+    finalBodyMaxWidth: { xs: "100%", sm: 500, md: 720 },
+  },
 
   // =========================================================
   // AUTHENTIC RELATING PAGE

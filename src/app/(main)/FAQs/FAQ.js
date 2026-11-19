@@ -146,24 +146,35 @@ export default function FAQSection() {
                     setExpanded(expanded === item._id ? null : item._id)
                   }
                   disableGutters
-                  sx={theme => ({
+
+                  sx={(theme) => ({
                     ...theme.custom.faq.accordion,
                     ...(expanded === item._id
                       ? theme.custom.faq.accordionExpanded
                       : theme.custom.faq.accordionCollapsed),
 
-                    // ✅ Overrides
                     opacity: 1,
                     borderRadius: '10px',
-                    border: '2px solid #ffc8c0',
+                    border: '2px solid #FF826F',
+                    fontWeight: 400,
+                    overflow: 'hidden',
+
                     '&:before': {
                       display: 'none',
                     },
+
                     '&.Mui-expanded': {
+                      border: '2px solid transparent',
                       borderRadius: '10px',
-                      border: '2px solid #ffc8c0',
+                      backgroundImage: `
+      linear-gradient(91.44deg, #FF826E 0%, #DE472F 100%),
+      linear-gradient(104.35deg, #FFFFFF 2.33%, #DE472F 100.06%)
+    `,
+                      backgroundOrigin: 'padding-box, border-box',
+                      backgroundClip: 'padding-box, border-box',
                     },
                   })}
+
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.45, delay: index * 0.07 }}
@@ -179,7 +190,12 @@ export default function FAQSection() {
                     }
                     sx={theme => theme.custom.faq.accordionSummary}
                   >
-                    <Typography sx={theme => theme.custom.faq.questionText}>
+                    <Typography
+                      sx={theme => ({
+                        ...theme.custom.faq.questionText,
+                        fontWeight: 400,
+                      })}
+                    >
                       {item.question}
                     </Typography>
                   </AccordionSummary>

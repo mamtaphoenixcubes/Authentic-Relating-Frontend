@@ -322,7 +322,7 @@ const colors = {
   // =====================================================
   connectionSection: {
     headerTitleColor: "#FF8A7A",
-    headerDescriptionColor: "#000000",
+    headerDescriptionColor: "#444444",
 
     toggleActiveBg: "#1976d2",
     toggleActiveHoverBg: "#1565c0",
@@ -334,8 +334,8 @@ const colors = {
     placeholderBg: "#cccccc",
     gridPlaceholderBg: "#D9D9D9",
 
-    cardText: "#ffffff",
-    cardScrollThumb: "rgba(255,255,255,0.4)",
+    cardText: "#F9F9F9",
+    cardScrollThumb: "#F9F9F9",
 
     readMoreBg: "#ffffff",
     eventsBg: "rgba(255,255,255,0.15)",
@@ -750,12 +750,12 @@ const colors = {
   whoItsFor: {
     heading: "#000000",
     subtitle: "#000000",
-    blockTitle: "#1d1d1d",
-    body: "#444444",
-    accent: "#FF7A5C",
+    blockTitle: "#000000",
+    body: "#000000",
+    accent: "#FF6C6F",
 
-    cardGradient: "linear-gradient(135deg, #FFD27A 0%, #F6A300 100%)",
-    cardBorder: "2px solid rgba(255,255,255,0.9)",
+    cardGradient: "linear-gradient(135deg, #FFC566 0%, #F9A629 100%)",
+    cardBorder: "2px solid rgb(255, 255, 255)",
     cardBorderHover: "2px solid rgba(255,255,255,1)",
     cardShadow: "0 2px 8px rgba(0,0,0,0.08)",
     cardShadowHover:
@@ -782,25 +782,27 @@ const colors = {
   // =====================================================
   youWillLearnTimeline: {
     panelText: "#ffffff",
+
     panelBorderGradient:
       "linear-gradient(to right, rgba(255,255,255,1), rgba(180,180,180,0.8))",
+
     lineColor: "rgba(255,255,255,0.7)",
     dotColor: "#ffffff",
 
-    // Panel gradients + titles (index-aligned with panelsData)
+    // Same background gradient for all three panels
     panels: [
       {
-        gradient: "linear-gradient(135deg, #FFD27D 0%, #FFAE33 100%)",
+        gradient: "linear-gradient(98.89deg, #FFC566 0%, #F9A629 100%)",
         title: "You Will Learn To:",
         stagger: 0.08,
       },
       {
-        gradient: "linear-gradient(135deg, #95C4FF 0%, #087EDF 100%)",
+        gradient: "linear-gradient(98.89deg, #95C4FF 0%, #087EDF 100%)",
         title: "Training Includes:",
         stagger: 0.07,
       },
       {
-        gradient: "linear-gradient(135deg, #32D7E3 0%, #0C959F 100%)",
+        gradient: "linear-gradient(98.89deg, #32D7E3 0%, #0C959F 100%)",
         title: "Certification Journey:",
         stagger: 0.1,
       },
@@ -815,7 +817,7 @@ const colors = {
     moduleText: "#000000",
 
     // Module bullet ring colors (index-aligned)
-    moduleColors: ["#FF6B6B", "#FFA94D", "#339AF0", "#3EC1C1"],
+    moduleColors: ["#FE826D", "#FFC061", "#3196E2", "#53D2DB"],
 
     // Button
     buttonBg: "linear-gradient(98.48deg, #32D7E3 0%, #0C959F 100%)",
@@ -1154,7 +1156,7 @@ const colors = {
     topBoxText: "#ffffff",
 
     rightPanelBg: "rgba(255, 255, 255, 0.3)",
-    rightPanelBorder: "2px solid rgba(255,255,255,0.8)",
+    rightPanelBorderGradient: "linear-gradient(135deg, #FFFFFF, #0C959F)",
 
 
     coachingCardGradient: "linear-gradient(135deg, #FFC566, #F9A629)",
@@ -1200,7 +1202,7 @@ const colors = {
     heroTitle: "#ffffff",
     heroBody: "rgba(255,255,255,0.9)",
     heroOverlay:
-      "linear-gradient(135deg, rgba(233,90,60,0.92), rgba(198,74,45,0.92))",
+      "linear-gradient(101.6deg, rgba(255, 130, 110, 0.86) 0%, rgba(222, 71, 47, 0.86) 100%)",
     heroImage: "/WhyItMattersToday.jpg",
 
     overviewTitle: "#000000",
@@ -1234,8 +1236,8 @@ const colors = {
   // FACILITATION HEADER SECTION
   // =====================================================
   facilitationHeader: {
-    sectionTitle: "#1a1a1a",
-    body: "#555555",
+    sectionTitle: "#000000",
+    body: "#000000",
     imageRadius: "12px",
   },
   // =====================================================

@@ -35,9 +35,8 @@ export default function WhatisAuthentic() {
           {/* Blue gradient card */}
           <motion.div {...wa.motion.card} style={wa.motionWrapper}>
             <Box sx={wa.card}>
-              {/* Title */}
-              <Typography sx={wa.title}>
-                What is Authentic Relating Facilitation?
+              <Typography sx={{ ...wa.title, maxWidth: { xs: "100%", sm: 520, md: 620, lg: 820 } }}>
+                What is Authentic Relating <br /> Facilitation?
               </Typography>
 
               {/* Description */}

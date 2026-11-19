@@ -49,7 +49,35 @@ export const CommunityUnique = () => {
           </MotionBox>
 
           {/* RIGHT */}
-          <MotionBox {...cu.motion.rightCol} sx={cu.rightCol}>
+          <MotionBox
+            {...cu.motion.rightCol}
+            sx={{
+              ...cu.rightCol,
+              position: "relative",
+              border: "none",
+              backgroundClip: "padding-box",
+
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                inset: 0,
+                borderRadius: "inherit",
+                padding: "2px",
+
+                background:
+                  "linear-gradient(135deg, #FFFFFF 0%, #6f95977e 100%)",
+
+                WebkitMask:
+                  "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+
+                WebkitMaskComposite: "xor",
+                maskComposite: "exclude",
+
+                pointerEvents: "none",
+                zIndex: 1,
+              },
+            }}
+          >
             {coachingPoints.map((point, index) => (
               <MotionBox
                 key={index}
@@ -79,7 +107,10 @@ export const CommunityUnique = () => {
           </MotionTypography>
 
           <MotionBox {...cu.motion.buttonsStack} sx={cu.buttonsStack}>
-            <Box sx={cu.primaryButton}>Join Our Online Community Space</Box>
+            <Box sx={{
+              ...cu.primaryButton,
+              border: '2px solid #FFFFFF' // 👈 Applied to Primary
+            }}>Join Our Online Community Space</Box>
             <Box sx={cu.secondaryButton}>
               Attend a Event , Relating Circle or Joy Lab
             </Box>

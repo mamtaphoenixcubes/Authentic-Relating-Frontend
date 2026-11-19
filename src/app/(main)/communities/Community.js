@@ -125,14 +125,20 @@ export const Community = () => {
                   >
                     <MotionTypography
                       {...cm.motion.title}
-                      sx={cm.sectionTitle}
+                      sx={{
+                        ...cm.sectionTitle,
+                        color: '#000000',
+                      }}
                     >
                       {section.title}
                     </MotionTypography>
 
                     <MotionTypography
                       {...cm.motion.description}
-                      sx={cm.sectionDescription}
+                      sx={{
+                        ...cm.sectionDescription,
+                        color: '#000000',
+                      }}
                     >
                       <span
                         dangerouslySetInnerHTML={{ __html: section.description }}
@@ -150,7 +156,30 @@ export const Community = () => {
           CARDS SECTION — "Ways to Engage"
       ========================================================= */}
       <SiteContainer sx={cm.container}>
-        <MotionBox variants={cm.motion.fadeInUp} sx={cm.cardWrapper}>
+        <MotionBox
+          variants={cm.motion.fadeInUp}
+          sx={{
+            ...cm.cardWrapper,
+            position: 'relative',
+            border: 'none',
+            backgroundClip: 'padding-box',
+
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              inset: 0,
+              borderRadius: 'inherit',
+              padding: '2px',
+              background: 'linear-gradient(104.35deg, #ffff 2.33%, #DE472F 100.06%)',
+              WebkitMask:
+                'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+              WebkitMaskComposite: 'xor',
+              maskComposite: 'exclude',
+              pointerEvents: 'none',
+              zIndex: 1,
+            },
+          }}
+        >
           <MotionTypography
             {...cm.motion.title}
             sx={cm.cardWrapperHeading}

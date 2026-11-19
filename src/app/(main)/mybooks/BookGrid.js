@@ -228,7 +228,7 @@ export default function BookGrid() {
         >
             {/* 👇 Reduced Section bottom padding */}
             <Section sx={{ pb: { xs: 2, sm: 3, md: 4 } }}>
-                <SiteContainer>
+                <SiteContainer maxWidth="1600px">
                     {/* ================= CATEGORY FILTER ================= */}
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
@@ -326,12 +326,15 @@ export default function BookGrid() {
                     </motion.div>
 
                     {/* ================= BOOK CARDS ================= */}
+                    {/* ================= BOOK CARDS ================= */}
                     <Box
                         sx={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            justifyContent: 'center',
-                            gap: { xs: 2, sm: 2, md: 2.5 },
+                            display: "flex",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
+                            gap: { xs: 2, sm: 2.5, md: 3, lg: 3.5 },
+                            width: "100%",
+                            mx: "auto",
                         }}
                     >
                         {books.map((book, index) => (
@@ -341,36 +344,31 @@ export default function BookGrid() {
                                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                                style={{ display: 'flex', justifyContent: 'center' }}
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    flex: "1 1 300px",
+                                    maxWidth: "400px",
+                                    minWidth: 0,
+                                }}
                             >
                                 <Card
                                     className="card"
                                     sx={{
                                         width: "100%",
-                                        flexBasis: {
-                                            xs: '280px',
-                                            sm: '320px',
-                                            md: '420px',
-                                            lg: '520px',
-                                        },
-                                        maxWidth: {
-                                            xs: 380,
-                                            sm: 320,
-                                            md: 250,
-                                            lg: 320,
-                                        },
+                                        maxWidth: "100%",
                                         minHeight: {
                                             xs: 320,
-                                            sm: 340,
-                                            md: 360,
-                                            lg: 380,
+                                            sm: 350,
+                                            md: 370,
+                                            lg: 390,
                                         },
                                         borderRadius: { xs: 2, sm: 2, md: 2.5 },
                                         boxShadow: {
                                             xs: "0 4px 12px rgba(0,0,0,0.08)",
                                             md: "0 6px 16px rgba(0,0,0,0.08)",
                                         },
-                                        p: { xs: 1.5, sm: 1.5, md: 2 },
+                                        p: { xs: 1.5, sm: 2, md: 2.25 },
                                         display: "flex",
                                         flexDirection: "column",
                                         overflow: "hidden",
@@ -379,6 +377,7 @@ export default function BookGrid() {
                                         },
                                     }}
                                 >
+                                    {/* IMAGE */}
                                     {/* IMAGE */}
                                     <Box
                                         className="image-wrapper"
@@ -450,7 +449,7 @@ export default function BookGrid() {
                                         <Typography
                                             sx={{
                                                 fontFamily: '"Red Hat Display", sans-serif',
-                                                fontWeight: 600,
+                                                fontWeight: 700,
                                                 fontSize: {
                                                     xs: "16px",
                                                     sm: "18px",
@@ -458,6 +457,7 @@ export default function BookGrid() {
                                                     lg: "22px",
                                                 },
                                                 mb: 1,
+                                                color: "#212A37"
                                             }}
                                         >
                                             {book.title}
@@ -480,7 +480,7 @@ export default function BookGrid() {
                                                     sm: 1.6,
                                                     md: "22.8px",
                                                 },
-                                                color: "text.secondary",
+                                                color: "#535353",
                                                 mb: 2,
                                                 flexGrow: 1,
                                                 display: "-webkit-box",
@@ -523,7 +523,7 @@ export default function BookGrid() {
                                                     whiteSpace: "nowrap",
                                                     overflow: "hidden",
                                                     textOverflow: "ellipsis",
-                                                    color: "#000",
+                                                    color: "#444444",
                                                     background:
                                                         "linear-gradient(106.27deg, rgba(255,255,255,0.26) 33.98%, rgba(255,255,255,0.05) 105.14%)",
                                                     backdropFilter: "blur(10px)",
@@ -623,7 +623,7 @@ export default function BookGrid() {
                                                             whiteSpace: "nowrap",
                                                             overflow: "hidden",
                                                             textOverflow: "ellipsis",
-                                                            color: "#fff",
+                                                            color: "#FFFFFF",
                                                             background: "linear-gradient(98.48deg, #95C4FF 0%, #087EDF 100%)",
                                                             position: "relative",
                                                             border: "none",
@@ -674,13 +674,33 @@ export default function BookGrid() {
                                     sx={{
                                         width: 30,
                                         height: 30,
-                                        border: '1px solid #FFD6D6',
-                                        color: '#FF9A9A',
-                                        bgcolor: '#fff',
-                                        '&:hover': { bgcolor: '#FFF5F5' },
+                                        borderRadius: '10px',
+                                        border: '2px solid transparent',
+                                        color: page > 0 ? '#fff' : '#FF9A9A',
+                                        background: page > 0
+                                            ? `
+                linear-gradient(135deg, #FF9A8A 0%, #FF5A5A 100%) padding-box,
+                linear-gradient(104.35deg, #FF9A8A 2.33%, rgba(255,255,255,0.1) 100.06%) border-box
+            `
+                                            : `
+                linear-gradient(#fff, #fff) padding-box,
+                linear-gradient(104.35deg, #FF9A8A 2.33%, rgba(255,255,255,0.1) 100.06%) border-box
+            `,
+                                        '&:hover': {
+                                            background: page > 0
+                                                ? `
+                    linear-gradient(135deg, #FF8A7A 0%, #FF4A4A 100%) padding-box,
+                    linear-gradient(104.35deg, #FF9A8A 2.33%, rgba(255,255,255,0.1) 100.06%) border-box
+                `
+                                                : `
+                    linear-gradient(#FFF5F5, #FFF5F5) padding-box,
+                    linear-gradient(104.35deg, #FF9A8A 2.33%, rgba(255,255,255,0.1) 100.06%) border-box
+                `,
+                                        },
                                         '&.Mui-disabled': {
                                             color: '#FFD6D6',
                                             border: '1px solid #FFEDED',
+                                            background: '#fff',
                                         },
                                     }}
                                 >
@@ -694,14 +714,37 @@ export default function BookGrid() {
                                     sx={{
                                         width: 30,
                                         height: 30,
+                                        borderRadius: '10px',
+                                        border: '2px solid transparent',
                                         color: '#fff',
-                                        background: 'linear-gradient(135deg, #FF9A8A 0%, #FF5A5A 100%)',
+                                        background: `
+        linear-gradient(135deg, #FF9A8A 0%, #FF5A5A 100%) padding-box,
+        linear-gradient(
+            104.35deg,
+            #FF9A8A 2.33%,
+            rgba(255, 255, 255, 0.1) 100.06%
+        ) border-box
+    `,
                                         '&:hover': {
-                                            background: 'linear-gradient(135deg, #FF8A7A 0%, #FF4A4A 100%)',
+                                            background: `
+            linear-gradient(135deg, #FF8A7A 0%, #FF4A4A 100%) padding-box,
+            linear-gradient(
+                104.35deg,
+                #FF9A8A 2.33%,
+                rgba(255, 255, 255, 0.1) 100.06%
+            ) border-box
+        `,
                                         },
                                         '&.Mui-disabled': {
                                             color: '#fff',
-                                            background: '#FFD6D6',
+                                            background: `
+            #FFD6D6 padding-box,
+            linear-gradient(
+                104.35deg,
+                #FF9A8A 2.33%,
+                rgba(255, 255, 255, 0.1) 100.06%
+            ) border-box
+        `,
                                         },
                                     }}
                                 >
@@ -927,8 +970,8 @@ export default function BookGrid() {
                                                     py: 1.2,
                                                     background: 'linear-gradient(98.48deg, #95C4FF 0%, #087EDF 100%)',
                                                     boxShadow: '0 4px 14px rgba(8,126,223,0.35)',
-                                                    '&:hover': { 
-                                                        opacity: 0.92, 
+                                                    '&:hover': {
+                                                        opacity: 0.92,
                                                         boxShadow: '0 6px 18px rgba(8,126,223,0.4)',
                                                         background: 'linear-gradient(98.48deg, #85b4ef 0%, #076ecf 100%)',
                                                     },
@@ -1461,8 +1504,8 @@ export default function BookGrid() {
                                             py: 1.2,
                                             background: 'linear-gradient(98.48deg, #95C4FF 0%, #087EDF 100%)',
                                             boxShadow: '0 4px 14px rgba(8,126,223,0.35)',
-                                            '&:hover': { 
-                                                opacity: 0.92, 
+                                            '&:hover': {
+                                                opacity: 0.92,
                                                 boxShadow: '0 6px 18px rgba(8,126,223,0.4)',
                                                 background: 'linear-gradient(98.48deg, #85b4ef 0%, #076ecf 100%)',
                                             },

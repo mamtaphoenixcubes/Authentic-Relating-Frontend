@@ -49,11 +49,22 @@ export default function FacilitationHeader() {
                   transition={{ duration: 0.7, delay: 0.2 }}
                 >
                   <Box sx={fh.textBox}>
-                    <SectionHeader
-                      title="What is Facilitation?"
-                      align="left"
-                      sx={fh.sectionHeaderSx}
-                    />
+                    <Typography
+                      sx={{
+                        fontFamily: '"Red Hat Display", sans-serif',
+                        fontWeight: 700,
+                        fontStyle: 'normal',
+                        fontSize: { xs: 24, sm: 28, md: 36, lg: 44 },
+
+                        lineHeight: '100%',
+                        letterSpacing: 0,
+                        verticalAlign: 'middle',
+                        color: '#000000',
+                        mb: '16px',
+                      }}
+                    >
+                      What is Facilitation?
+                    </Typography>
 
                     <Typography sx={fh.body}>
                       Facilitation is the art of guiding a group or individual

@@ -98,13 +98,6 @@ export default function AdvancedTrainingSection() {
                   sizes="(max-width: 600px) 100vw, 50vw"
                   priority
                 />
-
-                {/* TEXT OVERLAY */}
-                <Box sx={at.cardOverlayBox}>
-                  <Typography sx={at.cardOverlayText}>
-                    Advanced Training
-                  </Typography>
-                </Box>
               </Card>
             </motion.div>
           </Grid>

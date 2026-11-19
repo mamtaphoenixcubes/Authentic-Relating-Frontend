@@ -1128,6 +1128,7 @@ const theme = createTheme({
         mb: spacing.leadership.itemRowMb,
         alignItems: "stretch",
       },
+
       itemRowReversed: {
         flexDirection: { xs: "column", md: "row-reverse" },
       },
@@ -1137,31 +1138,50 @@ const theme = createTheme({
         flex: 1,
         display: "flex",
         minWidth: 0,
+        overflow: "visible",
       },
+
       imageCard: {
         width: "100%",
         height: spacing.leadership.imageHeight,
-        minHeight: { md: spacing.leadership.itemMinHeight.md, lg: spacing.leadership.itemMinHeight.lg },
+        minHeight: {
+          md: spacing.leadership.itemMinHeight.md,
+          lg: spacing.leadership.itemMinHeight.lg,
+        },
         borderRadius: spacing.leadership.imageCardRadius,
         overflow: "hidden",
         backgroundColor: colors.leadership.imagePlaceholderBg,
         flex: 1,
         boxShadow: spacing.leadership.imageCardShadow,
-        transition: "all 0.3s ease",
+        transition: "box-shadow 0.3s ease",
+
         "&:hover": {
-          transform: "scale(1.02)",
           boxShadow: spacing.leadership.imageCardShadowHover,
         },
+
+        "&:hover img": {
+          transform: "scale(1.04)",
+        },
       },
+
       imageCardContent: {
         p: "0 !important",
         height: "100%",
+        overflow: "hidden",
       },
+
       imageElement: {
         width: "100%",
         height: "100%",
         objectFit: "cover",
+        objectPosition: "center center",
+        display: "block",
+        transform: "scale(1)",
+        transformOrigin: "center center",
+        transition: "transform 0.4s ease",
+        willChange: "transform",
       },
+
       imageEmptyBox: {
         width: "100%",
         height: "100%",
@@ -1177,13 +1197,17 @@ const theme = createTheme({
         display: "flex",
         minWidth: 0,
       },
+
       textColumnInner: {
         display: "flex",
         flexDirection: "column",
         alignItems: { xs: "center", md: "flex-start" },
         textAlign: { xs: "center", md: "left" },
         height: "100%",
-        minHeight: { md: spacing.leadership.itemMinHeight.md, lg: spacing.leadership.itemMinHeight.lg },
+        minHeight: {
+          md: spacing.leadership.itemMinHeight.md,
+          lg: spacing.leadership.itemMinHeight.lg,
+        },
         borderRadius: spacing.leadership.textColumnRadius,
         p: spacing.leadership.textColumnPadding,
         width: "100%",
@@ -1205,7 +1229,10 @@ const theme = createTheme({
 
         "& p": {
           mb: spacing.leadership.richDescParagraphMb,
-          "&:last-child": { mb: 0 },
+
+          "&:last-child": {
+            mb: 0,
+          },
         },
 
         "& h3, & h4": {
@@ -1234,7 +1261,7 @@ const theme = createTheme({
             width: spacing.leadership.richDescBulletSize,
             height: spacing.leadership.richDescBulletSize,
             borderRadius: "50%",
-            border: `${spacing.leadership.richDescBulletBorder} solid ${colors.leadership.richDescBulletBorder}`,
+            border: `${spacing.leadership.richDescBulletBorder}px solid ${colors.leadership.richDescBulletBorder}`,
             marginTop: spacing.leadership.richDescBulletMt,
             flexShrink: 0,
           },
@@ -1248,9 +1275,10 @@ const theme = createTheme({
         alignItems: "center",
         mt: spacing.leadership.ctaContainerMt,
         mb: spacing.leadership.ctaContainerMb,
-        pt: { xs: 4, md: 8 },                          // 👈 inner top padding
-        overflow: "hidden",
+        pt: { xs: 4, md: 8 },
+        overflow: "visible",
       },
+
       ctaBanner: {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
@@ -1262,8 +1290,7 @@ const theme = createTheme({
         position: "relative",
         overflow: "hidden",
 
-
-        // Gradient border (Figma match)
+        // Gradient border
         "&::before": {
           content: '""',
           position: "absolute",
@@ -1287,14 +1314,17 @@ const theme = createTheme({
         borderRadius: spacing.leadership.ctaRightRadius,
         p: spacing.leadership.ctaLeftPadding,
       },
+
       ctaTitle: {
         ...typography.leadership.ctaTitle,
         mb: spacing.leadership.ctaHeadingMb,
       },
+
       ctaBody: {
         ...typography.leadership.ctaBody,
         opacity: 0.95,
       },
+
       ctaImageWrapper: {
         mt: spacing.leadership.ctaImageMt,
         width: "100%",
@@ -1332,11 +1362,13 @@ const theme = createTheme({
           pointerEvents: "none",
         },
       },
+
       coachingHeading: {
         ...typography.leadership.coachingHeading,
         color: "#fff",
         mb: spacing.leadership.coachingHeadingMb,
       },
+
       coachingCard: {
         background: colors.leadership.coachingCardGradient,
         backdropFilter: "blur(100.386px)",
@@ -1345,11 +1377,16 @@ const theme = createTheme({
         p: spacing.leadership.coachingCardPadding,
         boxShadow: colors.leadership.coachingCardShadow,
         transition: "transform 0.2s ease",
-        "&:hover": { transform: "translateX(5px)" },
+
+        "&:hover": {
+          transform: "translateX(5px)",
+        },
       },
+
       coachingCardTitle: {
         ...typography.leadership.coachingCardTitle,
       },
+
       coachingCardDescription: {
         ...typography.leadership.coachingCardDescription,
         mt: spacing.leadership.coachingCardDescMt,
@@ -4689,7 +4726,7 @@ const theme = createTheme({
         },
         lineHeight: "130%",
         letterSpacing: "0%",
-        color: "#fff",
+        color: "#F9F9F9",
         mb: { xs: 1, md: 1.5 },
         textAlign: { xs: "center", sm: "left" },
       },
@@ -4705,7 +4742,7 @@ const theme = createTheme({
         },
         lineHeight: { xs: 1.2, sm: 1.15, md: 1.1, lg: 1.05 },
         letterSpacing: "0%",
-        color: "#fff",
+        color: "#F9F9F9",
         mb: { xs: 2, md: 3, lg: 4 },
         textAlign: { xs: "center", sm: "left" },
       },
@@ -4721,7 +4758,7 @@ const theme = createTheme({
         },
         lineHeight: { xs: 1.6, sm: 1.7, md: "22.8px" },
         letterSpacing: "0%",
-        color: "#fff",
+        color: "#F9F9F9",
         opacity: 0.95,
         mb: { xs: 2.5, md: 3.5 },
         textAlign: { xs: "center", sm: "left" },

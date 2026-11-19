@@ -17,8 +17,8 @@ export default function DiscountBannerCourse() {
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.7, ease: "easeOut", delay: 0.1 }
     }
@@ -26,8 +26,8 @@ export default function DiscountBannerCourse() {
 
   const fadeInRight = {
     hidden: { opacity: 0, x: 40 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       x: 0,
       transition: { duration: 0.7, ease: "easeOut" }
     }
@@ -35,8 +35,8 @@ export default function DiscountBannerCourse() {
 
   const scaleIn = {
     hidden: { opacity: 0, scale: 0.85 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scale: 1,
       transition: { duration: 0.6, ease: "easeOut" }
     }
@@ -52,15 +52,20 @@ export default function DiscountBannerCourse() {
 
   const buttonAnimation = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.5, ease: "easeOut", delay: 0.4 }
     }
   };
 
   return (
-    <Section>
+    <Section
+      sx={{
+        pt: { xs: 0, sm: 3, md: 2 },
+        mt: "0px !important",
+      }}
+    >
       <SiteContainer>
         <Box sx={styles.container}>
           <Box sx={styles.banner}>

@@ -473,7 +473,9 @@ export default function OfferingsMoreSessions() {
                                                         }}
                                                         sx={{
                                                             width: { xs: "90%", sm: 310, md: 420, lg: 580, xl: 692 },
-                                                            height: { xs: 320, sm: 390, md: 400, lg: 440 },
+                                                            /* ✅ minHeight instead of fixed height → card grows with content */
+                                                            minHeight: { xs: 320, sm: 390, md: 400, lg: 440 },
+                                                            height: "auto",
                                                             borderRadius: "20px",
                                                             background: section.gradient,
                                                             p: 4,
@@ -481,16 +483,21 @@ export default function OfferingsMoreSessions() {
                                                             boxShadow: "0 20px 40px rgba(0,0,0,0.25)",
                                                             display: "flex",
                                                             flexDirection: "column",
-                                                            justifyContent: "space-between",
+                                                            /* ✅ no bottom-pinning → buttons sit under text */
+                                                            justifyContent: "flex-start",
+                                                            gap: 2,
                                                             overflow: "hidden",
                                                         }}
                                                     >
                                                         {/* TOP CONTENT */}
                                                         <Box
                                                             sx={{
-                                                                overflowY: "auto",
                                                                 pr: 1,
-                                                                flex: 1,
+                                                                /* ✅ size to content, shrink only if needed */
+                                                                flex: "0 1 auto",
+                                                                /* ✅ cap so extremely long text scrolls instead of stretching infinitely */
+                                                                maxHeight: { xs: 220, sm: 260, md: 280, lg: 300 },
+                                                                overflowY: "auto",
                                                                 scrollbarWidth: "thin",
                                                                 "&::-webkit-scrollbar": {
                                                                     width: "6px",
@@ -580,13 +587,16 @@ export default function OfferingsMoreSessions() {
                                                             whileInView={{ opacity: 1, y: 0 }}
                                                             viewport={{ once: true }}
                                                             transition={{ duration: 0.5, delay: 0.7 }}
+                                                            /* ✅ pushes buttons to bottom only when card has spare height */
+                                                             style={{ marginTop: 0, marginBottom: "auto" }} 
                                                         >
                                                             <Stack
                                                                 direction={{ xs: "column", sm: "row" }}
                                                                 spacing={2}
                                                                 sx={{
-                                                                    mt: 2,
+                                                                    mt: 0,
                                                                     alignSelf: "flex-start",
+                                                                    width: "100%",
                                                                 }}
                                                             >
                                                                 <MotionButton
