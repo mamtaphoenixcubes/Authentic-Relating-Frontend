@@ -213,7 +213,7 @@ export default function AmitabhaProfile() {
               viewport={viewportConfig}
               className="py-2"
             >
-              At his core, Amitabha Bhatia is a truth-seeker and bridge-builder — someone who's spent his life asking a powerful question:
+              At his core, Amitabha Bhatia is a truth-seeker and bridge-builder someone who's spent his life asking a powerful question:
             </motion.p>
 
             {/* 2 — Scale pop (the bold question) */}
@@ -234,7 +234,7 @@ export default function AmitabhaProfile() {
               whileInView="show"
               viewport={viewportConfig}
             >
-              As the founder of <strong>AuthenticRelating.com</strong>, Amitabha is advancing a global movement to transform how we relate — not just with each other, but with ourselves. His mission is clear: to help people drop masks and return to the heart of what it means to be truly real — to relate with honesty, presence, and courage. He believes that beneath all the noise — deadlines, roles, social conditioning — lies a quiet human longing: to be seen, heard, and met as we truly are. In a world that often rewards performance over presence and efficiency over empathy, his work is a quiet, powerful invitation back to what's real.
+              As the founder of <strong>AuthenticRelating.com</strong>, Amitabha is advancing a global movement to transform how we relate not just with each other, but with ourselves. His mission is clear: to help people drop masks and return to the heart of what it means to be truly real to relate with honesty, presence, and courage. He believes that beneath all the noise deadlines, roles, social conditioning lies a quiet human longing: to be seen, heard, and met as we truly are. In a world that often rewards performance over presence and efficiency over empathy, his work is a quiet, powerful invitation back to what's real.
             </motion.p>
 
             {/* 4 — Blur in */}
@@ -244,7 +244,7 @@ export default function AmitabhaProfile() {
               whileInView="show"
               viewport={viewportConfig}
             >
-              Amitabha's path has been shaped by a lifelong devotion to the study and exploration of leadership, psychology, human behaviour and relationships, yoga, meditation, breathwork, and the mind-body-breath connection. He brings a rare synthesis of ancient wisdom and modern insight, and understands that how we relate to others is inseparable from how we relate to ourselves—our emotions, our nervous system, our breath, and our stories.
+              Amitabha's path has been shaped by a lifelong devotion to the study and exploration of leadership, psychology, human behaviour and relationships, yoga, meditation, breathwork, and the mind-body-breath connection. He brings a rare synthesis of ancient wisdom and modern insight, and understands that how we relate to others is inseparable from how we relate to ourselves our emotions, our nervous system, our breath, and our stories.
             </motion.p>
 
             {/* 5 — Slide from right */}
@@ -254,7 +254,7 @@ export default function AmitabhaProfile() {
               whileInView="show"
               viewport={viewportConfig}
             >
-              He doesn't offer scripts or surface-level techniques. What he offers is a living practice — rooted in presence, vulnerability, and deep listening. Whether he's working with a global organization, leading an authentic relating circle, or mentoring one-on-one, Amitabha creates spaces where people can drop prejudices, soften their armour, and meet each other in truth.
+              He doesn't offer scripts or surface-level techniques. What he offers is a living practice rooted in presence, vulnerability, and deep listening. Whether he's working with a global organization, leading an authentic relating circle, or mentoring one-on-one, Amitabha creates spaces where people can drop prejudices, soften their armour, and meet each other in truth.
             </motion.p>
 
             {/* 6 — Fade up (short paragraph, simple motion) */}
@@ -264,7 +264,7 @@ export default function AmitabhaProfile() {
               whileInView="show"
               viewport={viewportConfig}
             >
-              His presence is calm, grounded, and catalytic. People feel safe with him — and in that safety, they discover the freedom to be fully themselves.
+              His presence is calm, grounded, and catalytic. People feel safe with him and in that safety, they discover the freedom to be fully themselves.
             </motion.p>
 
             {/* 7 — Scale + rotate */}
@@ -274,7 +274,7 @@ export default function AmitabhaProfile() {
               whileInView="show"
               viewport={viewportConfig}
             >
-              More than a teacher and facilitator, Amitabha is a mirror — helping people remember their wholeness and the power of authentic connection. He's not interested in helping people perform better — he's here to help them to truly be themselves and relate <strong>better</strong> — to lead, love, and live from a place of integrity, empathy, and embodied truth.
+              More than a teacher and facilitator, Amitabha is a mirror helping people remember their wholeness and the power of authentic connection. He's not interested in helping people perform better. he's here to help them to truly be themselves and relate <strong>better</strong> to lead, love, and live from a place of integrity, empathy, and embodied truth.
             </motion.p>
 
             {/* 8 — Spring bounce */}
@@ -284,7 +284,7 @@ export default function AmitabhaProfile() {
               whileInView="show"
               viewport={viewportConfig}
             >
-              In a time when the world feels more disconnected than ever, Amitabha Bhatia is offering a vital reconnection — <strong>to ourselves, to each other, and to what truly matters.</strong>
+              In a time when the world feels more disconnected than ever, Amitabha Bhatia is offering a vital reconnection , <strong>to ourselves, to each other, and to what truly matters.</strong>
             </motion.p>
 
             {/* 9 — Blur + rise (closing paragraph) */}
@@ -294,7 +294,7 @@ export default function AmitabhaProfile() {
               whileInView="show"
               viewport={viewportConfig}
             >
-              Beyond AuthenticRelating.com, Amitabha offers a wide range of transformative experiences through his <strong>personal website theamitabha.com</strong>, including <strong>life mentoring, conscious leadership coaching, energy and breathwork, qi gong, yoga therapy, spiritual immersions, and self-mastery programs.</strong> His work blends ancient wisdom with modern tools, supporting individuals and organizations in awakening their full potential — from the inside out.
+              Beyond AuthenticRelating.com, Amitabha offers a wide range of transformative experiences through his <strong>personal website theamitabha.com</strong>, including <strong>life mentoring, conscious leadership coaching, energy and breathwork, qi gong, yoga therapy, spiritual immersions, and self-mastery programs.</strong> His work blends ancient wisdom with modern tools, supporting individuals and organizations in awakening their full potential , from the inside out.
             </motion.p>
           </div>
         </div>
