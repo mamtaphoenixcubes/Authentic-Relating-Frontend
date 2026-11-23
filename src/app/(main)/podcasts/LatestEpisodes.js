@@ -333,16 +333,22 @@ export default function LatestEpisodes() {
                         setSelectedCategory={setSelectedCategory}
                       />
                     )}
-
                     <Button
                       variant="contained"
                       onClick={() => setShowAll((prev) => !prev)}
                       sx={{
                         width: { xs: '100%', sm: 'auto' },
-                        bgcolor: colors.connection.events.background,
+                        bgcolor: "#000000",
                         backdropFilter: colors.connection.events.backdropBlur,
-                        border: '1px solid rgba(255,255,255,0.3)',
-                        color: colors.connection.events.text,
+
+                        border: '2px solid transparent',
+                        borderRadius: '10px',
+                        backgroundImage:
+                          'linear-gradient(#000000, #000000), linear-gradient(106.27deg, #FFFFFF 33.98%, #00000010 105.14%)',
+                        backgroundOrigin: 'padding-box, border-box',
+                        backgroundClip: 'padding-box, border-box',
+
+                        color: "#FFFFFF",
                         textTransform: 'none',
                         fontFamily: typography.fonts.body,
                         fontWeight: typography.weights.medium,
@@ -351,11 +357,14 @@ export default function LatestEpisodes() {
                         py: { xs: 0.5, sm: 0.6 },
                         minWidth: { sm: 140, md: 160 },
                         display: { xs: 'none', sm: 'inline-flex' },
-                        borderRadius: spacing.connection.eventsButton.radiusGrid,
                         whiteSpace: 'nowrap',
+
                         '&:hover': {
                           bgcolor: colors.connection.events.hoverBackground,
-                          border: '1px solid rgba(255,255,255,0.5)',
+                          backgroundImage:
+                            `linear-gradient(${colors.connection.events.hoverBackground}, ${colors.connection.events.hoverBackground}), linear-gradient(106.27deg, #FFFFFF 33.98%, #00000010 105.14%)`,
+                          backgroundOrigin: 'padding-box, border-box',
+                          backgroundClip: 'padding-box, border-box',
                         },
                       }}
                     >
@@ -388,7 +397,11 @@ export default function LatestEpisodes() {
                     <Card
                       onClick={() => setSelectedPodcast(podcast)}
                       sx={{
-                         background: 'linear-gradient(15deg, #FF8C75 0%, #FA5D56 100%)',
+                        background: 'rgba(255, 250, 250, 0.08)',
+                        backdropFilter: 'blur(138.4px)',
+                        WebkitBackdropFilter: 'blur(138.4px)',
+                        boxShadow: '0px 4px 7.3px 1px #0000001A',
+
                         borderRadius: colors.connection.listCard.radius,
                         p: { xs: 0.8, sm: 1.2 },
                         display: 'flex',
@@ -398,9 +411,11 @@ export default function LatestEpisodes() {
                         transition: 'all 0.3s ease',
                         height: '100%',
                         minHeight: spacing.connection.gridCardHeight,
+
                         '&:hover': {
-                          background: colors.connection.events.hoverBackground,
+                          background: "rgba(255, 250, 250, 0.21)",
                           transform: 'translateY(-2px)',
+                          boxShadow: '0px 6px 12px 1px #00000026',
                         },
                       }}
                     >
@@ -602,13 +617,13 @@ export default function LatestEpisodes() {
                         <Typography sx={metaTextSx}>
                           {episode.episodeDate !== 'instant'
                             ? new Date(episode.episodeDate).toLocaleDateString(
-                                'en-US',
-                                {
-                                  month: 'long',
-                                  day: 'numeric',
-                                  year: 'numeric',
-                                }
-                              )
+                              'en-US',
+                              {
+                                month: 'long',
+                                day: 'numeric',
+                                year: 'numeric',
+                              }
+                            )
                             : 'Instant'}{' '}
                           • {episode.duration} min
                         </Typography>
@@ -706,11 +721,10 @@ export default function LatestEpisodes() {
                             >
                               <Box
                                 sx={{
-                                  width: `${
-                                    ((currentTime[epKey] || 0) /
-                                      (duration[epKey] || 1)) *
+                                  width: `${((currentTime[epKey] || 0) /
+                                    (duration[epKey] || 1)) *
                                     100
-                                  }%`,
+                                    }%`,
                                   height: '100%',
                                   background: colors.textLight,
                                   borderRadius: 2,

@@ -81,7 +81,7 @@ export default function CourseInnerDetail() {
                         sx={{
                             fontFamily: typography.fontFamily,
                             fontSize: { xs: 25, sm: 20, md: 25, lg: 35, xl: 45 },
-                            color:"#15AFA2",
+                            color: "#15AFA2",
                             fontWeight: 700,
                             mb: { xs: getSpacing(1.5), sm: getSpacing(0), md: getSpacing(0), lg: getSpacing(0), xl: getSpacing(0.5) },
                             textAlign: { xs: 'center', sm: 'left' }
@@ -110,7 +110,7 @@ export default function CourseInnerDetail() {
                                     backgroundColor: '#F3F4F6',
                                     borderBottom: '2px solid #14B8A6',
                                     mb: { xs: getSpacing(2), sm: getSpacing(2.5), md: getSpacing(2.5), lg: getSpacing(3.5), xl: getSpacing(4) },
-                                    borderRadius: { xs: getSpacing(1), sm: getSpacing(1.5), md: getSpacing(2), lg: getSpacing(2.5), xl: getSpacing(3) },
+                                    borderRadius: "0px",
                                     overflow: 'hidden',
                                 }}
                             >
@@ -170,7 +170,7 @@ export default function CourseInnerDetail() {
                                     sx={{
                                         fontFamily: typography.fontFamily,
                                         fontSize: { xs: 13, sm: 10, md: 13, lg: 16, xl: 17 },
-                                        color: "#4B5563",
+                                        color: "#444444",
                                         mb: { xs: getSpacing(1.5), sm: getSpacing(2), md: getSpacing(2.5), lg: getSpacing(3), xl: getSpacing(3.5) },
                                         lineHeight: 1.9,
                                         textAlign: { xs: 'justify', sm: 'left' }
@@ -187,7 +187,7 @@ export default function CourseInnerDetail() {
                                     sx={{
                                         fontFamily: typography.fontFamily,
                                         fontSize: { xs: 13, sm: 10, md: 13, lg: 16, xl: 17 },
-                                        color: "#4B5563",
+                                        color: "#444444",
                                         mb: { xs: getSpacing(1.5), sm: getSpacing(2), md: getSpacing(2.5), lg: getSpacing(3), xl: getSpacing(3.5) },
                                         lineHeight: 1.9,
                                         textAlign: { xs: 'justify', sm: 'left' }
@@ -209,7 +209,8 @@ export default function CourseInnerDetail() {
                                         fontSize: { xs: 22, sm: 15, md: 20, lg: 28, xl: 30 },
                                         fontWeight: 700,
                                         mb: { xs: getSpacing(1.5), sm: getSpacing(2), md: getSpacing(2.5), lg: getSpacing(3), xl: getSpacing(3.5) },
-                                        textAlign: { xs: 'center', sm: 'left' }
+                                        textAlign: { xs: 'center', sm: 'left' },
+                                        color: "#444444",
                                     }}
                                 >
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vel?
@@ -221,7 +222,7 @@ export default function CourseInnerDetail() {
                                     sx={{
                                         fontFamily: typography.fontFamily,
                                         fontSize: { xs: 13, sm: 10, md: 13, lg: 16, xl: 17 },
-                                        color: "#4B5563",
+                                        color: "#444444",
                                         mb: { xs: getSpacing(1.5), sm: getSpacing(2), md: getSpacing(2.5), lg: getSpacing(3), xl: getSpacing(3.5) },
                                         lineHeight: 1.9,
                                         textAlign: { xs: 'justify', sm: 'left' }
@@ -287,9 +288,7 @@ export default function CourseInnerDetail() {
                             </Stack>
                         </motion.div>
 
-                        <Divider
-                            sx={{ mb: { xs: getSpacing(3), sm: getSpacing(3.5), md: getSpacing(4), lg: getSpacing(4.5), xl: getSpacing(5) } }}
-                        />
+                        
 
                         {/* INSTRUCTOR SECTION */}
                         <motion.div
@@ -398,7 +397,7 @@ export default function CourseInnerDetail() {
                                                     sx={{
                                                         fontFamily: typography.fontFamily,
                                                         fontSize: { xs: 12, sm: 10, md: 12, lg: 15, xl: 16 },
-                                                        color: '#6B7280',
+                                                        color: '#444444',
                                                     }}
                                                 >
                                                     Lorem ipsum Lorem, Instructor
@@ -444,7 +443,7 @@ export default function CourseInnerDetail() {
                                                             sx={{
                                                                 fontFamily: typography.fontFamily,
                                                                 fontSize: { xs: 12.5, sm: 9.5, md: 10.5, lg: 15.5, xl: 16.5 },
-                                                                color: '#374151',
+                                                                color: '#444444',
                                                                 textAlign: { xs: 'center', sm: 'left' }
                                                             }}
                                                         >
@@ -483,14 +482,34 @@ export default function CourseInnerDetail() {
                             <Card
                                 sx={{
                                     width: '100%',
-                                    borderRadius: { xs: getSpacing(1), sm: getSpacing(1), md: getSpacing(1), lg: getSpacing(1.5), xl: getSpacing(2) },
-                                    boxShadow: {
-                                        xs: '0 4px 12px rgba(0,0,0,0.08)',
-                                        sm: '0 6px 18px rgba(0,0,0,0.08)',
-                                        md: '0 8px 24px rgba(0,0,0,0.08)',
-                                        lg: '0 10px 30px rgba(0,0,0,0.08)',
-                                        xl: '0 12px 40px rgba(0,0,0,0.08)'
+                                    borderRadius: {
+                                        xs: getSpacing(1),
+                                        sm: getSpacing(1),
+                                        md: getSpacing(1),
+                                        lg: getSpacing(1.5),
+                                        xl: getSpacing(2),
                                     },
+
+                                    // Glass / Blur Effect
+                                    backdropFilter: 'blur(106.398px)',
+                                    WebkitBackdropFilter: 'blur(106.398px)',
+
+                                    // Gradient Border
+                                    border: '1px solid transparent',
+                                    backgroundImage: `
+            linear-gradient(#FFFFFF, #FFFFFF),
+            linear-gradient(
+                122.64deg,
+                rgba(68, 68, 68, 0.1) 20.34%,
+                rgba(68, 68, 68, 0.01) 103.19%
+            )
+        `,
+                                    backgroundOrigin: 'border-box',
+                                    backgroundClip: 'padding-box, border-box',
+
+                                    // Shadow
+                                    boxShadow: '0px 3.08px 5.61px 0.77px #0000001A',
+
                                     overflow: 'hidden',
                                 }}
                             >
@@ -611,40 +630,49 @@ export default function CourseInnerDetail() {
                                     <Button
                                         fullWidth
                                         sx={{
-                                            mt: { xs: getSpacing(2.5), sm: getSpacing(3), md: getSpacing(3.5), lg: getSpacing(4), xl: getSpacing(4.5) },
-                                            py: { xs: getSpacing(1), sm: getSpacing(1.25), md: getSpacing(1.5), lg: getSpacing(1.75), xl: getSpacing(2) },
-                                            borderRadius: { xs: getSpacing(1.5), sm: getSpacing(1.75), md: getSpacing(2), lg: getSpacing(2.25), xl: getSpacing(2.5) },
-                                            background: 'linear-gradient(135deg, #FB7185, #F97316)',
+                                            mt: {
+                                                xs: getSpacing(2.5),
+                                                sm: getSpacing(3),
+                                                md: getSpacing(3.5),
+                                                lg: getSpacing(4),
+                                                xl: getSpacing(4.5),
+                                            },
+                                            py: {
+                                                xs: getSpacing(1),
+                                                sm: getSpacing(1.25),
+                                                md: getSpacing(1.5),
+                                                lg: getSpacing(1.75),
+                                                xl: getSpacing(2),
+                                            },
+                                            borderRadius: '10px',
+                                            border: '2px solid transparent',
+                                            backgroundImage: `
+            linear-gradient(91.44deg, #FF826E 0%, #DE472F 100%),
+            linear-gradient(104.35deg, #FFFFFF 2.33%, #FF826E 100.06%)
+        `,
+                                            backgroundOrigin: 'border-box',
+                                            backgroundClip: 'padding-box, border-box',
                                             color: '#fff',
                                             fontWeight: 600,
                                             textTransform: 'none',
                                             fontFamily: typography.fontFamily,
                                             fontSize: { xs: 13, sm: 10, md: 15, lg: 16, xl: 17 },
-                                            boxShadow: {
-                                                xs: '0 4px 12px rgba(249,115,22,0.35)',
-                                                sm: '0 6px 16px rgba(249,115,22,0.35)',
-                                                md: '0 8px 20px rgba(249,115,22,0.35)',
-                                                lg: '0 10px 24px rgba(249,115,22,0.35)',
-                                                xl: '0 12px 28px rgba(249,115,22,0.35)'
-                                            },
+                                            boxShadow: "0 12px 28px rgba(121, 120, 120, 0.5)",
                                             '&:hover': {
-                                                background: 'linear-gradient(135deg, #F43F5E, #EA580C)',
+                                                backgroundImage: `
+                linear-gradient(91.44deg, #FF826E 0%, #DE472F 100%),
+                linear-gradient(104.35deg, #FFFFFF 2.33%, #DE472F 100.06%)
+            `,
                                                 transform: {
                                                     xs: 'translateY(-2px)',
                                                     sm: 'translateY(-3px)',
                                                     md: 'translateY(-4px)',
                                                     lg: 'translateY(-5px)',
-                                                    xl: 'translateY(-6px)'
+                                                    xl: 'translateY(-6px)',
                                                 },
-                                                boxShadow: {
-                                                    xs: '0 8px 20px rgba(249,115,22,0.5)',
-                                                    sm: '0 10px 24px rgba(249,115,22,0.5)',
-                                                    md: '0 12px 28px rgba(249,115,22,0.5)',
-                                                    lg: '0 14px 32px rgba(249,115,22,0.5)',
-                                                    xl: '0 16px 36px rgba(249,115,22,0.5)'
-                                                }
+                                                boxShadow: "0 12px 28px rgba(160, 155, 155, 0.5)"
                                             },
-                                            transition: 'all 0.3s ease'
+                                            transition: 'all 0.3s ease',
                                         }}
                                     >
                                         Join the course

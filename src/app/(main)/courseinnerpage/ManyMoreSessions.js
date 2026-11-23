@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -6,7 +7,7 @@ import { motion } from "framer-motion";
 
 // Import common components
 import Section from "../../_components/common/Section";
-import Container from "../../_components/common/Container";
+import SiteContainer from "../../_components/common/SiteContainer";
 import SectionHeader from "../../_components/common/SectionHeader";
 import Card from "../../_components/common/Card";
 import EventButton from "../../_components/buttons/EventButton";
@@ -79,8 +80,12 @@ export default function ManyMoreSessions() {
   };
 
   return (
-    <Section sx={{ py: { xs: 6, md: 10 } }}>
-      <Container>
+    <Section
+      sx={{
+        pb: { xs: 2, sm: 3, md: 4 },
+      }}
+    >
+      <SiteContainer maxWidth="1600px">
         <SectionHeader
           title="Many more sessions available"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed urna elit. Ut in tincidunt lacus, at convallis risus."
@@ -88,13 +93,14 @@ export default function ManyMoreSessions() {
           sx={{ mb: 4 }}
         />
 
-        {/* CARDS CONTAINER - FLEXBOX FOR CENTERING */}
-        <div
-          style={{
+        {/* CARDS CONTAINER */}
+        <Box
+          sx={{
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
             gap: "24px",
+            width: "100%",
           }}
         >
           {sessionsData.map((session, index) => {
@@ -110,7 +116,7 @@ export default function ManyMoreSessions() {
                 style={{
                   width: "calc(33.333% - 16px)",
                   minWidth: "300px",
-                  maxWidth: "400px",
+                  maxWidth: {xs: "100%", sm: "calc(50% - 16px)", md: "calc(33.333% - 16px)"},
                   display: "flex",
                   flexDirection: "column",
                 }}
@@ -119,17 +125,20 @@ export default function ManyMoreSessions() {
                   sx={{
                     p: 2,
                     borderRadius: "16px",
-                    background: "linear-gradient(100deg, #50B0F0 0%, #80B8F5 50%, #bfc3fa 100%)",
+                    background:
+                      "linear-gradient(100deg, #50B0F0 0%, #80B8F5 50%, #bfc3fa 100%)",
                     boxShadow: "0 8px 24px rgba(100, 181, 246, 0.3)",
                     display: "flex",
                     flexDirection: "column",
                     position: "relative",
                     overflow: "hidden",
                     height: "100%",
-                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                    transition:
+                      "transform 0.3s ease, box-shadow 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-6px)",
-                      boxShadow: "0 16px 40px rgba(100, 181, 246, 0.4)",
+                      boxShadow:
+                        "0 16px 40px rgba(100, 181, 246, 0.4)",
                     },
                   }}
                 >
@@ -197,28 +206,43 @@ export default function ManyMoreSessions() {
                     >
                       {session.description}
                     </Typography>
-                    {session.description && session.description.length > 100 && (
-                      <Typography
-                        onClick={() => toggleDescription(session.id)}
-                        sx={{
-                          fontFamily: '"Red Hat Display", sans-serif',
-                          fontWeight: 600,
-                          fontSize: { xs: "11px", md: "12px" },
-                          color: "#fff",
-                          cursor: "pointer",
-                          mt: 0.5,
-                          textDecoration: "underline",
-                          "&:hover": { opacity: 0.8 },
-                        }}
-                      >
-                        {isExpanded ? "Show Less" : "... Read More"}
-                      </Typography>
-                    )}
+
+                    {session.description &&
+                      session.description.length > 100 && (
+                        <Typography
+                          onClick={() => toggleDescription(session.id)}
+                          sx={{
+                            fontFamily: '"Red Hat Display", sans-serif',
+                            fontWeight: 600,
+                            fontSize: { xs: "11px", md: "12px" },
+                            color: "#fff",
+                            cursor: "pointer",
+                            mt: 0.5,
+                            textDecoration: "underline",
+                            "&:hover": { opacity: 0.8 },
+                          }}
+                        >
+                          {isExpanded ? "Show Less" : "... Read More"}
+                        </Typography>
+                      )}
                   </Box>
 
                   {/* TIME */}
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
-                    <Box component="span" sx={{ fontSize: "14px", color: "#fff" }}>🕐</Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      mb: 1,
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{ fontSize: "14px", color: "#fff" }}
+                    >
+                      🕐
+                    </Box>
+
                     <Typography
                       sx={{
                         fontFamily: '"Red Hat Display", sans-serif',
@@ -232,8 +256,21 @@ export default function ManyMoreSessions() {
                   </Box>
 
                   {/* MODE */}
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-                    <Box component="span" sx={{ fontSize: "14px", color: "#fff" }}>📍</Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      mb: 2,
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{ fontSize: "14px", color: "#fff" }}
+                    >
+                      📍
+                    </Box>
+
                     <Typography
                       sx={{
                         fontFamily: '"Red Hat Display", sans-serif',
@@ -247,7 +284,14 @@ export default function ManyMoreSessions() {
                   </Box>
 
                   {/* PRICE */}
-                  <Box sx={{ display: "flex", alignItems: "baseline", gap: 1, mb: 3 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      gap: 1,
+                      mb: 3,
+                    }}
+                  >
                     <Typography
                       sx={{
                         fontFamily: '"Red Hat Display", sans-serif',
@@ -256,8 +300,9 @@ export default function ManyMoreSessions() {
                         color: "#fff",
                       }}
                     >
-                      {session.currency} {getPriceLabel(session)}
+                      {getPriceLabel(session)}
                     </Typography>
+
                     {session.originalPrice && (
                       <Typography
                         sx={{
@@ -268,20 +313,23 @@ export default function ManyMoreSessions() {
                           textDecoration: "line-through",
                         }}
                       >
-                        {session.currency} {getOriginalPriceLabel(session)}
+                        {getOriginalPriceLabel(session)}
                       </Typography>
                     )}
                   </Box>
 
-                  {/* BUTTONS - PUSHED TO BOTTOM */}
-                  {/* BUTTONS - PUSHED TO BOTTOM */}
+                  {/* BUTTONS */}
                   <Box
                     sx={{
-                      display: 'flex',
-                      gap: { xs: '8px', sm: '10px', md: '12px' },
-                      mt: 'auto',
-                      flexDirection: 'row',
-                      width: '100%',
+                      display: "flex",
+                      gap: {
+                        xs: "8px",
+                        sm: "10px",
+                        md: "12px",
+                      },
+                      mt: "auto",
+                      flexDirection: "row",
+                      width: "100%",
                     }}
                   >
                     {/* READ MORE BUTTON */}
@@ -289,42 +337,61 @@ export default function ManyMoreSessions() {
                       sx={{
                         flex: 1,
                         minWidth: 0,
-                        height: { xs: '30px', sm: '34px', md: '38px' },
-                        minHeight: 'unset',
-                        borderRadius: { xs: '6px', sm: '7px', md: '8px' },
-                        fontSize: { xs: '10px', sm: '11px', md: '13px' },
+                        height: {
+                          xs: "30px",
+                          sm: "34px",
+                          md: "38px",
+                        },
+                        minHeight: "unset",
+                        borderRadius: {
+                          xs: "6px",
+                          sm: "7px",
+                          md: "8px",
+                        },
+                        fontSize: {
+                          xs: "10px",
+                          sm: "11px",
+                          md: "13px",
+                        },
                         fontWeight: 500,
                         fontFamily: '"Red Hat Display", sans-serif',
-                        color: '#FFFFFF',
-                        position: 'relative',
-                        overflow: 'hidden',
+                        color: "#FFFFFF",
+                        position: "relative",
+                        overflow: "hidden",
                         lineHeight: 1.2,
-                        px: { xs: 0.5, sm: 1, md: 1.5 },
-                        background: 'linear-gradient(105deg, #6BB9F1 0%, #80C5F5 100%)',
-                        backdropFilter: 'blur(10px)',
-                        WebkitBackdropFilter: 'blur(10px)',
-                        border: '1.5px solid rgba(255,255,255,0.95)',
-                        boxShadow: '0px 2px 5px rgba(0,0,0,0.12)',
-                        transition: 'all 0.3s ease',
-                        '&::before': {
+                        px: {
+                          xs: 0.5,
+                          sm: 1,
+                          md: 1.5,
+                        },
+                        background:
+                          "linear-gradient(105deg, #6BB9F1 0%, #80C5F5 100%)",
+                        backdropFilter: "blur(10px)",
+                        WebkitBackdropFilter: "blur(10px)",
+                        border: "1.5px solid rgba(255,255,255,0.95)",
+                        boxShadow: "0px 2px 5px rgba(0,0,0,0.12)",
+                        transition: "all 0.3s ease",
+                        "&::before": {
                           content: '""',
-                          position: 'absolute',
+                          position: "absolute",
                           inset: 0,
-                          borderRadius: 'inherit',
-                          padding: '1px',
+                          borderRadius: "inherit",
+                          padding: "1px",
                           background:
-                            'linear-gradient(135deg, #FFFFFF 0%, rgba(255,255,255,0.35) 100%)',
+                            "linear-gradient(135deg, #FFFFFF 0%, rgba(255,255,255,0.35) 100%)",
                           WebkitMask:
-                            'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                          WebkitMaskComposite: 'xor',
-                          maskComposite: 'exclude',
-                          pointerEvents: 'none',
+                            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                          WebkitMaskComposite: "xor",
+                          maskComposite: "exclude",
+                          pointerEvents: "none",
                           zIndex: 1,
                         },
-                        '&:hover': {
-                          background: 'linear-gradient(105deg, #58AEEF 0%, #70BDF3 100%)',
-                          boxShadow: '0px 4px 10px rgba(0,0,0,0.15)',
-                          transform: 'translateY(-1px)',
+                        "&:hover": {
+                          background:
+                            "linear-gradient(105deg, #58AEEF 0%, #70BDF3 100%)",
+                          boxShadow:
+                            "0px 4px 10px rgba(0,0,0,0.15)",
+                          transform: "translateY(-1px)",
                         },
                       }}
                     >
@@ -336,40 +403,59 @@ export default function ManyMoreSessions() {
                       sx={{
                         flex: 1,
                         minWidth: 0,
-                        height: { xs: '30px', sm: '34px', md: '38px' },
-                        minHeight: 'unset',
-                        borderRadius: { xs: '6px', sm: '7px', md: '8px' },
-                        fontSize: { xs: '10px', sm: '11px', md: '13px' },
+                        height: {
+                          xs: "30px",
+                          sm: "34px",
+                          md: "38px",
+                        },
+                        minHeight: "unset",
+                        borderRadius: {
+                          xs: "6px",
+                          sm: "7px",
+                          md: "8px",
+                        },
+                        fontSize: {
+                          xs: "10px",
+                          sm: "11px",
+                          md: "13px",
+                        },
                         fontWeight: 600,
                         fontFamily: '"Red Hat Display", sans-serif',
-                        color: '#FFFFFF',
-                        position: 'relative',
-                        overflow: 'hidden',
+                        color: "#FFFFFF",
+                        position: "relative",
+                        overflow: "hidden",
                         lineHeight: 1.2,
-                        px: { xs: 0.5, sm: 1, md: 1.5 },
-                        background: 'linear-gradient(105deg, #93c6fc 0%, #1692ff 100%)',
-                        border: '1.5px solid rgba(255,255,255,0.95)',
-                        boxShadow: '0px 2px 5px rgba(0,0,0,0.12)',
-                        transition: 'all 0.3s ease',
-                        '&::before': {
+                        px: {
+                          xs: 0.5,
+                          sm: 1,
+                          md: 1.5,
+                        },
+                        background:
+                          "linear-gradient(105deg, #93c6fc 0%, #1692ff 100%)",
+                        border: "1.5px solid rgba(255,255,255,0.95)",
+                        boxShadow: "0px 2px 5px rgba(0,0,0,0.12)",
+                        transition: "all 0.3s ease",
+                        "&::before": {
                           content: '""',
-                          position: 'absolute',
+                          position: "absolute",
                           inset: 0,
-                          borderRadius: 'inherit',
-                          padding: '1px',
+                          borderRadius: "inherit",
+                          padding: "1px",
                           background:
-                            'linear-gradient(135deg, #FFFFFF 0%, rgba(255,255,255,0.35) 100%)',
+                            "linear-gradient(135deg, #FFFFFF 0%, rgba(255,255,255,0.35) 100%)",
                           WebkitMask:
-                            'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                          WebkitMaskComposite: 'xor',
-                          maskComposite: 'exclude',
-                          pointerEvents: 'none',
+                            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                          WebkitMaskComposite: "xor",
+                          maskComposite: "exclude",
+                          pointerEvents: "none",
                           zIndex: 1,
                         },
-                        '&:hover': {
-                          background: 'linear-gradient(105deg, #69ADF0 0%, #0876D5 100%)',
-                          boxShadow: '0px 4px 10px rgba(0,0,0,0.15)',
-                          transform: 'translateY(-1px)',
+                        "&:hover": {
+                          background:
+                            "linear-gradient(105deg, #69ADF0 0%, #0876D5 100%)",
+                          boxShadow:
+                            "0px 4px 10px rgba(0,0,0,0.15)",
+                          transform: "translateY(-1px)",
                         },
                       }}
                     >
@@ -380,8 +466,8 @@ export default function ManyMoreSessions() {
               </motion.div>
             );
           })}
-        </div>
-      </Container>
+        </Box>
+      </SiteContainer>
     </Section>
   );
 }
