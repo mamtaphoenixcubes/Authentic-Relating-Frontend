@@ -63,8 +63,22 @@ export default function ClientTestimonial() {
             },
           }}
         >
-          What Our Clients Say?
+         The Ripple Effect of Being Seen
         </MotionTypography>
+
+        <Typography
+              sx={{
+                 ...testimonial.text,
+                 textAlign: "center",
+                 pb:"2",
+                    mb: {
+                      xs: spacing.clientTestimonial.textBottom.xs / 4,
+                      md: spacing.clientTestimonial.textBottom.md / 4,
+                    },
+              }}
+            >
+"One moment of truth. A lifetime of impact."
+            </Typography>
 
         <Swiper
           modules={[Autoplay]}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import axiosInstance from "@/lib/axios";
+import CourseLoginDialog from "./CourseLoginDialog";
 
 // Common components
 import Section from "../../_components/common/Section";
@@ -14,6 +15,49 @@ import EventButton from "../../_components/buttons/EventButton";
 // Theme
 import theme from "../../../theme/theme";
 
+const getCourseImageUrl = (image) => {
+  const imagePath = image;
+  if (typeof imagePath !== "string" || !imagePath.trim()) {
+    return "/placeholder.png";
+  }
+
+  const path = imagePath.trim();
+  if (/^https?:\/\//i.test(path)) return path;
+
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "") ?? "";
+  return `${baseUrl}/${path.replace(/^\/+/, "")}`;
+};
+
+const formatCourseStartDate = (startDate) => {
+  if (!startDate) return "";
+
+  const date = new Date(startDate);
+  if (Number.isNaN(date.getTime())) return "";
+
+  const formattedDate = new Intl.DateTimeFormat(undefined, {
+    dateStyle: "medium",
+  }).format(date);
+  const formattedTime = new Intl.DateTimeFormat(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  }).format(date);
+
+  return `${formattedDate}, ${formattedTime}`;
+};
+
+const getCourseDeliveryLabel = (course) => {
+  const mode = course?.deliveryMode || course?.mode_of_course;
+  const labels = {
+    prerecorded: "Prerecorded",
+    online: "Online",
+    both: "Online & Prerecorded",
+    digitaldownload: "Digital Download",
+  };
+
+  return labels[mode?.toLowerCase()] || "Not specified";
+};
+
 export default function CourseCard() {
   const [courseData, setCourseData] = useState([]);
   const [page, setPage] = useState(0);
@@ -21,6 +65,18 @@ export default function CourseCard() {
   const [loading, setLoading] = useState(false);
   const [expandedCards, setExpandedCards] = useState({});
   const [activeCategory, setActiveCategory] = useState("All");
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  const [paymentReturnTo, setPaymentReturnTo] = useState('/onlinecourse');
+
+  const handleBookNow = (courseSlug) => {
+    const paymentUrl = `/onlinecourse/payment/${courseSlug}`;
+    if (localStorage.getItem('token')) {
+      window.location.href = paymentUrl;
+      return;
+    }
+    setPaymentReturnTo(paymentUrl);
+    setLoginDialogOpen(true);
+  };
 
   const size = 6;
 
@@ -112,35 +168,35 @@ export default function CourseCard() {
     if (!course) return "";
 
     const currencySymbol = getCurrencySymbol(course);
+    const price = course.price ?? course.amountOneTime ?? 0;
+    const paymentType = course.course_paymenttype?.toLowerCase();
 
-    if (course.course_paymenttype === "free") {
-      return "Free";
+    if (paymentType === "free") return "Free";
+
+    if (["onetimepayment", "one_time", "one-time"].includes(paymentType)) {
+      return `${currencySymbol}${price}`;
     }
 
-    if (course.course_paymenttype === "onetimepayment") {
-      return `${currencySymbol}${course.amountOneTime ?? 0}`;
+    if (paymentType === "recurring") {
+      const interval = course.recurringInterval || "week";
+      const intervalLabels = {
+        day: "day",
+        week: "week",
+        month: "month",
+        year: "year",
+      };
+      const intervalLabel = intervalLabels[interval.toLowerCase()] || interval;
+      const installmentCount = Number(
+        course.installmentCount ?? course.installment
+      );
+      const installmentLabel =
+        installmentCount > 1 ? ` for ${installmentCount} installments` : "";
+
+      return `${currencySymbol}${price}/${intervalLabel}${installmentLabel}`;
     }
 
-    if (course.course_paymenttype === "recurring") {
-      const installment = course.installment;
-      const suffix = installment ? ` × ${installment}` : "";
-
-      if (course.amountInMonth) {
-        return `${currencySymbol}${course.amountInMonth}/month${suffix}`;
-      }
-
-      if (course.amountInWeek) {
-        return `${currencySymbol}${course.amountInWeek}/week${suffix}`;
-      }
-
-      if (course.amountInByWeekly) {
-        return `${currencySymbol}${course.amountInByWeekly}/bi-week${suffix}`;
-      }
-    }
-
-    return "";
+    return price ? `${currencySymbol}${price}` : "";
   };
-
   // Expand / collapse description
   const toggleDescription = (courseId) => {
     setExpandedCards((prev) => ({
@@ -156,6 +212,9 @@ export default function CourseCard() {
       course.approve_course &&
       !course.isdelete
   );
+
+
+  console.log(publishedCourses,"pub")
 
   // Button common styles
   const commonButtonStyles = {
@@ -352,9 +411,9 @@ export default function CourseCard() {
         >
           {!loading &&
             publishedCourses.map((course, index) => {
-              const imageUrl = course.image?.[0]
-                ? `${process.env.NEXT_PUBLIC_API_URL}/${course.image[0]}`
-                : "/placeholder.png";
+              const imageUrl = getCourseImageUrl(
+                course?.thumbnailUrl || course?.image
+              );
 
               const priceLabel = getCoursePriceLabel(course);
               const currencySymbol = getCurrencySymbol(course);
@@ -548,8 +607,7 @@ export default function CourseCard() {
                           color: "#FFFFFF",
                         }}
                       >
-                        {course.date ||
-                          "21st Mar, 2025 @ 10:00am - 02:00pm"}
+                        {formatCourseStartDate(course.startDate) || "Date to be announced"}
                       </Typography>
                     </Box>
 
@@ -584,7 +642,7 @@ export default function CourseCard() {
                           color: "#FFFFFF",
                         }}
                       >
-                        Mode: {course.mode_of_course || "Online"}
+                        Mode: {getCourseDeliveryLabel(course)}
                       </Typography>
                     </Box>
 
@@ -592,19 +650,28 @@ export default function CourseCard() {
                     <Box
                       sx={{
                         display: "flex",
-                        alignItems: "baseline",
+                        alignItems: "center",
                         gap: 1,
-                        mb: 3,
+                        mb: 2,
                       }}
                     >
+                      <Box
+                        component="span"
+                        sx={{
+                          fontSize: "18px",
+                          color: "#FFFFFF",
+                        }}
+                      >
+                        💲
+                      </Box>
                       <Typography
                         sx={{
                           fontFamily:
                             '"Red Hat Display", sans-serif',
-                          fontWeight: 700,
+                          fontWeight: 500,
                           fontSize: {
-                            xs: "16px",
-                            md: "18px",
+                            xs: "12px",
+                            md: "13px",
                           },
                           color: "#FFFFFF",
                         }}
@@ -617,7 +684,7 @@ export default function CourseCard() {
                           sx={{
                             fontFamily:
                               '"Red Hat Display", sans-serif',
-                            fontWeight: 400,
+                            fontWeight: 500,
                             fontSize: {
                               xs: "12px",
                               md: "13px",
@@ -672,9 +739,7 @@ export default function CourseCard() {
                               "0px 4px 10px rgba(0,0,0,0.15)",
                           },
                         }}
-                        onClick={() => {
-                          window.location.href = `/onlinecourse/payment/${course.courseSlug}`;
-                        }}
+                        onClick={() => handleBookNow(course.courseSlug)}
                       >
                         Book Now
                       </EventButton>
@@ -802,6 +867,11 @@ export default function CourseCard() {
           </Box>
         )}
       </SiteContainer>
+      <CourseLoginDialog
+        open={loginDialogOpen}
+        onClose={() => setLoginDialogOpen(false)}
+        returnTo={paymentReturnTo}
+      />
     </Section>
   );
 }

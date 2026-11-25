@@ -11,10 +11,14 @@ import {
     Tab,
     Stack,
     Divider,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
 } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import VideocamIcon from '@mui/icons-material/Videocam';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@mui/material/styles';
@@ -22,8 +26,74 @@ import { useTheme } from '@mui/material/styles';
 // Shared components
 import Section from '@/app/_components/common/Section';
 import SiteContainer from '@/app/_components/common/SiteContainer';
+import CourseLoginDialog from '../CourseLoginDialog';
 
 const MotionButton = motion(Button);
+
+const renderMarkdownInline = (text, keyPrefix) => {
+    const parts = text.split(/(\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*)/g);
+
+    return parts.map((part, index) => {
+        const key = `${keyPrefix}-${index}`;
+        if (part.startsWith('***') && part.endsWith('***')) {
+            return <strong key={key}><em>{part.slice(3, -3)}</em></strong>;
+        }
+        if (part.startsWith('**') && part.endsWith('**')) {
+            return <strong key={key}>{part.slice(2, -2)}</strong>;
+        }
+        if (part.startsWith('*') && part.endsWith('*')) {
+            return <em key={key}>{part.slice(1, -1)}</em>;
+        }
+        return part;
+    });
+};
+
+const renderMarkdownDescription = (markdown) => {
+    const lines = markdown.replace(/\\([*_])/g, '$1').split(/\r?\n/);
+    const elements = [];
+    let paragraph = [];
+    let bullets = [];
+
+    const flushParagraph = () => {
+        if (!paragraph.length) return;
+        elements.push(
+            <p key={`paragraph-${elements.length}`} className="text-gray-600 text-[15px] leading-[1.9] font-redhat mb-6">
+                {renderMarkdownInline(paragraph.join(' '), `paragraph-${elements.length}`)}
+            </p>
+        );
+        paragraph = [];
+    };
+
+    const flushBullets = () => {
+        if (!bullets.length) return;
+        elements.push(
+            <ul key={`list-${elements.length}`} className="list-disc pl-6 mb-6 space-y-2 text-gray-600 text-[15px] leading-[1.9] font-redhat">
+                {bullets.map((item, index) => (
+                    <li key={index}>{renderMarkdownInline(item, `list-${elements.length}-${index}`)}</li>
+                ))}
+            </ul>
+        );
+        bullets = [];
+    };
+
+    lines.forEach((line) => {
+        const trimmedLine = line.trim();
+        if (!trimmedLine) {
+            flushParagraph();
+            flushBullets();
+        } else if (/^[-*+]\s+/.test(trimmedLine)) {
+            flushParagraph();
+            bullets.push(trimmedLine.replace(/^[-*+]\s+/, ''));
+        } else {
+            flushBullets();
+            paragraph.push(trimmedLine);
+        }
+    });
+
+    flushParagraph();
+    flushBullets();
+    return elements;
+};
 
 
 export default function     CourseInnerDetail({ course }) {
@@ -31,16 +101,22 @@ export default function     CourseInnerDetail({ course }) {
     const styles = theme.custom.courseInnerDetail;
 
     const [value, setValue] = useState(0);
+    const [loginDialogOpen, setLoginDialogOpen] = useState(false);
     const router = useRouter();
+    const paymentUrl = `/onlinecourse/payment/${course?.courseSlug}`;
+
+    const handleEnrollClick = () => {
+        if (localStorage.getItem('token')) {
+            router.push(paymentUrl);
+            return;
+        }
+        setLoginDialogOpen(true);
+    };
 
     const overviewRef = useRef(null);
     const instructorRef = useRef(null);
 
-    const price = course?.amountOneTime || 0;
-    const currency = course?.currency || "USD";
     const hasOffer = course?.festiveOffer;
-
-    const oldPrice = hasOffer ? Math.round(price * 1.3) : null;
 
     const handleTabChange = (newValue) => {
         setValue(newValue);
@@ -79,8 +155,21 @@ export default function     CourseInnerDetail({ course }) {
 
     // ── Rich text renderer (unchanged) ─────────────────────────
     const renderRawDescription = () => {
-        if (!course?.rawdescription?.blocks) return null;
-        const blocks = course.rawdescription.blocks;
+        let longDescription = course?.longDescriptionMarkdown;
+        if (typeof longDescription === 'string') {
+            try {
+                longDescription = JSON.parse(longDescription);
+            } catch {
+                return longDescription.trim()
+                    ? renderMarkdownDescription(longDescription)
+                    : null;
+            }
+        }
+
+        const blocks = Array.isArray(longDescription)
+            ? longDescription
+            : longDescription?.blocks;
+        if (!Array.isArray(blocks)) return null;
         const elements = [];
         let currentList = [];
         let currentListType = null;
@@ -119,7 +208,7 @@ export default function     CourseInnerDetail({ course }) {
         };
 
         blocks.forEach((block, index) => {
-            const { type, text } = block;
+            const { type = "unstyled", text } = block;
             if (!text?.trim()) return;
             if (type === "unordered-list-item" || type === "ordered-list-item") {
                 if (currentListType && currentListType !== type) flushList(index);
@@ -145,39 +234,60 @@ export default function     CourseInnerDetail({ course }) {
     };
 
     // ── Price helpers (unchanged) ──────────────────────────────
+    const formatPrice = (amount, currency = course?.currency || 'USD') => {
+        try {
+            return new Intl.NumberFormat(undefined, {
+                style: 'currency',
+                currency,
+                maximumFractionDigits: 2,
+            }).format(amount);
+        } catch {
+            return `${currency} ${amount}`;
+        }
+    };
+
     const getCoursePriceLabel = (course) => {
         if (!course) return '';
-        const currencySymbol = course.currency === 'USD' ? '$' : '₹';
-        if (course.course_paymenttype === 'free') return 'Free';
-        if (course.course_paymenttype === 'onetimepayment') return `${currencySymbol}${course.amountOneTime}`;
-        if (course.course_paymenttype === 'recurring') {
-            const installment = course.installment;
-            if (course.amountInMonth) return `${currencySymbol}${course.amountInMonth}/month${installment ? ` × ${installment}` : ''}`;
-            if (course.amountInWeek) return `${currencySymbol}${course.amountInWeek}/week${installment ? ` × ${installment}` : ''}`;
-            if (course.amountInByWeekly) return `${currencySymbol}${course.amountInByWeekly}/bi-week${installment ? ` × ${installment}` : ''}`;
+        const paymentType = (course.pricingType || course.course_paymenttype || '').toLowerCase();
+        const amount = course.price ?? course.amountOneTime ?? 0;
+        if (paymentType === 'free') return 'Free';
+        if (['one_time', 'one-time', 'onetimepayment'].includes(paymentType)) {
+            return formatPrice(amount, course.currency);
         }
-        return '';
+        if (paymentType === 'recurring') {
+            return formatPrice(amount, course.currency);
+        }
+        return amount ? formatPrice(amount, course.currency) : '';
     };
 
     const getTotalRecurring = (course) => {
-        const installment = Number(course.installment || 0);
-        if (course.amountInWeek) return course.amountInWeek * installment;
-        if (course.amountInMonth) return course.amountInMonth * installment;
-        if (course.amountInByWeekly) return course.amountInByWeekly * installment;
-        return null;
+        const paymentType = (course.pricingType || course.course_paymenttype || '').toLowerCase();
+        if (paymentType !== 'recurring') return null;
+        const installment = Number(course.installmentCount ?? course.installment ?? 0);
+        const amount = Number(course.price ?? course.amountInWeek ?? course.amountInMonth ?? course.amountInByWeekly ?? 0);
+        return installment > 0 && amount > 0 ? amount * installment : null;
     };
-
     const priceLabel = getCoursePriceLabel(course);
     const totalRecurring = getTotalRecurring(course);
+    const isRecurring = (course?.pricingType || course?.course_paymenttype || '').toLowerCase() === 'recurring';
+    const recurringInterval = (course?.recurringInterval || 'week').toLowerCase();
+    const installmentCount = Number(course?.installmentCount ?? course?.installment ?? 0);
+    const recurringDetails = isRecurring
+        ? `per ${recurringInterval}${installmentCount > 1 ? ` · ${installmentCount} installments` : ''}`
+        : '';
+    const chapterCount = Array.isArray(course?.chapters) ? course.chapters.length : 0;
+        const courseFaqs = Array.isArray(course?.faqs) ? course.faqs : [];
+    const deliveryMode = (course?.deliveryMode || course?.mode_of_course || 'online').toLowerCase();
+    const deliveryModeLabels = {
+        prerecorded: 'Prerecorded',
+        online: 'Online',
+        both: 'Hybrid',
+        digitaldownload: 'Digital Download',
+    };
 
     return (
         <Section sx={styles.section}>
             <SiteContainer>
-                {/* TITLE */}
-                <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
-                    <Typography sx={styles.pageTitle}>Expand inside out</Typography>
-                </motion.div>
-
                 <Grid container spacing={styles.grid.container.spacing}>
                     {/* ─────────── LEFT CONTENT ─────────── */}
                     <Grid item {...styles.grid.leftCol}>
@@ -201,13 +311,34 @@ export default function     CourseInnerDetail({ course }) {
                         <motion.div variants={fadeInUp}>
                             <div
                                 ref={overviewRef}
-                                className="text-gray-600 text-[15px] leading-[1.8] font-redhat scroll-mt-[20rem]"
+                                className="scroll-mt-[20rem]"
                                 style={{ marginBottom: theme.spacing(styles.description.mb) }}
-                                dangerouslySetInnerHTML={{ __html: course?.shortDescription || "" }}
-                            />
+                            >
+                                {renderRawDescription()}
+                            </div>
                         </motion.div>
 
-                        <motion.div variants={fadeInUp}>{renderRawDescription()}</motion.div>
+                        {courseFaqs.length > 0 && (
+                            <motion.div variants={fadeInUp}>
+                                <Typography variant="h5" sx={{ mb: 2, fontWeight: 700 }}>
+                                    Frequently Asked Questions
+                                </Typography>
+                                {courseFaqs.map((faq, index) => (
+                                    <Accordion key={faq?._id || faq?.id || index} disableGutters>
+                                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                            <Typography sx={{ fontWeight: 600 }}>
+                                                {faq?.question || faq?.faqQuestion || `Question ${index + 1}`}
+                                            </Typography>
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <Typography sx={{ whiteSpace: 'pre-line', color: 'text.secondary' }}>
+                                                {faq?.answer || faq?.faqAnswer || ''}
+                                            </Typography>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                ))}
+                            </motion.div>
+                        )}
 
                         <Divider sx={styles.divider} />
 
@@ -219,7 +350,14 @@ export default function     CourseInnerDetail({ course }) {
                         <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
                             <Stack {...styles.instructorStack}>
                                 <motion.div variants={scaleIn}>
-                                    <Box sx={styles.instructorImage} />
+                                    <Box sx={{ ...styles.instructorImage, overflow: 'hidden' }}>
+                                        <Box
+                                            component="img"
+                                            src="https://randomuser.me/api/portraits/men/32.jpg"
+                                            alt="Amitabha Bhatia"
+                                            sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                                        />
+                                    </Box>
                                 </motion.div>
 
                                 <motion.div variants={fadeInRight}>
@@ -229,16 +367,16 @@ export default function     CourseInnerDetail({ course }) {
                                             <Box sx={styles.instructorAccentBar} />
                                             <Box>
                                                 <Typography sx={styles.instructorName}>Amitabha Bhatia</Typography>
-                                                <Typography sx={styles.instructorRole}>Lorem ipsum Lorem, Instructor</Typography>
+                                                <Typography sx={styles.instructorRole}>Vinyasa Flow Instructor</Typography>
                                             </Box>
                                         </Stack>
 
                                         {/* CHECK LIST */}
                                         <Stack {...styles.bulletStack}>
                                             {[
-                                                'Donec imperdiet ante sit.',
-                                                'Donec imperdiet ante sit.',
-                                                'Donec imperdiet ante sit.',
+                                                'Guides breath-led movement and mindful transitions.',
+                                                'Focuses on foundational poses, alignment, and safe sequencing.',
+                                                'Supports students in building strength, balance, and steady focus.',
                                             ].map((text, idx) => (
                                                 <motion.div key={idx} variants={fadeInLeft} custom={idx}>
                                                     <Stack {...styles.bulletRow}>
@@ -266,28 +404,86 @@ export default function     CourseInnerDetail({ course }) {
                             >
                                 <Card sx={styles.sidebarCard}>
                                     {/* TOP PRICE SECTION */}
-                                    <Box sx={styles.priceSection}>
+                                    <Box sx={{
+                                        ...styles.priceSection,
+                                        p: { xs: 2.5, sm: 3 },
+                                        background: 'linear-gradient(135deg, #e6fffb 0%, #d9f7f2 100%)',
+                                    }}>
                                         <Stack direction="row" justifyContent="space-between" alignItems="center">
-                                            <Typography sx={styles.priceLabel}>Course Price:</Typography>
-                                            {hasOffer && <Box sx={styles.offerBadge}>Limited time offer</Box>}
+                                            <Typography sx={{ ...styles.priceLabel, fontWeight: 700, color: '#174b4b' }}>Course Price</Typography>
+                                            <Button
+                                                size="small"
+                                                variant="outlined"
+                                                disabled={!course?.courseSlug}
+                                                onClick={() => router.push(`/lms/${encodeURIComponent(course?.courseSlug || '')}`)}
+                                                sx={{
+                                                    minWidth: 0,
+                                                    px: 1.5,
+                                                    py: 0.5,
+                                                    borderRadius: '999px',
+                                                    borderColor: '#087f75',
+                                                    color: '#087f75',
+                                                    fontSize: '0.72rem',
+                                                    fontWeight: 700,
+                                                    textTransform: 'none',
+                                                    whiteSpace: 'nowrap',
+                                                    '&:hover': {
+                                                        borderColor: '#065f58',
+                                                        backgroundColor: '#ffffff80',
+                                                    },
+                                                }}
+                                            >
+                                                Test LMS
+                                            </Button>
                                         </Stack>
+                                        {hasOffer && <Box sx={{ ...styles.offerBadge, display: 'inline-flex', mt: 1 }}>Limited time offer</Box>}
 
-                                        <Stack {...styles.priceRow}>
-                                            <div className="text-[#14B8A6]">
-                                                {course.course_paymenttype === 'recurring' && (
-                                                    <span style={styles.emiBadge}>EMI Available</span>
-                                                )}
-                                                <div className="font-semibold text-lg">
-                                                    <Typography sx={styles.priceValue}>
-                                                        {priceLabel?.toLowerCase() === 'free' ? 'Free' : `${currency} ${priceLabel}`}
-                                                    </Typography>
-                                                </div>
-                                                {totalRecurring && (
-                                                    <Typography sx={styles.totalRecurring}>
-                                                        Total: ${totalRecurring}
-                                                    </Typography>
-                                                )}
-                                            </div>
+                                        <Stack spacing={0.75} sx={{ mt: 1.5, alignItems: 'flex-start' }}>
+                                            {isRecurring && (
+                                                <Box component="span" sx={{
+                                                    ...styles.emiBadge,
+                                                    display: 'inline-flex',
+                                                    alignItems: 'center',
+                                                    borderRadius: '999px',
+                                                    backgroundColor: '#ffffffb8',
+                                                    color: '#087f75',
+                                                    fontWeight: 700,
+                                                    px: 1.5,
+                                                    py: 0.5,
+                                                }}>
+                                                    Installment plan
+                                                </Box>
+                                            )}
+                                            <Typography sx={{
+                                                ...styles.priceValue,
+                                                color: '#124b4a',
+                                                fontSize: { xs: '1.65rem', sm: '2rem' },
+                                                fontWeight: 800,
+                                                lineHeight: 1.15,
+                                                overflowWrap: 'anywhere',
+                                            }}>
+                                                {priceLabel}
+                                            </Typography>
+                                            {recurringDetails && (
+                                                <Typography sx={{ color: '#39716d', fontSize: '0.9rem', fontWeight: 600 }}>
+                                                    {recurringDetails}
+                                                </Typography>
+                                            )}
+                                            {totalRecurring && (
+                                                <Typography sx={{
+                                                    ...styles.totalRecurring,
+                                                    mt: 0.5,
+                                                    px: 1.25,
+                                                    py: 0.5,
+                                                    borderRadius: 1.5,
+                                                    backgroundColor: '#ffffffa8',
+                                                    color: '#174b4b',
+                                                    fontSize: '0.95rem',
+                                                    fontWeight: 700,
+                                                }}>
+                                                    Total: {formatPrice(totalRecurring, course.currency)}
+                                                </Typography>
+                                            )}
                                         </Stack>
                                     </Box>
 
@@ -300,7 +496,7 @@ export default function     CourseInnerDetail({ course }) {
                                                 <Typography sx={styles.detailLabel}>Course Length</Typography>
                                             </Stack>
                                             <Typography sx={styles.detailValue}>
-                                                {course?.chapters?.length ? `${course.chapters.length} Modules` : '3 Hrs'}
+                                                {chapterCount} {chapterCount === 1 ? 'Chapter' : 'Chapters'}
                                             </Typography>
                                         </Stack>
 
@@ -320,19 +516,21 @@ export default function     CourseInnerDetail({ course }) {
                                                 <Typography sx={styles.detailLabel}>Course Type</Typography>
                                             </Stack>
                                             <Typography sx={styles.detailValueCapitalize}>
-                                                {course?.mode_of_course || 'Online'}
+                                                {deliveryModeLabels[deliveryMode] || 'Online'}
                                             </Typography>
                                         </Stack>
 
                                         {/* CTA BUTTON */}
                                         <MotionButton
-                                            onClick={() => router.push(`/onlinecourse/payment/${course.courseSlug}`)}
+                                            onClick={handleEnrollClick}
                                             fullWidth
                                             whileHover={{ scale: 1.05, y: -2 }}
                                             whileTap={{ scale: 0.95 }}
                                             sx={styles.ctaButton}
                                         >
-                                            {course?.course_paymenttype === 'onetimepayment' ? 'Join the course' : 'Subscribe Now'}
+                                            {['one_time', 'one-time', 'onetimepayment'].includes(
+                                                (course?.pricingType || course?.course_paymenttype || '').toLowerCase()
+                                            ) ? 'Join the course' : 'Subscribe Now'}
                                         </MotionButton>
                                     </Box>
                                 </Card>
@@ -341,6 +539,11 @@ export default function     CourseInnerDetail({ course }) {
                     </Grid>
                 </Grid>
             </SiteContainer>
+            <CourseLoginDialog
+                open={loginDialogOpen}
+                onClose={() => setLoginDialogOpen(false)}
+                returnTo={paymentUrl}
+            />
         </Section>
     );
 }

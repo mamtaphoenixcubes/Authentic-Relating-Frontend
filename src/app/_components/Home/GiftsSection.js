@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography, Button, IconButton } from "@mui/material";
 import { motion } from "framer-motion";
 import axiosInstance from "@/lib/axios";
+import { useRouter } from "next/navigation";
 
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
@@ -22,14 +23,15 @@ import Section from "../common/Section";
 import SiteContainer from "../common/SiteContainer";
 
 const MotionBox = motion(Box);
+const MotionButton = motion(Button);
 
 /* =========================================================
    CATEGORY GRADIENTS
 ========================================================= */
 const categoryGradients = {
-  "Free Videos": colors.gifts.categoryGradients.videos,
-  "Free PDF": colors.gifts.categoryGradients.pdf,
-  "Free Audios": colors.gifts.categoryGradients.audios,
+  "Videos": colors.gifts.categoryGradients.videos,
+  "PDF": colors.gifts.categoryGradients.pdf,
+  "Audios": colors.gifts.categoryGradients.audios,
   "My Video Collection": colors.gifts.categoryGradients.collection,
 };
 
@@ -50,6 +52,7 @@ const getFileUrl = (file) => {
    COMPONENT
 ========================================================= */
 export default function GiftsSection() {
+  const router = useRouter();
   const [data, setData] = useState([]);
   const [modalItem, setModalItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -102,9 +105,9 @@ export default function GiftsSection() {
         const finalData = selectedItems.map((item) => {
           let category = "";
 
-          if (item.type === "video") category = "Free Videos";
-          else if (item.type === "pdf") category = "Free PDF";
-          else if (item.type === "audio") category = "Free Audios";
+          if (item.type === "video") category = "Videos";
+          else if (item.type === "pdf") category = "PDF";
+          else if (item.type === "audio") category = "Audios";
           else if (item.type === "collection")
             category = "My Video Collection";
 
@@ -120,6 +123,8 @@ export default function GiftsSection() {
               item.description ||
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             image: item.thumbnail || "",
+            gradientStart: item.gradientStart || "#95c4ff",
+            gradientEnd: item.gradientEnd || "#087edf",
             duration: item.duration || null,
             fileUrl: item.file_url || item.fileUrl || "",
             originalType: item.type,
@@ -163,6 +168,8 @@ export default function GiftsSection() {
       mounted = false;
     };
   }, []);
+
+  const buttonGradient = "linear-gradient(90deg, #ff9a91 0%, #f57067 100%)";
 
   /* =======================================================
      DOWNLOAD FILE
@@ -242,7 +249,7 @@ export default function GiftsSection() {
               fontFamily: typography.fonts.body,
             }}
           >
-            Loading free resources...
+            Loading resources...
           </Typography>
         </SiteContainer>
       </Section>
@@ -267,6 +274,11 @@ export default function GiftsSection() {
           {/* HEADER */}
           <Box
             sx={{
+              display: "flex",
+              alignItems: { xs: "stretch", md: "center" },
+              justifyContent: "space-between",
+              gap: { xs: 2, md: 4 },
+              flexDirection: { xs: "column", md: "row" },
               mb: {
                 xs: spacing.gifts.headerBottom.xs / 4,
                 sm: spacing.gifts.headerBottom.sm / 4,
@@ -274,46 +286,102 @@ export default function GiftsSection() {
               },
             }}
           >
-            <Typography
-              sx={{
-                fontFamily: typography.fonts.heading,
-                fontWeight: typography.weights.bold,
-                fontSize: {
-                  xs: typography.gifts.title.fontSize.xs,
-                  sm: typography.gifts.title.fontSize.sm,
-                  md: typography.gifts.title.fontSize.md,
-                },
-                lineHeight: typography.gifts.title.lineHeight,
-                letterSpacing: typography.gifts.title.letterSpacing,
-                textAlign: typography.gifts.title.textAlign,
-                color: colors.gifts.title,
-                mb: spacing[2],
-              }}
-            >
-              Gifts for You
-            </Typography>
+            <Box sx={{ width: { xs: "100%", md: "66.666%" } }}>
+              <Typography
+                sx={{
+                  fontFamily: typography.fonts.heading,
+                  fontWeight: typography.weights.bold,
+                  fontSize: {
+                    xs: typography.gifts.title.fontSize.xs,
+                    sm: typography.gifts.title.fontSize.sm,
+                    md: typography.gifts.title.fontSize.md,
+                  },
+                  lineHeight: typography.gifts.title.lineHeight,
+                  letterSpacing: typography.gifts.title.letterSpacing,
+                  textAlign: typography.gifts.title.textAlign,
+                  color: colors.gifts.title,
+                  mb: spacing[2],
+                }}
+              >
+                The Good Stuff
+              </Typography>
 
-            <Typography
+              <Typography
+                sx={{
+                  fontFamily: typography.fonts.body,
+                  fontWeight: typography.weights.medium,
+                  fontSize: {
+                    xs: typography.gifts.description.fontSize.xs,
+                    sm: typography.gifts.description.fontSize.sm,
+                    md: typography.gifts.description.fontSize.md,
+                  },
+                  lineHeight: typography.gifts.description.lineHeight,
+                  letterSpacing: typography.gifts.description.letterSpacing,
+                  color: colors.gifts.description,
+                  textAlign: typography.gifts.description.textAlign,
+                  maxWidth: "1440px",
+                }}
+              >
+                A little wisdom. A little wonder. A whole lot of connection.
+                Welcome to our little treasure chest of free goodies! Explore
+                playful games, practical exercises, inspiring reads, videos,
+                guides and other surprises designed to spark curiosity, deepen
+                connection and make being human a whole lot more interesting. Take
+                a peek. Take your pick. Try something new. It's all yours!
+              </Typography>
+            </Box>
+
+            <MotionButton
+              onClick={() => router.push("/freestuff/")}
+              variant="default"
+              whileHover={{
+                scale: 1.05,
+                y: -3,
+                transition: { type: "spring", stiffness: 300, damping: 20 },
+              }}
+              whileTap={{ scale: 0.95 }}
               sx={{
-                fontFamily: typography.fonts.body,
-                fontWeight: typography.weights.medium,
-                fontSize: {
-                  xs: typography.gifts.description.fontSize.xs,
-                  sm: typography.gifts.description.fontSize.sm,
-                  md: typography.gifts.description.fontSize.md,
+                maxWidth: { xs: "100%", sm: "200px", md: "240px" },
+                width: { xs: "100%", sm: "200px", md: "240px" },
+                height: { xs: "48px", sm: "44px", md: "48px" },
+                px: { xs: 2.5, sm: 1.5, md: 2.5 },
+                fontSize: { xs: "13px", sm: "14px", md: "15px" },
+                fontWeight: 700,
+                textTransform: "none",
+                borderRadius: "12px",
+                color: "#F9F9F9",
+                background: buttonGradient,
+                border: "none",
+                position: "relative",
+                overflow: "hidden",
+                transform: "translateZ(0)",
+                boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.15)",
+                flexShrink: 0,
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: "inherit",
+                  padding: "2px",
+                  background: "linear-gradient(90deg, #fff4f2 0%, #f57067 100%)",
+                  WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                  WebkitMaskComposite: "xor",
+                  maskComposite: "exclude",
+                  pointerEvents: "none",
+                  zIndex: 0,
                 },
-                lineHeight: typography.gifts.description.lineHeight,
-                letterSpacing: typography.gifts.description.letterSpacing,
-                color: colors.gifts.description,
-                textAlign: typography.gifts.description.textAlign,
-                maxWidth: "1440px",
+                "& .MuiButton-label, & > *": {
+                  position: "relative",
+                  zIndex: 1,
+                },
+                "&:hover": {
+                  background: "linear-gradient(90deg, #f57067 0%, #e85d54 100%)",
+                  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                },
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              sed urna elit. Ut in tincidunt lacus, at convallis risus. Orci
-              varius natoque penatibus et magnis dis parturient montes,
-              nascetur ridiculus mus.
-            </Typography>
+              Explore the Good Stuff
+            </MotionButton>
           </Box>
 
           {/* ERROR STATE */}
@@ -402,9 +470,9 @@ export default function GiftsSection() {
               {data.map((item, index) => {
                 const gradient = categoryGradients[item.category];
                 const isVideo =
-                  item.category === "Free Videos" ||
+                  item.category === "Videos" ||
                   item.category === "My Video Collection";
-                const isAudio = item.category === "Free Audios";
+                const isAudio = item.category === "Audios";
 
                 return (
                   <Box
@@ -555,8 +623,7 @@ export default function GiftsSection() {
                               sm: typography.gifts.cardTitle.fontSize.sm,
                               md: typography.gifts.cardTitle.fontSize.md,
                             },
-                            lineHeight:
-                              typography.gifts.cardTitle.lineHeight,
+                            lineHeight: typography.gifts.cardTitle.lineHeight,
                             letterSpacing:
                               typography.gifts.cardTitle.letterSpacing,
                             mb: spacing[1],
@@ -574,12 +641,9 @@ export default function GiftsSection() {
                             fontFamily: typography.fonts.body,
                             fontWeight: typography.weights.regular,
                             fontSize: {
-                              xs: typography.gifts.cardDescription.fontSize
-                                .xs,
-                              sm: typography.gifts.cardDescription.fontSize
-                                .sm,
-                              md: typography.gifts.cardDescription.fontSize
-                                .md,
+                              xs: typography.gifts.cardDescription.fontSize.xs,
+                              sm: typography.gifts.cardDescription.fontSize.sm,
+                              md: typography.gifts.cardDescription.fontSize.md,
                             },
                             lineHeight: {
                               xs: typography.gifts.cardDescription.lineHeight
@@ -693,7 +757,7 @@ export default function GiftsSection() {
             onClick={(event) => event.stopPropagation()}
             sx={{
               width: "100%",
-              maxWidth: modalItem.category === "Free PDF" ? 1000 : 860,
+              maxWidth: modalItem.category === "PDF" ? 1000 : 860,
               maxHeight: "95vh",
               borderRadius: {
                 xs: spacing[2],
@@ -792,34 +856,34 @@ export default function GiftsSection() {
               }}
             >
               {/* Video */}
-              {(modalItem.category === "Free Videos" ||
+              {(modalItem.category === "Videos" ||
                 modalItem.category === "My Video Collection") && (
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    bgcolor: "#000",
+                  }}
+                >
                   <Box
+                    component="video"
+                    src={getFileUrl(modalItem.fileUrl)}
+                    controls
+                    autoPlay
+                    playsInline
                     sx={{
+                      display: "block",
                       width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      bgcolor: "#000",
+                      maxHeight: "70vh",
+                      objectFit: "contain",
                     }}
-                  >
-                    <Box
-                      component="video"
-                      src={getFileUrl(modalItem.fileUrl)}
-                      controls
-                      autoPlay
-                      playsInline
-                      sx={{
-                        display: "block",
-                        width: "100%",
-                        maxHeight: "70vh",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </Box>
-                )}
+                  />
+                </Box>
+              )}
 
               {/* Audio */}
-              {modalItem.category === "Free Audios" && (
+              {modalItem.category === "Audios" && (
                 <Box
                   sx={{
                     display: "flex",
@@ -909,7 +973,7 @@ export default function GiftsSection() {
               )}
 
               {/* PDF */}
-              {modalItem.category === "Free PDF" && (
+              {modalItem.category === "PDF" && (
                 <Box
                   sx={{
                     width: "100%",

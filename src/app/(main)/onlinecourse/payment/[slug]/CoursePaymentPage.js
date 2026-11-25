@@ -321,7 +321,8 @@ function CourseCheckoutForm({
           {
             paymentIntentId: paymentData.paymentIntentId,
             enrollmentId: paymentData.enrollmentId,
-          }
+          },
+          { headers: { Authorization: `Bearer ${localStorage.getItem('token') || ''}` } }
         );
 
         console.log(res,"crs")
@@ -455,10 +456,11 @@ export default function CoursePaymentPage({slug}) {
     const handleNext = async () => {
         try {
             if (activeStep === 0) {
-                // ✅ validate first
-                if (!validateAttendee()) return;
-
-                // ✅ then call API
+                setPaymentError('');
+                if (courseData?.course_paymenttype === 'free') {
+                    await enrollFreeCourse();
+                    return;
+                }
                 await createPaymentIntent();
             }
 
@@ -466,6 +468,7 @@ export default function CoursePaymentPage({slug}) {
 
         } catch (err) {
             console.error(err);
+            setPaymentError(err?.response?.data?.message || err?.message || 'Unable to start enrollment. Please try again.');
         }
     };
 
@@ -534,67 +537,48 @@ export default function CoursePaymentPage({slug}) {
 
     const createPaymentIntent = async () => {
         try {
-            // ✅ get user from localStorage
-            const user = JSON.parse(localStorage.getItem("user"));
-
-            if (!user?._id) {
+            const token = localStorage.getItem('token');
+            if (!token) {
                 throw new Error("User not logged in");
             }
-
-            // ✅ attendee info (using your structure)
-            const attendeeInfoPayload = {
-                name: attendeeInfo.name.trim(),
-                email: attendeeInfo.email.trim(),
-                phone: attendeeInfo.phone.trim(),
-            };
-
-            // ✅ determine paymentType
-            let paymentType = "one_time";
-            let installment;
-
-            if (courseData?.course_paymenttype === "recurring") {
-                if (courseData?.amountInMonth) {
-                    paymentType = "monthly";
-                } else if (courseData?.amountInByWeekly) {
-                    paymentType = "biweekly";
-                } else if (courseData?.amountInWeek) {
-                    paymentType = "weekly";
-                }
-
-                installment = courseData?.installment;
-            }
-
-            if (courseData?.course_paymenttype === "onetimepayment") {
-                paymentType = "one_time";
-            }
-
-            // ✅ final payload
-            const payload = {
-                courseId: courseData?._id,
-                userId: user._id,
-                paymentType,
-                attendeeInfo: attendeeInfoPayload,
-                ...(installment && { installment }),
-            };
-
-            console.log("🚀 Payload:", payload);
-
-            // ✅ API call (with token)
             const res = await axiosInstance.post(
                 "/course-payments/create-course-payment-intent",
-                payload,
+                { courseId: courseData?._id },
+                { headers: { Authorization: `Bearer ${token}` } }
             );
+            const paymentData = res.data?.data || res.data;
+            if (res.data?.status === 0 || !paymentData?.clientSecret) {
+                throw new Error(res.data?.message || 'Unable to create payment.');
+            }
+            setPaymentIntentData(paymentData);
 
-            console.log("✅ Payment Intent Response:", res.data);
-
-            // ✅ store response (IMPORTANT)
-            setPaymentIntentData(res.data);
-
-            return res.data;
+            return paymentData;
 
         } catch (error) {
             console.error("❌ Payment intent error:", error);
             throw error;
+        }
+    };
+
+    const enrollFreeCourse = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) throw new Error('Please sign in to enroll in this course.');
+        if (!courseData?._id) throw new Error('Course information is unavailable. Please refresh and try again.');
+
+        setProcessingPayment(true);
+        try {
+            const res = await axiosInstance.post(
+                '/course-payments/enroll-free',
+                { courseId: courseData._id },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            if (res.data?.status === 0 || res.data?.isEnrolled === false) {
+                throw new Error(res.data?.message || 'Unable to enroll in this course.');
+            }
+            setPaymentSuccess(true);
+            setActiveStep(3);
+        } finally {
+            setProcessingPayment(false);
         }
     };
 
@@ -798,6 +782,7 @@ console.log(totalRecurring,"val")
                                         {activeStep === 0 && (
                                             <motion.div key="s0" initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.28 }}>
                                                 <SectionTitle>Review Event Details</SectionTitle>
+                                                {paymentError && <Alert severity="error" sx={{ mb: 2 }}>{paymentError}</Alert>}
 
                                                 {/* Event Preview */}
                                                 <Box sx={{

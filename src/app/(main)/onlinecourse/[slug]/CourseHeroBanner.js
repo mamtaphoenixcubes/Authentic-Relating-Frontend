@@ -2,12 +2,29 @@
 
 import { motion } from "framer-motion";
 
-export default function CourseHeroBanner({ course }) {
-  const imageUrl = course?.heroImage
-    ? `${process.env.NEXT_PUBLIC_API_URL}/${course.heroImage}`
-    : "/placeholder-hero.jpg";
+const getMediaUrl = (path) => {
+  if (typeof path !== "string" || !path.trim()) return "";
+  const value = path.trim();
+  if (/^https?:\/\//i.test(value)) return value;
 
-  const mode = course?.mode_of_course?.toLowerCase();
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "") || "";
+  return `${baseUrl}/${value.replace(/^\/+/, "")}`;
+};
+
+export default function CourseHeroBanner({ course }) {
+  const videoUrl = getMediaUrl(course?.teaserVideoUrl);
+  const imageUrl =
+    getMediaUrl(
+      course?.heroImage || course?.thumbnailUrl || course?.image?.[0]
+    ) || "/placeholder-hero.jpg";
+
+  const deliveryMode = course?.deliveryMode?.toLowerCase();
+  const deliveryModeDetails = {
+    prerecorded: { label: "Prerecorded Course", color: "bg-green-500/30" },
+    online: { label: "Online Course", color: "bg-blue-500/30" },
+    both: { label: "Online & Prerecorded Course", color: "bg-purple-500/30" },
+    digitaldownload: { label: "Digital Download", color: "bg-amber-500/30" },
+  }[deliveryMode];
 
   return (
     <section
@@ -18,11 +35,27 @@ export default function CourseHeroBanner({ course }) {
         overflow-hidden
       "
     >
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${imageUrl})` }}
-      />
+      {/* Use the muted teaser when available; otherwise show the course image. */}
+      {videoUrl ? (
+        <video
+          key={videoUrl}
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-label={`${course?.course_title || "Course"} teaser video`}
+        >
+          <source src={videoUrl} />
+        </video>
+      ) : (
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${imageUrl})` }}
+          role="img"
+          aria-label={`${course?.course_title || "Course"} image`}
+        />
+      )}
 
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/40" />
@@ -39,7 +72,7 @@ export default function CourseHeroBanner({ course }) {
           >
 
             {/* Mode Badge */}
-            {mode && (
+            {deliveryModeDetails && (
               <span
                 className={`
                   inline-block
@@ -51,18 +84,10 @@ export default function CourseHeroBanner({ course }) {
                   border border-white/40
                   text-white
                   font-medium
-                  ${
-                    mode === "online"
-                      ? "bg-blue-500/30"
-                      : mode === "offline"
-                      ? "bg-green-500/30"
-                      : "bg-purple-500/30"
-                  }
+                  ${deliveryModeDetails.color}
                 `}
               >
-                {mode === "online" && "Online Course"}
-                {mode === "offline" && "In Person Course"}
-                {mode === "hybrid" && "Hybrid Course"}
+                {deliveryModeDetails.label}
               </span>
             )}
 
