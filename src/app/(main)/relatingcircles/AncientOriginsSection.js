@@ -110,7 +110,7 @@ export default function AncientOriginsSection() {
         >
           <Box sx={styles.card}>
             <Typography sx={styles.cardTitle}>
-              Circles have long been central to <br /> human connection:
+              Relating Circles have long been central to <br /> human connection:
             </Typography>
 
             {/* SM+ oscillating rows */}

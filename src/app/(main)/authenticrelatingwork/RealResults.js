@@ -336,8 +336,22 @@ export const RealResults = () => {
                             variant="offering"
                             size="large"
                             sx={{
-                                maxWidth: 360,
-                                width: '100%',
+                                // 👇 Center on xs/sm, Left on md/lg/xl 👇
+                                display: 'block',
+                                mx: { xs: 'auto', md: 0 },
+                                ml: { md: 0 }, // Explicitly force left margin to 0 on md and up
+
+                                width: {
+                                    xs: '150px',
+                                    sm: '300px',
+                                    md: '200px',
+                                    lg: '250px',
+                                    xl: '300px'
+                                },
+                                maxWidth: '100%',
+                                fontSize: '18px',
+                                fontFamily: '"Red Hat Display", sans-serif',
+                                fontWeight: 600,
 
                                 /* 👇 Orange gradient override */
                                 background: 'linear-gradient(135deg, #F37A60, #E4452F)',

@@ -569,7 +569,7 @@ const colors = {
   whyItMatters: {
     overlay:
       "linear-gradient(135deg, rgba(233,90,60,0.92), rgba(198,74,45,0.92))",
-    cardBorder: "2px solid rgb(255, 255, 255)",
+    // cardBorder: "2px solid rgb(255, 255, 255)",
     cardShadow: "0 8px 30px rgba(77, 77, 77, 0.2)",
     title: "#ffffff",
     description: "rgba(255,255,255,0.9)",
@@ -620,7 +620,6 @@ const colors = {
 
     // Image circle
     imageCircleBg: "#B0D4FF",
-    imageCircleShadow: "0px 0px 50px 0px #00497F4D",
 
     // CTA card
     ctaCardBg: "linear-gradient(90deg, #FF7E5F 0%, #FF3D3D 100%)",
@@ -683,13 +682,13 @@ const colors = {
 
     // How We Work wrapper
     howWeWorkBg:
-      "linear-gradient(135deg, #FF8A65 0%, #E64A19 100%)",
+      "linear-gradient(135deg, #FF826E 0%, #DE472F 100%)",
     howWeWorkShadow: "0 14px 32px rgba(0,0,0,0.18)",
 
     // How We Work cards
     howWeWorkCardBg:
       "linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05))",
-    howWeWorkCardBorder: "1.5px solid rgba(255,255,255,0.6)",
+    howWeWorkCardBorder: "2px solid rgba(255, 255, 255, 0.67)",
     howWeWorkCardBorderHover: "1.5px solid rgba(255,255,255,0.9)",
     howWeWorkCardShadowHover: "0 20px 40px rgba(0,0,0,0.25)",
     howWeWorkCardText: "#ffffff",
@@ -1350,7 +1349,7 @@ const colors = {
     title: "#000000",
     subtitle: "#000000",
     headingRight: "#000000",
-    paragraph: "#555555",
+    paragraph: "#000000",
     imageRadius: 2,
   },
   // =====================================================

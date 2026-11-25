@@ -59,9 +59,15 @@ export default function AboutGuide() {
                                         height: "100%",
                                     }}
                                 >
-                                    <Box sx={styles.imageWrapper}>
+                                    <Box
+                                        sx={{
+                                            ...styles.imageWrapper,
+                                            boxShadow: 'none', // 👈 REMOVES THE SHADOW
+                                            border: 'none',    // 👈 REMOVES THE BORDER (just in case)
+                                        }}
+                                    >
                                         {/* DESKTOP / TABLET IMAGE */}
-                                        <Box sx={styles.imageInner}>
+                                        <Box sx={{ ...styles.imageInner, boxShadow: 'none' }}>
                                             <Image
                                                 src="/Amitabhabhatia.png"
                                                 alt="Amitabha Bhatia"
@@ -72,7 +78,7 @@ export default function AboutGuide() {
                                         </Box>
 
                                         {/* MOBILE IMAGE */}
-                                        <Box sx={styles.imageInnerMobile}>
+                                        <Box sx={{ ...styles.imageInnerMobile, boxShadow: 'none' }}>
                                             <Image
                                                 src="/Amitabhabhatia.png"
                                                 alt="Amitabha Bhatia"
@@ -87,8 +93,17 @@ export default function AboutGuide() {
                         </motion.div>
 
                         {/* RIGHT COLUMN */}
+                        {/* RIGHT COLUMN */}
                         <motion.div variants={slideFromLeft} style={{ flex: 1 }}>
-                            <Box sx={styles.textColumn}>
+                            <Box
+                                sx={{
+                                    ...styles.textColumn,
+                                    color: '#000000 !important', // 👈 Forces all text in this column to black
+                                    '& *': {
+                                        color: '#000000 !important' // 👈 Forces all nested text and spans to black
+                                    }
+                                }}
+                            >
                                 <Typography sx={styles.profileTitle}>
                                     About Your Guide
                                 </Typography>

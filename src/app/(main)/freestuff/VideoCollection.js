@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -7,14 +8,11 @@ import {
   Stack,
   Card,
   CardContent,
-  Container,
   IconButton,
   Chip,
   useTheme,
 } from '@mui/material';
 
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 import { useState, useEffect } from 'react';
@@ -22,26 +20,17 @@ import { motion } from 'framer-motion';
 
 import axiosInstance from '@/lib/axios';
 
-// Theme design system
 import colors from '@/theme/colors';
 import typography from '@/theme/typography';
 
+import SiteContainer from '../../_components/common/SiteContainer';
+import Section from '../../_components/common/Section';
+
 export default function VideoCollection() {
   const theme = useTheme();
-
-  /*
-   * Shared theme sections
-   * These come from theme.js
-   */
   const gifts = theme.custom?.giftsSection || {};
 
-  /*
-   * Typography design tokens
-   */
   const fontFamily = typography.fonts?.body || 'inherit';
-  const headingFontFamily =
-    typography.fonts?.heading || typography.fonts?.body || 'inherit';
-
   const weights = typography.weights || {};
 
   const regular = weights.regular || 400;
@@ -49,108 +38,58 @@ export default function VideoCollection() {
   const semibold = weights.semibold || 600;
   const bold = weights.bold || 700;
 
-  /*
-   * Color design tokens
-   */
-  const gradient = 'linear-gradient(98.89deg, #FFC566 0%, #F9A629 100%)';
+  const gradient =
+    'linear-gradient(98.89deg, #FFC566 0%, #F9A629 100%)';
+
+  const cardBg = '#FFFFFF';
+  const cardBorderColor = '#F1F5F9';
+  const cardBoxShadow = '0px 4px 12px rgba(0, 0, 0, 0.08)';
+  const cardTitleColor = '#333333';
+  const cardDescriptionColor = '#666666';
 
   const titleColor =
     colors.clientTestimonial?.title ||
     colors.textPrimary ||
     '#FF7A65';
 
-  const textPrimary =
-    colors.textPrimary ||
-    '#222222';
+  const textLight = colors.textLight || '#FFFFFF';
+  const textMuted = colors.textMuted || '#777777';
 
-  const textSecondary =
-    colors.textSecondary ||
-    '#666666';
-
-  const textMuted =
-    colors.textMuted ||
-    '#777777';
-
-  const textLight =
-    colors.textLight ||
-    '#FFFFFF';
-
-  const background =
-    colors.background ||
-    '#FFFFFF';
-
-  const backgroundSoft =
-    colors.backgroundSoft ||
-    '#F8F8F8';
-
-  const border =
-    colors.border ||
-    '#E5E5E5';
-
-  const cardBorder =
-    colors.gifts?.cardBorder ||
-    border;
-
-  const cardShadow =
-    colors.gifts?.cardShadow ||
-    '0 8px 30px rgba(0,0,0,0.08)';
-
-  const cardBackground =
-    colors.gifts?.cardBackground ||
-    background;
+  const background = colors.background || '#FFFFFF';
+  const backgroundSoft = colors.backgroundSoft || '#F8F8F8';
+  const border = colors.border || '#E5E5E5';
 
   const imageBackground =
     colors.gifts?.imageBackground ||
     colors.connection?.gridCard?.imagePlaceholder ||
     backgroundSoft;
 
-  const buttonBorder =
-    colors.gifts?.buttonBorder ||
-    'linear-gradient(135deg, rgba(255,255,255,.5), rgba(255,255,255,.1))';
-
-  const buttonHoverOpacity =
-    colors.gifts?.buttonHoverOpacity ?? 0.9;
-
-  const modalBackground =
-    colors.gifts?.modalBackground ||
-    '#111111';
+  const modalBackground = colors.gifts?.modalBackground || '#111111';
 
   const closeBackground =
-    colors.gifts?.closeBackground ||
-    'rgba(255,255,255,0.12)';
+    colors.gifts?.closeBackground || 'rgba(255,255,255,0.12)';
 
   const closeHoverBackground =
-    colors.gifts?.closeHoverBackground ||
-    'rgba(255,255,255,0.2)';
+    colors.gifts?.closeHoverBackground || 'rgba(255,255,255,0.2)';
 
-  /*
-   * Component state
-   */
-  const [visibleVideos, setVisibleVideos] = useState(6);
+  const [visibleVideos, setVisibleVideos] = useState(8);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [collections, setCollections] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const [selectedCategory, setSelectedCategory] = useState('');
-
   const [videoUrl, setVideoUrl] = useState(null);
 
-  /*
-   * Filter collections by selected category
-   */
   const filteredCollections = selectedCategory
     ? collections.filter(
-      (item) => item.category_id?._id === selectedCategory
-    )
+        (item) => item.category_id?._id === selectedCategory
+      )
     : collections;
 
-  /*
-   * Show more / show less
-   */
   const toggleVideos = () => {
     if (isExpanded) {
-      setVisibleVideos(6);
+      setVisibleVideos(8);
     } else {
       setVisibleVideos(filteredCollections.length);
     }
@@ -158,9 +97,6 @@ export default function VideoCollection() {
     setIsExpanded((prev) => !prev);
   };
 
-  /*
-   * Fetch collections
-   */
   useEffect(() => {
     const fetchCollections = async () => {
       try {
@@ -177,9 +113,6 @@ export default function VideoCollection() {
 
         const allData = res?.data?.data || [];
 
-        /*
-         * Only collection type
-         */
         const collectionData = allData
           .filter((item) => item.type === 'collection')
           .sort(
@@ -188,9 +121,6 @@ export default function VideoCollection() {
               (b.index_position || 0)
           );
 
-        /*
-         * Unique categories
-         */
         const uniqueCategories = [
           ...new Map(
             collectionData
@@ -219,26 +149,17 @@ export default function VideoCollection() {
     fetchCollections();
   }, []);
 
-  /*
-   * Reset visible cards when category changes
-   */
   useEffect(() => {
-    setVisibleVideos(6);
+    setVisibleVideos(8);
     setIsExpanded(false);
   }, [selectedCategory]);
 
-  /*
-   * Video URL helper
-   */
   const getVideoUrl = (video) => {
     if (!video?.file_url) return null;
 
     return `${process.env.NEXT_PUBLIC_API_URL}/${video.file_url}`;
   };
 
-  /*
-   * Thumbnail URL helper
-   */
   const getThumbnailUrl = (video) => {
     if (!video?.thumbnail) return null;
 
@@ -247,901 +168,673 @@ export default function VideoCollection() {
     )}`;
   };
 
-  /*
-   * Open video
-   */
   const openVideo = (video) => {
     const url = getVideoUrl(video);
 
-    if (url) {
-      setVideoUrl(url);
-    }
+    if (url) setVideoUrl(url);
   };
 
-  /*
-   * Close video
-   */
-  const closeVideo = () => {
-    setVideoUrl(null);
-  };
+  const closeVideo = () => setVideoUrl(null);
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      viewport={{
-        once: true,
-        amount: 0.2,
-      }}
-      transition={{
-        duration: 0.5,
-      }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5 }}
     >
-      <Container
-        maxWidth="xl"
-        sx={{
-          py: {
-            xs: 0,
-            sm: 0,
-            md: 0,
-          },
-          pb: { xs: 4, sm: 5, md: 0 }, // Keeps bottom padding if you need it
-        }}
-      >
-        {/* =========================================================
-            HEADER
-        ========================================================= */}
-
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: -10,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.4,
-          }}
-        >
-          <Typography
-            component="h2"
-            textAlign="center"
-            sx={{
-              fontFamily: headingFontFamily,
-              fontSize: {
-                xs: 24,
-                sm: 28,
-                md: 30,
-              },
-              fontWeight: semibold,
-              color: "#F0A634",
-              lineHeight: 1.2,
-              mb: 1,
-            }}
-          >
-            My Video Collection
-          </Typography>
-        </motion.div>
-
-        <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          whileInView={{
-            opacity: 1,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.4,
-            delay: 0.1,
-          }}
-        >
-          <Typography
-            textAlign="center"
-            sx={{
-              fontFamily,
-              fontSize: {
-                xs: 13,
-                sm: 14,
-              },
-              fontWeight: regular,
-              color: "#000000",
-              lineHeight: 1.7,
-              maxWidth: 720,
-              mx: 'auto',
-              mb: {
-                xs: 4,
-                md: 6,
-              },
-              px: {
-                xs: 1,
-                sm: 0,
-              },
-            }}
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Aenean sed urna elit. Ut in tincidunt lacus, at
-            convallis risus. Orci varius natoque penatibus et
-            magnis dis parturient montes, nascetur ridiculus mus.
-          </Typography>
-        </motion.div>
-
-        {/* =========================================================
-            MAIN CONTENT
-        ========================================================= */}
-
-        <Box
+      <Section>
+        <SiteContainer
           sx={{
-            display: 'flex',
-            gap: {
-              sm: 2,
-              md: 3,
-            },
-            alignItems: 'flex-start',
+            pt: 0,
+            pb: { xs: 4, sm: 5, md: 0 },
           }}
         >
-          {/* =======================================================
-              DESKTOP CATEGORY SIDEBAR
-          ======================================================= */}
-
-          <Stack
-            spacing={1}
-            sx={{
-              display: {
-                xs: 'none',
-                sm: 'flex',
-              },
-              minWidth: {
-                sm: 180,
-                md: 225,
-              },
-              flexShrink: 0,
-            }}
+          {/* HEADER */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
           >
-            {categories.map((cat, index) => {
-              const isActive = cat._id === selectedCategory;
+            <Typography
+              component="h2"
+              textAlign="center"
+              sx={{
+                fontFamily: '"Red Hat Display", sans-serif',
+                fontWeight: 700,
+                fontSize: {
+                  xs: 24,
+                  sm: 28,
+                  md: 36,
+                  lg: 40,
+                  xl: 44,
+                },
+                lineHeight: '100%',
+                letterSpacing: '0%',
+                color: '#F0A634',
+                mb: 1,
+              }}
+            >
+              My Video Collection
+            </Typography>
+          </motion.div>
 
-              return (
-                <motion.div
-                  key={cat._id}
-                  initial={{
-                    opacity: 0,
-                    x: -10,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    x: 0,
-                  }}
-                  viewport={{
-                    once: true,
-                  }}
-                  transition={{
-                    duration: 0.3,
-                    delay: 0.1 + index * 0.05,
-                  }}
-                >
-                  <Button
-                    onClick={() => setSelectedCategory(cat._id)}
-                    fullWidth
-                    variant="contained"
-                    sx={{
-                      minHeight: 46,
-                      minWidth: { sm: 180, md: 225 },
-                      px: 2,
-                      borderRadius: '10px',
-                      textTransform: 'none',
-                      fontFamily,
-                      fontSize: 13,
-                      fontWeight: isActive ? bold : medium,
-                      justifyContent: 'center',
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            <Typography
+              textAlign="center"
+              sx={{
+                fontFamily: '"Red Hat Display", sans-serif',
+                fontSize: { xs: 13, sm: 14, md: 16 },
+                fontWeight: 400,
+                color: '#000000',
+                lineHeight: 1.7,
+                width: '100%',
+                maxWidth: 952,
+                mx: 'auto',
+                mb: { xs: 4, md: 6 },
+                px: { xs: 1, sm: 0 },
+              }}
+            >
+              Lorem ipsum dolor sit amet, consectetur adipiscing
+              elit. Aenean sed urna elit. Ut in tincidunt lacus,
+              at convallis risus. Orci varius natoque penatibus
+              et magnis dis parturient montes, nascetur
+              ridiculus mus.
+            </Typography>
+          </motion.div>
 
-                      // Active state uses gradient, inactive uses solid white
-                      background: isActive ? gradient : '#FFFFFF',
-                      color: isActive ? textLight : textPrimary,
-
-                      // Border and effects
-                      border: '2px solid #FFFFFF',
-                      backdropFilter: 'blur(260px)',
-                      WebkitBackdropFilter: 'blur(260px)', // Safari support
-                      boxShadow: '0px 4px 7.3px 1px #0000001A',
-
-                      position: 'relative',
-                      overflow: 'hidden',
-                      transition: 'all 0.2s ease',
-
-                      '&:hover': {
-                        background: isActive ? gradient : '#FAFAFA',
-                        boxShadow: '0px 4px 7.3px 1px #0000001A', // Keep shadow on hover
-                      },
-                      '&:active': {
-                        boxShadow: '0px 4px 7.3px 1px #0000001A'
-                      },
-                    }}
-                  >
-                    {cat.title}
-                  </Button>
-                </motion.div>
-              );
-            })}
-          </Stack>
-
-          {/* =======================================================
-              RIGHT CONTENT
-          ======================================================= */}
-
+          {/* MAIN CONTENT */}
           <Box
             sx={{
-              flex: 1,
-              minWidth: 0,
-              position: 'relative',
+              display: 'flex',
+              gap: 3,
+              width: '100%',
+              alignItems: 'flex-start',
             }}
           >
-            {/* =====================================================
-                MOBILE CATEGORIES
-            ===================================================== */}
-
+            {/* DESKTOP CATEGORY SIDEBAR */}
             <Stack
-              direction="row"
-              spacing={1}
-              justifyContent="center"
-              alignItems="center"
-              flexWrap="wrap"
+              spacing={1.3}
               sx={{
-                display: {
-                  xs: 'flex',
-                  sm: 'none',
+                display: { xs: 'none', sm: 'flex' },
+                width: {
+                  sm: '260px',
+                  md: '265px',
                 },
-                mb: 3,
-                rowGap: 1,
+                flexShrink: 0,
               }}
             >
               {categories.map((cat, index) => {
-                const isActive =
-                  cat._id === selectedCategory;
+                const isActive = cat._id === selectedCategory;
 
                 return (
                   <motion.div
                     key={cat._id}
-                    initial={{
-                      opacity: 0,
-                      scale: 0.8,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      scale: 1,
-                    }}
-                    viewport={{
-                      once: true,
-                    }}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
                     transition={{
                       duration: 0.3,
-                      delay: 0.1 + index * 0.1,
+                      delay: 0.1 + index * 0.05,
                     }}
                   >
-                    <Chip
-                      label={cat.title}
+                    <Button
                       onClick={() =>
                         setSelectedCategory(cat._id)
                       }
-                      variant={
-                        isActive
-                          ? 'filled'
-                          : 'outlined'
-                      }
-                      size="small"
+                      fullWidth
                       sx={{
-                        borderRadius: 4,
+                        height: 42,
+                        borderRadius: 1,
+                        justifyContent: 'center',
+                        textTransform: 'none',
                         fontFamily,
-                        fontSize: 13,
                         fontWeight: isActive ? bold : medium,
-
                         background: isActive
                           ? gradient
                           : '#FFFFFF',
-
                         color: isActive
                           ? textLight
-                          : textPrimary,
-
-                        border: isActive ? 'none' : `1px solid ${border}`,
+                          : cardTitleColor,
+                        border: '2px solid #FFFFFF',
+                        borderImage: 'none',
+                        backdropFilter:
+                          'blur(100.38603973388672px)',
+                        WebkitBackdropFilter:
+                          'blur(100.38603973388672px)',
                         boxShadow: isActive
                           ? '0px 4px 10px rgba(249, 166, 41, 0.3)'
-                          : '0px 2px 8px rgba(0, 0, 0, 0.04)',
-
-                        px: 1.5,
-                        height: 32,
-                        minWidth: 110,
-
+                          : '0px 2.96px 5.4px 0.74px #0000001A',
+                        transition: 'all 0.25s ease',
                         '&:hover': {
                           background: isActive
                             ? gradient
                             : '#FAFAFA',
-                        },
-
-                        '& .MuiChip-label': {
-                          px: 1,
+                          opacity: isActive ? 0.9 : 1,
+                          transform: 'scale(1.02)',
                         },
                       }}
-                    />
+                    >
+                      {cat.title}
+                    </Button>
                   </motion.div>
                 );
               })}
             </Stack>
 
-            {/* =====================================================
-                MOBILE VIDEO CARDS
-            ===================================================== */}
-
+            {/* RIGHT CONTENT */}
             <Box
               sx={{
-                display: {
-                  xs: 'block',
-                  sm: 'none',
-                },
+                flex: 1,
+                minWidth: 0,
+                position: 'relative',
               }}
             >
-              {filteredCollections
-                .slice(0, visibleVideos)
-                .map((video, index) => (
-                  <motion.div
-                    key={
-                      video._id ||
-                      video.id ||
-                      index
-                    }
-                    initial={{
-                      opacity: 0,
-                      y: 20,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    viewport={{
-                      once: true,
-                      amount: 0.1,
-                    }}
-                    transition={{
-                      duration: 0.4,
-                      delay: 0.05,
-                    }}
-                  >
-                    <Card
-                      sx={{
-                        mb: 3,
-                        borderRadius: 3,
-                        border: `1px solid ${cardBorder}`,
-                        boxShadow: cardShadow,
-                        overflow: 'hidden',
-                        backgroundColor:
-                          cardBackground,
-                      }}
-                    >
-                      {/* Thumbnail */}
-                      <Box
-                        sx={{
-                          height: 180,
-                          bgcolor:
-                            imageBackground,
-                          borderRadius: 2,
-                          m: 1,
-                          overflow: 'hidden',
-                          position: 'relative',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        {video.thumbnail ? (
-                          <img
-                            src={getThumbnailUrl(
-                              video
-                            )}
-                            alt={
-                              video.title ||
-                              'Video'
-                            }
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                            }}
-                          />
-                        ) : (
-                          <PlayArrowIcon
-                            sx={{
-                              fontSize: 42,
-                              color: textMuted,
-                            }}
-                          />
-                        )}
-                      </Box>
-
-                      {/* Content */}
-                      <CardContent
-                        sx={{
-                          p: 3,
-                          '&:last-child': {
-                            pb: 3,
-                          },
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent:
-                              'space-between',
-                            alignItems:
-                              'flex-start',
-                            gap: 2,
-                            mb: 1,
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              fontFamily,
-                              fontWeight:
-                                semibold,
-                              fontSize:
-                                '1.1rem',
-                              lineHeight: 1.3,
-                              color:
-                                video.color ||
-                                textPrimary,
-                              textAlign:
-                                'left',
-                            }}
-                          >
-                            {video.title}
-                          </Typography>
-
-                          {video.duration && (
-                            <Typography
-                              sx={{
-                                flexShrink: 0,
-                                fontFamily,
-                                fontSize: 13,
-                                color:
-                                  textMuted,
-                                fontWeight:
-                                  medium,
-                              }}
-                            >
-                              {video.duration}
-                            </Typography>
-                          )}
-                        </Box>
-
-                        <Typography
-                          sx={{
-                            fontFamily,
-                            fontWeight:
-                              regular,
-                            mb: 3,
-                            fontSize:
-                              '0.9375rem',
-                            lineHeight: 1.5,
-                            color:
-                              textSecondary,
-                            textAlign:
-                              'left',
-                          }}
-                        >
-                          {video.description}
-                        </Typography>
-
-                        <Button
-                          fullWidth
-                          variant="contained"
-                          startIcon={
-                            <PlayArrowIcon />
-                          }
-                          onClick={() =>
-                            openVideo(video)
-                          }
-                          sx={{
-                            minHeight: 42,
-                            borderRadius: '10px',
-                            background:
-                              gradient,
-                            color: textLight,
-                            textTransform:
-                              'none',
-                            fontFamily,
-                            fontSize:
-                              '0.9375rem',
-                            fontWeight:
-                              medium,
-                            border: '2px solid #FFFFFF',
-                            backdropFilter: 'blur(100.38603973388672px)',
-                            WebkitBackdropFilter: 'blur(100.38603973388672px)',
-                            boxShadow: '0px 2.96px 5.4px 0.74px #0000001A',
-
-                            '&:hover': {
-                              opacity:
-                                buttonHoverOpacity,
-                              background:
-                                gradient,
-                              boxShadow: '0px 2.96px 5.4px 0.74px #0000001A',
-                            },
-                          }}
-                        >
-                          Watch Now
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-            </Box>
-
-            {/* =====================================================
-                DESKTOP VIDEO GRID
-            ===================================================== */}
-
-            <Box
-              sx={{
-                display: {
-                  xs: 'none',
-                  sm: 'grid',
-                },
-
-                gridTemplateColumns: {
-                  sm: 'repeat(2, minmax(0, 1fr))',
-                  md: 'repeat(3, minmax(0, 1fr))',
-                },
-
-                gap: {
-                  sm: 2,
-                  md: 3,
-                },
-
-                pb: 0,
-              }}
-            >
-              {filteredCollections
-                .slice(0, visibleVideos)
-                .map((video, index) => (
-                  <motion.div
-                    key={
-                      video._id ||
-                      video.id ||
-                      index
-                    }
-                    initial={{
-                      opacity: 0,
-                      scale: 0.9,
-                      y: 10,
-                    }}
-                    whileInView={{
-                      opacity: 1,
-                      scale: 1,
-                      y: 0,
-                    }}
-                    viewport={{
-                      once: true,
-                      amount: 0.1,
-                    }}
-                    transition={{
-                      duration: 0.4,
-                      delay:
-                        0.1 +
-                        (index % 3) * 0.1,
-                    }}
-                    whileHover={{
-                      y: -4,
-                      transition: {
-                        duration: 0.2,
-                      },
-                    }}
-                    style={{
-                      height: '100%',
-                    }}
-                  >
-                    <Card
-                      className="video-collection-card"
-                      sx={{
-                        borderRadius: 1,
-                        border: `1px solid ${cardBorder}`,
-                        boxShadow: cardShadow,
-                        height: '100%',
-                        display: 'flex',
-                        flexDirection:
-                          'column',
-                        overflow: 'hidden',
-                        background:
-                          cardBackground,
-                      }}
-                    >
-                      {/* Thumbnail */}
-                      <Box
-                        className="video-thumbnail"
-                        sx={{
-                          position: 'relative',
-                          height: {
-                            sm: 150,
-                            md: 170,
-                          },
-                          bgcolor: imageBackground,
-                          borderRadius: 1,
-                          m: 1,
-                          overflow: 'hidden',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          // REMOVED: The hover effect that expanded the container and caused the image to zoom
-                        }}
-                      >
-                        {video.thumbnail ? (
-                          <img
-                            src={getThumbnailUrl(
-                              video
-                            )}
-                            alt={
-                              video.title ||
-                              'Video'
-                            }
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                            }}
-                          />
-                        ) : (
-                          <PlayArrowIcon
-                            sx={{
-                              fontSize: 48,
-                              color: textMuted,
-                            }}
-                          />
-                        )}
-
-                        {/* Play button */}
-                        <IconButton
-                          aria-label={`Play ${video.title || 'video'}`}
-                          onClick={() =>
-                            openVideo(video)
-                          }
-                          sx={{
-                            position:
-                              'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform:
-                              'translate(-50%, -50%)',
-
-                            bgcolor:
-                              'rgba(0,0,0,0.55)',
-
-                            color:
-                              textLight,
-
-                            width: 48,
-                            height: 48,
-
-                            transition:
-                              'all 0.2s ease',
-
-                            '&:hover': {
-                              bgcolor:
-                                'rgba(0,0,0,0.8)',
-                              transform:
-                                'translate(-50%, -50%) scale(1.05)',
-                            },
-                          }}
-                        >
-                          <PlayArrowIcon />
-                        </IconButton>
-                      </Box>
-
-                      {/* Card content */}
-                      <CardContent
-                        sx={{
-                          flexGrow: 1,
-                          display: 'flex',
-                          flexDirection:
-                            'column',
-                          p: {
-                            xs: 2,
-                            sm: 2.5,
-                          },
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent:
-                              'space-between',
-                            alignItems:
-                              'flex-start',
-                            gap: 1.5,
-                            mb: 1.5,
-                          }}
-                        >
-                          <Typography
-                            component="h3"
-                            sx={{
-                              fontFamily,
-                              fontWeight:
-                                bold,
-                              lineHeight: 1.2,
-                              fontSize: {
-                                xs: 16,
-                                sm: 18,
-                              },
-                              color:
-                                video.color ||
-                                textPrimary,
-                              textAlign:
-                                'left',
-                              mb: 0,
-                            }}
-                          >
-                            {video.title}
-                          </Typography>
-
-                          {video.duration && (
-                            <Typography
-                              sx={{
-                                flexShrink: 0,
-                                fontFamily,
-                                fontSize: 13,
-                                color:
-                                  textMuted,
-                                fontWeight:
-                                  medium,
-                                whiteSpace:
-                                  'nowrap',
-                              }}
-                            >
-                              {video.duration}
-                            </Typography>
-                          )}
-                        </Box>
-
-                        <Typography
-                          sx={{
-                            fontFamily,
-                            fontWeight:
-                              regular,
-                            fontSize: {
-                              xs: 13,
-                              sm: 14,
-                            },
-                            lineHeight: 1.5,
-                            color:
-                              textMuted,
-                            mb: 2,
-                            flexGrow: 1,
-                            textAlign:
-                              'left',
-                          }}
-                        >
-                          {video.description}
-                        </Typography>
-
-                        {/* Watch button */}
-                        <Button
-                          fullWidth
-                          variant="contained"
-                          startIcon={
-                            <PlayArrowIcon />
-                          }
-                          onClick={() =>
-                            openVideo(video)
-                          }
-                          sx={{
-                            minHeight: 36,
-                            borderRadius: '10px',
-                            background:
-                              gradient,
-                            color: textLight,
-                            textTransform:
-                              'none',
-                            fontFamily,
-                            fontSize: 13,
-                            fontWeight:
-                              medium,
-                            position:
-                              'relative',
-                            overflow:
-                              'hidden',
-                            border: '2px solid #FFFFFF',
-                            backdropFilter: 'blur(100.38603973388672px)',
-                            WebkitBackdropFilter: 'blur(100.38603973388672px)',
-                            boxShadow: '0px 2.96px 5.4px 0.74px #0000001A',
-
-                            '&:hover': {
-                              opacity:
-                                buttonHoverOpacity,
-                              background:
-                                gradient,
-                              boxShadow: '0px 2.96px 5.4px 0.74px #0000001A',
-                            },
-                          }}
-                        >
-                          Watch Now
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-            </Box>
-
-            {/* =====================================================
-                READ MORE / SHOW LESS
-            ===================================================== */}
-
-            {filteredCollections.length > 6 && (
-              <motion.div
-                initial={{
-                  opacity: 0,
-                }}
-                whileInView={{
-                  opacity: 1,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  duration: 0.4,
-                  delay: 0.3,
+              {/* MOBILE CATEGORIES */}
+              <Stack
+                direction="row"
+                spacing={1}
+                justifyContent="center"
+                alignItems="center"
+                flexWrap="wrap"
+                sx={{
+                  display: { xs: 'flex', sm: 'none' },
+                  mb: 3,
+                  rowGap: 1,
                 }}
               >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent:
-                      'center',
-                    mt: 4,
+                {categories.map((cat, index) => {
+                  const isActive =
+                    cat._id === selectedCategory;
+
+                  return (
+                    <motion.div
+                      key={cat._id}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.3,
+                        delay: 0.1 + index * 0.1,
+                      }}
+                    >
+                      <Chip
+                        label={cat.title}
+                        onClick={() =>
+                          setSelectedCategory(cat._id)
+                        }
+                        size="small"
+                        sx={{
+                          borderRadius: 4,
+                          fontFamily,
+                          fontSize: 13,
+                          fontWeight: isActive ? bold : medium,
+                          background: isActive
+                            ? gradient
+                            : '#FFFFFF',
+                          color: isActive
+                            ? textLight
+                            : cardTitleColor,
+                          border: isActive
+                            ? 'none'
+                            : `1px solid ${border}`,
+                          boxShadow: isActive
+                            ? '0px 4px 10px rgba(249, 166, 41, 0.3)'
+                            : '0px 2px 8px rgba(0, 0, 0, 0.04)',
+                          px: 1.5,
+                          height: 32,
+                          minWidth: 110,
+                          '&:hover': {
+                            background: isActive
+                              ? gradient
+                              : '#FAFAFA',
+                          },
+                          '& .MuiChip-label': {
+                            px: 1,
+                          },
+                        }}
+                      />
+                    </motion.div>
+                  );
+                })}
+              </Stack>
+
+              {/* MOBILE VIDEO CARDS */}
+              <Box
+                sx={{
+                  display: {
+                    xs: 'block',
+                    sm: 'none',
+                  },
+                }}
+              >
+                {filteredCollections
+                  .slice(0, visibleVideos)
+                  .map((video, index) => (
+                    <motion.div
+                      key={video._id || video.id || index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{
+                        once: true,
+                        amount: 0.1,
+                      }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.05,
+                      }}
+                    >
+                      <Card
+                        sx={{
+                          mb: 3,
+                          borderRadius: '16px',
+                          backgroundColor: cardBg,
+                          boxShadow: cardBoxShadow,
+                          border: `1px solid ${cardBorderColor}`,
+                          p: 2,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            height: 160,
+                            borderRadius: '10px',
+                            overflow: 'hidden',
+                            width: '100%',
+                            mb: 2,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            bgcolor: imageBackground,
+                            position: 'relative',
+                          }}
+                        >
+                          {video.thumbnail ? (
+                            <img
+                              src={getThumbnailUrl(video)}
+                              alt={video.title || 'Video'}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                              }}
+                            />
+                          ) : (
+                            <PlayArrowIcon
+                              sx={{
+                                fontSize: 42,
+                                color: textMuted,
+                              }}
+                            />
+                          )}
+
+                          <IconButton
+                            onClick={() => openVideo(video)}
+                            sx={{
+                              position: 'absolute',
+                              top: '50%',
+                              left: '50%',
+                              transform:
+                                'translate(-50%, -50%)',
+                              bgcolor: 'rgba(0,0,0,0.5)',
+                              color: '#FFFFFF',
+                              width: 48,
+                              height: 48,
+                              '&:hover': {
+                                bgcolor: 'rgba(0,0,0,0.7)',
+                              },
+                            }}
+                          >
+                            <PlayArrowIcon />
+                          </IconButton>
+                        </Box>
+
+                        <CardContent
+                          sx={{
+                            p: 0,
+                            '&:last-child': {
+                              pb: 0,
+                            },
+                            display: 'flex',
+                            flexDirection: 'column',
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'flex-start',
+                              gap: 1.5,
+                              mb: 1,
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                fontFamily,
+                                fontWeight: 700,
+                                fontSize: '20px',
+                                color: cardTitleColor,
+                                textAlign: 'left',
+                              }}
+                            >
+                              {video.title}
+                            </Typography>
+                          </Box>
+
+                          <Typography
+                            sx={{
+                              fontFamily,
+                              fontWeight: 400,
+                              fontSize: '14px',
+                              color: cardDescriptionColor,
+                              mb: 3,
+                              textAlign: 'left',
+                              lineHeight: 1.5,
+                            }}
+                          >
+                            {video.description}
+                          </Typography>
+
+                          <Button
+                            fullWidth
+                            variant="contained"
+                            startIcon={<PlayArrowIcon />}
+                            onClick={() => openVideo(video)}
+                            sx={{
+                              height: 44,
+                              borderRadius: '10px',
+                              background: gradient,
+                              color: '#FFFFFF',
+                              textTransform: 'none',
+                              fontFamily,
+                              fontSize: '15px',
+                              fontWeight: 500,
+                              border: '2px solid #FFFFFF',
+                              backdropFilter:
+                                'blur(100.38603973388672px)',
+                              WebkitBackdropFilter:
+                                'blur(100.38603973388672px)',
+                              boxShadow:
+                                '0px 2.96px 5.4px 0.74px #0000001A',
+                              '&:hover': {
+                                background: gradient,
+                                opacity: 0.9,
+                                boxShadow:
+                                  '0px 2.96px 5.4px 0.74px #0000001A',
+                              },
+                            }}
+                          >
+                            Watch Now
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+              </Box>
+
+              {/* DESKTOP VIDEO GRID */}
+              <Box
+                sx={{
+                  display: {
+                    xs: 'none',
+                    sm: 'grid',
+                  },
+                  gridTemplateColumns: {
+                    sm: 'repeat(2, minmax(0, 1fr))',
+                    md: 'repeat(3, minmax(0, 1fr))',
+                    lg: 'repeat(3, minmax(0, 1fr))',
+                    xl: 'repeat(3, minmax(0, 1fr))',
+                  },
+                  gap: 2,
+                  width: '100%',
+                }}
+              >
+                {filteredCollections
+                  .slice(0, visibleVideos)
+                  .map((video, index) => (
+                    <motion.div
+                      key={video._id || video.id || index}
+                      initial={{
+                        opacity: 0,
+                        scale: 0.9,
+                        y: 10,
+                      }}
+                      whileInView={{
+                        opacity: 1,
+                        scale: 1,
+                        y: 0,
+                      }}
+                      viewport={{
+                        once: true,
+                        amount: 0.1,
+                      }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.1 + (index % 3) * 0.08,
+                      }}
+                      whileHover={{
+                        y: -4,
+                        transition: {
+                          duration: 0.2,
+                        },
+                      }}
+                      style={{
+                        height: '100%',
+                      }}
+                    >
+                      <Card
+                        className="video-collection-card group"
+                        sx={{
+                          borderRadius: '16px',
+                          backgroundColor: cardBg,
+                          boxShadow: cardBoxShadow,
+                          border: `1px solid ${cardBorderColor}`,
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          p: 2,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            height: 160,
+                            borderRadius: '10px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            overflow: 'hidden',
+                            width: '100%',
+                            mb: 2,
+                            position: 'relative',
+                            bgcolor: imageBackground,
+                          }}
+                        >
+                          {video.thumbnail ? (
+                            <img
+                              src={getThumbnailUrl(video)}
+                              alt={video.title || 'Video'}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                              }}
+                            />
+                          ) : (
+                            <PlayArrowIcon
+                              sx={{
+                                fontSize: 48,
+                                color: textMuted,
+                              }}
+                            />
+                          )}
+
+                          <IconButton
+                            aria-label={`Play ${video.title || 'video'}`}
+                            onClick={() => openVideo(video)}
+                            sx={{
+                              position: 'absolute',
+                              top: '50%',
+                              left: '50%',
+                              transform:
+                                'translate(-50%, -50%)',
+                              bgcolor: 'rgba(0,0,0,0.55)',
+                              color: '#FFFFFF',
+                              width: 48,
+                              height: 48,
+                              transition: 'all 0.2s ease',
+                              '&:hover': {
+                                bgcolor: 'rgba(0,0,0,0.8)',
+                                transform:
+                                  'translate(-50%, -50%) scale(1.05)',
+                              },
+                            }}
+                          >
+                            <PlayArrowIcon />
+                          </IconButton>
+                        </Box>
+
+                        <CardContent
+                          sx={{
+                            p: 0,
+                            '&:last-child': {
+                              pb: 0,
+                            },
+                            flexGrow: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'flex-start',
+                              gap: 1.5,
+                              mb: 1,
+                            }}
+                          >
+                            <Typography
+                              component="h3"
+                              sx={{
+                                fontFamily,
+                                fontWeight: 700,
+                                fontSize: '20px',
+                                lineHeight: 1.2,
+                                color: cardTitleColor,
+                                textAlign: 'left',
+                              }}
+                            >
+                              {video.title}
+                            </Typography>
+                          </Box>
+
+                          <Typography
+                            sx={{
+                              fontFamily,
+                              fontWeight: 400,
+                              fontSize: '14px',
+                              color: cardDescriptionColor,
+                              mb: 3,
+                              flexGrow: 1,
+                              textAlign: 'left',
+                              lineHeight: 1.5,
+                            }}
+                          >
+                            {video.description}
+                          </Typography>
+
+                          <Button
+                            variant="contained"
+                            startIcon={<PlayArrowIcon />}
+                            onClick={() => openVideo(video)}
+                            sx={{
+                              width: '100%',
+                              height: 44,
+                              borderRadius: '10px',
+                              background: gradient,
+                              color: '#FFFFFF',
+                              textTransform: 'none',
+                              fontFamily,
+                              fontSize: '15px',
+                              fontWeight: 500,
+                              border: '2px solid #FFFFFF',
+                              backdropFilter:
+                                'blur(100.38603973388672px)',
+                              WebkitBackdropFilter:
+                                'blur(100.38603973388672px)',
+                              boxShadow:
+                                '0px 2.96px 5.4px 0.74px #0000001A',
+                              '&:hover': {
+                                background: gradient,
+                                opacity: 0.9,
+                                boxShadow:
+                                  '0px 2.96px 5.4px 0.74px #0000001A',
+                              },
+                            }}
+                          >
+                            Watch Now
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+              </Box>
+
+              {/* READ MORE / SHOW LESS */}
+              {filteredCollections.length > 8 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.3,
                   }}
                 >
-                  <Typography
-                    component="span"
-                    onClick={toggleVideos}
+                  <Box
                     sx={{
-                      textTransform:
-                        'none',
-                      fontFamily,
-                      color: titleColor,
-                      cursor: 'pointer',
-                      fontSize: 14,
-                      fontWeight: medium,
-                      textDecoration:
-                        'none',
-                      userSelect: 'none',
-
-                      '&:hover': {
-                        color:
-                          titleColor,
-                        textDecoration:
-                          'underline',
-                        textUnderlineOffset:
-                          '4px',
-                      },
+                      display: 'flex',
+                      justifyContent: 'center',
+                      mt: 4,
                     }}
                   >
-                    {isExpanded
-                      ? 'Show Less'
-                      : 'Read more'}
-                  </Typography>
-                </Box>
-              </motion.div>
-            )}
+                    <Typography
+                      component="span"
+                      onClick={toggleVideos}
+                      sx={{
+                        textTransform: 'none',
+                        fontFamily,
+                        color: titleColor,
+                        cursor: 'pointer',
+                        fontSize: 14,
+                        fontWeight: bold,
+                        textDecoration: 'underline',
+                        textUnderlineOffset: '4px',
+                        userSelect: 'none',
+                        '&:hover': {
+                          textDecoration: 'underline',
+                          textUnderlineOffset: '4px',
+                        },
+                      }}
+                    >
+                      {isExpanded ? 'Show Less' : 'Read more'}
+                    </Typography>
+                  </Box>
+                </motion.div>
+              )}
+            </Box>
           </Box>
-        </Box>
-      </Container>
+        </SiteContainer>
+        
+      </Section>
+      
 
-      {/* ===========================================================
-          VIDEO MODAL
-      =========================================================== */}
-
+      {/* VIDEO MODAL */}
       {videoUrl && (
         <Box
           onClick={closeVideo}
@@ -1150,17 +843,12 @@ export default function VideoCollection() {
               position: 'fixed',
               inset: 0,
               zIndex: 9999,
-              background:
-                'rgba(0,0,0,0.75)',
+              background: 'rgba(0,0,0,0.75)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }),
-
-            p: {
-              xs: 2,
-              md: 4,
-            },
+            p: { xs: 2, md: 4 },
           }}
         >
           <motion.div
@@ -1182,29 +870,24 @@ export default function VideoCollection() {
               width: '100%',
               maxWidth: 900,
             }}
-            onClick={(event) =>
-              event.stopPropagation()
-            }
+            onClick={(event) => event.stopPropagation()}
           >
             <Box
               sx={{
                 ...(gifts.modalContainer || {
-                  background:
-                    modalBackground,
+                  background: modalBackground,
                   borderRadius: 2,
                   overflow: 'hidden',
                 }),
               }}
             >
-              {/* Modal header */}
               <Box
                 sx={{
                   ...(gifts.modalHeader || {}),
                   background: gradient,
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent:
-                    'space-between',
+                  justifyContent: 'space-between',
                   px: 2,
                   py: 1.5,
                 }}
@@ -1212,15 +895,13 @@ export default function VideoCollection() {
                 <Box
                   sx={{
                     display: 'flex',
-                    alignItems:
-                      'center',
+                    alignItems: 'center',
                     gap: 1,
                   }}
                 >
                   <PlayArrowIcon
                     sx={{
-                      color:
-                        textLight,
+                      color: textLight,
                       fontSize: 20,
                     }}
                   />
@@ -1229,12 +910,9 @@ export default function VideoCollection() {
                     sx={{
                       fontFamily,
                       fontSize: 14,
-                      fontWeight:
-                        semibold,
-                      color:
-                        textLight,
-                      letterSpacing:
-                        0.3,
+                      fontWeight: semibold,
+                      color: textLight,
+                      letterSpacing: 0.3,
                     }}
                   >
                     Now Playing
@@ -1247,32 +925,24 @@ export default function VideoCollection() {
                   aria-label="Close video"
                   sx={{
                     color: textLight,
-                    bgcolor:
-                      closeBackground,
+                    bgcolor: closeBackground,
                     borderRadius: 2,
                     p: 0.5,
-
                     '&:hover': {
-                      bgcolor:
-                        closeHoverBackground,
-                      transform:
-                        'scale(1.05)',
+                      bgcolor: closeHoverBackground,
+                      transform: 'scale(1.05)',
                     },
-
-                    transition:
-                      'all 0.2s',
+                    transition: 'all 0.2s',
                   }}
                 >
                   ✕
                 </IconButton>
               </Box>
 
-              {/* Video */}
               <Box
                 sx={{
                   ...(gifts.modalBody || {}),
-                  background:
-                    modalBackground,
+                  background: modalBackground,
                 }}
               >
                 <video
@@ -1289,18 +959,14 @@ export default function VideoCollection() {
                 />
               </Box>
 
-              {/* Modal footer */}
               <Box
                 sx={{
                   px: 2.5,
                   py: 1.5,
-                  bgcolor:
-                    modalBackground,
+                  bgcolor: modalBackground,
                   display: 'flex',
-                  alignItems:
-                    'center',
-                  justifyContent:
-                    'space-between',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
                   gap: 2,
                 }}
               >
@@ -1308,24 +974,19 @@ export default function VideoCollection() {
                   sx={{
                     fontFamily,
                     fontSize: 12,
-                    color:
-                      'rgba(255,255,255,0.35)',
-                    fontWeight:
-                      regular,
+                    color: 'rgba(255,255,255,0.35)',
+                    fontWeight: regular,
                   }}
                 >
-                  Click outside or press ✕
-                  to close
+                  Click outside or press ✕ to close
                 </Typography>
 
                 <Box
                   sx={{
                     width: 8,
                     height: 8,
-                    borderRadius:
-                      '50%',
-                    bgcolor:
-                      titleColor,
+                    borderRadius: '50%',
+                    bgcolor: titleColor,
                     boxShadow: `0 0 8px ${titleColor}`,
                     flexShrink: 0,
                   }}
@@ -1335,6 +996,7 @@ export default function VideoCollection() {
           </motion.div>
         </Box>
       )}
+      
     </motion.div>
   );
 }

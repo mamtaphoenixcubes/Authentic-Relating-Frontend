@@ -16,8 +16,8 @@ export const AuthenticRelatingWorkHero = () => {
             >
                 
                 <Image
-                    src="/hero/arwork.png"
-                    alt="Founder Hero"
+                    src="/AuthenticRelatingWork.png"
+                    alt="Authentic Relating Work"
                     fill
                     priority
                     className="object-cover object-center"

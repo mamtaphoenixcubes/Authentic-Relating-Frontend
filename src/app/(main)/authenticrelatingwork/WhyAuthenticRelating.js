@@ -95,7 +95,8 @@ export default function WhyAuthenticRelating() {
                     sx={{ 
                         ...styles.wrapper,
                         mt: 0, // 👈 Removes top gap inside the section
-                        mb: 0  // 👈 Removes bottom gap inside the section
+                        mb: 0,  // 👈 Removes bottom gap inside the section
+                        border:" 2px solid #FFFFFF"
                     }}
                 >
                     {/* Heading */}

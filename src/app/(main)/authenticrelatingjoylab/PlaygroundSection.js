@@ -125,7 +125,7 @@ export default function PlaygroundSection() {
               objectFit: "cover",
               borderRadius: "24px",
               zIndex: 0,
-              mt: { xs: 4, md: 10 },
+              mt: { xs: 10,md:10, lg:2, xl: 5 },
               mb: { xs: 6, md: 8 },
             }}
           />

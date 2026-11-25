@@ -116,7 +116,7 @@ export default function JoyLabSection() {
                     transition={{ duration: 0.6 }}
                 >
                     <Typography sx={joyLabTypography.headingTitle}>
-                        What Happens in the Joy Lab?
+                        What Happens in the Joy Lab?aa
                     </Typography>
 
                     <Typography sx={joyLabTypography.headingSubtitle}>

@@ -19,6 +19,9 @@ export default function JoyLabSection() {
   const theme = useTheme();
   const s = theme.custom.joyLab;
 
+  // 👇 Added optional chaining (?) to prevent the crash
+  const headerStyles = theme.custom?.authenticRelatingHeader;
+
   const [viewMode, setViewMode] = useState('list');
   const [sections, setSections] = useState([]);
 
@@ -74,8 +77,17 @@ export default function JoyLabSection() {
   };
 
   return (
-    // 👇 Added pb override to reduce the bottom gap
-    <Section sx={{ mt: 0, pt: 0, pb: { xs: 2, md: 0, lg: 2 } }}>
+    // 👇 Safely fallback to default values if the theme is missing
+    <Section
+      sx={{
+        mt: 0,
+        pt: {
+          xs: headerStyles?.sectionPy?.xs ?? 0, // Fallback to 4
+          md: headerStyles?.sectionPy?.md ?? 0  // Fallback to 6
+        },
+        pb: { xs: 2, md: 0, lg: 0 }
+      }}
+    >
       <SiteContainer>
         <Box sx={s.container}>
           {/* HEADING */}
@@ -90,7 +102,13 @@ export default function JoyLabSection() {
               align="center"
               title="What Happens in the Joy Lab?"
               subtitle="At the Authentic Relating Joy Lab, we blend the best elements of games, storytelling, movement, and relational alchemy to create an unforgettable experience. Each session includes a mix of fun, depth, and playfulness, ensuring that everyone—whether introvert or extrovert, playful or contemplative—feels at home."
-              sx={s.headingHeaderSx}
+              sx={{
+                ...s.headingHeaderSx,
+                color: '#000000', 
+                '& h2, & p, & .MuiTypography-root': {
+                  color: '#000000',
+                }
+              }}
             />
           </MotionBox>
 

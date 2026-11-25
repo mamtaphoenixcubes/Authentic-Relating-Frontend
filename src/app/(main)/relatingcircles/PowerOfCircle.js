@@ -120,24 +120,43 @@ const CirclePowerCard = () => {
                             lg: 150,
                             xl: 160,
                           },
+                          position: 'relative',
                           transform: `skewX(${SKEW_ANGLE}deg)`,
                           transformOrigin: 'center center',
                           borderRadius: { xs: 2, sm: 2.5, md: 3 },
+
+                          // 👇 LEFT TO RIGHT GRADIENT OVER A SEMI-TRANSPARENT WHITE BASE 👇
                           background:
-                            'linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
+                            'linear-gradient(90deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05)), rgba(255,255,255,0.05)',
+
                           backdropFilter: 'blur(10px)',
-                          border: '2px solid rgba(255,255,255,0.9)',
                           p: { xs: 2, sm: 2, md: 2.5, lg: 3 },
                           display: 'flex',
                           flexDirection: 'column',
                           justifyContent: 'center',
                           cursor: 'default',
                           transition: 'all 0.3s ease',
+
+                          // 👇 GRADIENT BORDER (Matches your screenshot perfectly) 👇
+                          '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            inset: 0,
+                            borderRadius: 'inherit',
+                            padding: '2px',
+                            background: 'linear-gradient(106.27deg, rgba(255,255,255,1), rgba(255,255,255,0.4))',
+                            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                            WebkitMaskComposite: 'xor',
+                            maskComposite: 'exclude',
+                            pointerEvents: 'none',
+                          },
+
                           '&:hover': {
                             transform: `skewX(${SKEW_ANGLE}deg) translateY(-6px)`,
                             boxShadow: '0 12px 32px rgba(0,0,0,0.25)',
+                            // 👇 HOVER STATE (Left to Right) 👇
                             background:
-                              'linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.1))',
+                              'linear-gradient(90deg, rgba(255,255,255,0.22), rgba(255,255,255,0.1)), rgba(255,255,255,0.05)',
                           },
                         }}
                       >
@@ -153,7 +172,7 @@ const CirclePowerCard = () => {
                           <Typography
                             fontSize={{ xs: 13, sm: 13, md: 14, lg: 14, xl: 15 }}
                             lineHeight={1.4}
-                            sx={{ opacity: 0.9, color: '#fff' }}
+                            sx={{ opacity: 0.9, color: '#FFFFFF' }}
                           >
                             {item.desc}
                           </Typography>

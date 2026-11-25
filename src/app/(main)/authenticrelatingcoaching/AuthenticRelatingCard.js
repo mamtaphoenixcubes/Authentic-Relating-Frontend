@@ -125,6 +125,7 @@ function GlassBox({ children, sx = {} }) {
 // -----------------------------------------------------------
 // Reusable Point component
 // -----------------------------------------------------------
+
 function Point({ title, desc, background }) {
   return (
     <motion.div
@@ -136,7 +137,8 @@ function Point({ title, desc, background }) {
       <Box
         sx={{
           background,
-          borderRadius: 2,
+          opacity: 1,           // 👈 Added opacity
+          borderRadius: '10px', // 👈 Changed from 2 (16px) to 10px
           p: 2,
           boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
         }}
@@ -210,15 +212,15 @@ export default function AuthenticRelatingCard() {
                 borderRadius: '43px',
 
                 // Orange background with visible white gradient border
-               background: `
-  linear-gradient(105deg, #FF596C 0%, #FF8A70 50%, #FFB285 100%) padding-box,
+                background: `
+  linear-gradient(105deg, #ee6a55 0%, #FF8A70 50%, #FFB285 100%) padding-box,
   linear-gradient(
     105.94deg,
     #FFFFFF 2.2%,
     #999999 100%
   ) border-box
 `,
-border: '2px solid transparent',
+                border: '2px solid transparent',
 
                 gap: 5,
                 color: '#fff',
