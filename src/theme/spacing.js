@@ -419,7 +419,7 @@ leadership: {
   // JOY LAB
   // =========================================================
   joyLab: {
-    containerPy: { xs: 4, sm: 6, md: 8 },
+    containerPy: { xs: 4, sm: 6, md: 0 },
     spacerHeight: { xs: 40, md: 60 },
     spacerMb: { xs: 2, md: 3 },
     headingMb: { xs: 4, md: 6 },
@@ -1157,9 +1157,9 @@ leadership: {
   // =========================================================
 
   playground: {
-    outerPt: { xs: 6, md: 12 },
+    outerPt: { xs: 1, xl: 3 },
     outerPb: { xs: 2, sm: 5, md: 35, lg: 35, xl: 35 },
-    outerMb: { xs: 4, md: 6 },
+    outerMb: { xs: 4, md:6, xl: 0 },
     panelTop: { xs: 100, md: 250 },
     panelHeight: { xs: 420, sm: 30, md: 560 },
     panelRadius: { xs: "20px", md: "28px" },

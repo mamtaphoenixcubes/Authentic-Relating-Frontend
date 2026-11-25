@@ -59,12 +59,22 @@ export const AuthenticRelating = () => {
             }}
         >
             {/* HERO */}
-            <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-            >
+<SiteContainer
+  sx={{
+    ...t.offeringsWrapper,
+    width: '100%',
+    maxWidth: {
+      xs: '100%',
+      sm: '100%',
+      md: '1200px',
+      lg: '1400px',
+      xl: '1800px',
+    },
+    mx: 'auto',
+    pt: { xs: 4, md: 2, xl: 6 },
+    pb: { xs: 4, md: 2, xl: 6 },
+  }}
+>
                 <Box
                     sx={{
                         ...t.heroPanel,
@@ -121,7 +131,7 @@ export const AuthenticRelating = () => {
                         </Typography>
                     </motion.div>
                 </Box>
-            </motion.div>
+            </SiteContainer>
 
             {/* CORE OFFERINGS */}
             {/* CORE OFFERINGS */}

@@ -323,13 +323,13 @@ export default function OurApproach() {
                             </Typography>
 
                             <Box sx={styles.coreImageWrapper}>
-                                <Image
-                                    src={styles.coreImageSrc || '/arwork/coretraining.png'}
-                                    alt="Focus Areas"
-                                    fill
-                                    style={styles.coreImage}
-                                    sizes="(max-width: 600px) 100vw, 50vw"
-                                />
+                                    <Image
+                                        src={styles.coreImageSrc || '/arwork/coretraining.png'}
+                                        alt="Focus Areas"
+                                        fill
+                                        style={styles.coreImage}
+                                        sizes="(max-width: 600px) 100vw, 50vw"
+                                    />
                             </Box>
                         </MotionBox>
                     </Box>
