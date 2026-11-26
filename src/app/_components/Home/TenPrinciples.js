@@ -184,10 +184,7 @@ export default function TenPrinciples() {
               },
             }}
           >
-            Morbi varius ornare ante non posuere. Morbi lacus
-            lacus, auctor sit amet erat vitae, interdum semper
-            leo. Donec dignissim iaculis fermentum. Donec
-            tellus enim, facilisis eu vulputate eget.
+            Explore Amitabha Bhatia’s 10 Principles of Authentic Relating , a guide to deeper self-awareness and meaningful connection through presence, vulnerability, compassionate curiosity, honest expression, personal agency, inner congruence, self-care, healthy boundaries, lightness and play.
           </Typography>
         </Box>
 

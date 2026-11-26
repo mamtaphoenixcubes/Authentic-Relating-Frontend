@@ -5,7 +5,7 @@ import { ChevronDown, ChevronRight, Circle, CircleCheck, CircleHelp, FileText, M
 
 const lessonIcon = (type) => type === 'quiz' ? CircleHelp : type === 'audio' ? Music2 : type === 'pdf' ? FileText : Play;
 
-export default function CourseProgressSidebar({ chapters = [], lessons = [], selectedLessonId, onSelectLesson }) {
+export default function CourseProgressSidebar({ chapters = [], lessons = [], selectedLessonId, selectedChapterId, onSelectChapter, onSelectLesson }) {
   const [expanded, setExpanded] = useState(() => Object.fromEntries(chapters.map((chapter, index) => [chapter._id || String(index), index === 0])));
   const completedTotal = lessons.filter((item) => item.lesson.isFinished).length;
   const percent = lessons.length ? Math.round((completedTotal / lessons.length) * 100) : 0;
@@ -34,15 +34,16 @@ export default function CourseProgressSidebar({ chapters = [], lessons = [], sel
           const expandedNow = expanded[key] ?? chapterIndex === 0;
           const chapterLessons = chapter.lessons || [];
           const done = chapterLessons.filter((lesson) => lesson.isFinished).length;
+          const activeChapter = !selectedLessonId && (selectedChapterId === (chapter._id || chapter.title));
           return (
             <section key={key} className="relative rounded-[17px] border border-[#d4dce8] bg-white shadow-[0_0_0_1px_rgba(212,220,232,0.28)]">
               <button
                 type="button"
                 aria-expanded={expandedNow}
-                onClick={() => setExpanded((current) => ({ ...current, [key]: !expandedNow }))}
-                className={"relative z-10 mx-px mt-px flex min-h-[46px] w-[calc(100%-2px)] items-center justify-between gap-3 bg-[#f8f9fb] px-4 py-3 text-left outline-none transition-colors hover:bg-[#f4f6f9] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#f04e50] " + (expandedNow ? "rounded-t-[15px]" : "rounded-[15px]")}
+                onClick={() => { onSelectChapter?.(chapter); setExpanded((current) => ({ ...current, [key]: !expandedNow })); }}
+                className={"relative z-10 mx-px mt-px flex min-h-[46px] w-[calc(100%-2px)] items-center justify-between gap-3 px-4 py-3 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#f04e50] " + (activeChapter ? "bg-[#fff0e6] text-[#f04e50] " : "bg-[#f8f9fb] hover:bg-[#f4f6f9] ") + (expandedNow ? "rounded-t-[15px]" : "rounded-[15px]")}
               >
-                <span className="flex min-w-0 items-center gap-2.5 text-[13px] font-bold text-[#101b31]">
+                <span className={'flex min-w-0 items-center gap-2.5 text-[13px] font-bold ' + (activeChapter ? 'text-[#f04e50]' : 'text-[#101b31]')}>
                   {expandedNow ? <ChevronDown className="shrink-0 text-[#94a3b8]" size={15} /> : <ChevronRight className="shrink-0 text-[#94a3b8]" size={15} />}
                   <span className="truncate">{chapter.title || 'Chapter ' + (chapterIndex + 1)}</span>
                 </span>

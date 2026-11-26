@@ -9,7 +9,12 @@ const mediaUrl = (value) => {
   if (/^(https?:|blob:|data:)/i.test(value)) return value;
   try { return new URL(value, baseUrl || window.location.origin).toString(); } catch { return value; }
 };
-const lessonMedia = (lesson) => lesson?.videoUrl || lesson?.audioUrl || lesson?.pdfUrl || lesson?.mediaAssetUrl || lesson?.url || '';
+const lessonMedia = (lesson) => {
+  const type = String(lesson?.lessonType || '').toLowerCase();
+  if (type === 'audio') return lesson?.audioUrl || lesson?.mediaAssetUrl || lesson?.url || '';
+  if (type === 'pdf') return lesson?.pdfUrl || lesson?.mediaAssetUrl || lesson?.url || '';
+  return lesson?.mediaAssetUrl || lesson?.videoUrl || lesson?.url || '';
+};
 const videoEmbed = (src) => {
   const youtube = src.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/i);
   if (youtube) return 'https://www.youtube-nocookie.com/embed/' + youtube[1];
@@ -18,6 +23,7 @@ const videoEmbed = (src) => {
 };
 
 export default function LessonMediaPlayer({ lesson, poster }) {
+  if (!lesson) return <div aria-label="No lesson selected" className="aspect-video w-full rounded-[24px] bg-[#101820] shadow-[0_16px_28px_rgba(18,30,42,.18)]" />;
   const type = String(lesson?.lessonType || 'video').toLowerCase();
   const src = mediaUrl(lessonMedia(lesson));
   const embed = type === 'video' ? videoEmbed(src) : '';

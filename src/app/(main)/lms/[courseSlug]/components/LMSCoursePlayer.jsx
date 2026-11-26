@@ -51,9 +51,8 @@ export default function LMSCoursePlayer({ courseSlug }) {
         const hydratedCourse = { ...nextCourse, chapters: nextChapters };
         setCourse(hydratedCourse);
         const firstChapter = nextChapters.find((chapter) => chapter.lessons?.length) || nextChapters[0] || null;
-        const firstLesson = firstChapter?.lessons?.[0] || null;
         setSelectedChapter(firstChapter);
-        setSelectedLessonId(firstLesson?._id || (firstLesson ? firstLesson.title : ''));
+        setSelectedLessonId('');
       } catch (error) {
         if (active) setCourse({ loadError: error.message });
       } finally {
@@ -71,7 +70,7 @@ export default function LMSCoursePlayer({ courseSlug }) {
     key: lesson._id || (chapter._id || chapterIndex) + '-' + lessonIndex,
   }))), [chapters]);
   const selectedIndex = lessons.findIndex((item) => item.key === selectedLessonId || item.lesson._id === selectedLessonId || item.lesson.title === selectedLessonId);
-  const selected = selectedIndex >= 0 ? lessons[selectedIndex] : lessons[0];
+  const selected = selectedIndex >= 0 ? lessons[selectedIndex] : null;
   const lesson = selected?.lesson || null;
   const chapter = selected?.chapter || selectedChapter;
   const completedCount = lessons.filter(({ lesson: item }) => item.isFinished).length;
@@ -83,8 +82,18 @@ export default function LMSCoursePlayer({ courseSlug }) {
     setSelectedLessonId(key || nextLesson._id || nextLesson.title);
     setSelectedChapter(nextChapter);
   };
+  const selectChapter = (nextChapter) => {
+    setSelectedChapter(nextChapter);
+    setSelectedLessonId('');
+  };
   const selectByIndex = (index) => {
     const item = lessons[index];
+    if (item) selectLesson(item.lesson, item.chapter, item.key);
+  };
+  const startChapterLesson = () => {
+    const firstLesson = chapter?.lessons?.[0];
+    if (!firstLesson) return;
+    const item = lessons.find(({ lesson: itemLesson, chapter: itemChapter }) => itemLesson === firstLesson && itemChapter === chapter);
     if (item) selectLesson(item.lesson, item.chapter, item.key);
   };
   const toggleComplete = () => {
@@ -118,11 +127,11 @@ export default function LMSCoursePlayer({ courseSlug }) {
         <LearningProgress courseTitle={course.learningTitle || course.journeyName || course.course_title || course.title} lessonNumber={Math.max(0, selectedIndex + 1)} totalLessons={lessons.length} percentage={percent} />
         <LearningQuote />
         <div className="min-w-0">
-          <LessonMediaPlayer key={lesson?._id || selectedLessonId} lesson={lesson} poster={poster} />
-          <LessonDetails lesson={lesson} chapter={chapter} lessonId={lesson?._id || selectedLessonId} courseId={course._id || courseSlug} courseFiles={courseFiles} hasPrevious={selectedIndex > 0} hasNext={selectedIndex >= 0 && selectedIndex < lessons.length - 1} onPrevious={() => selectByIndex(selectedIndex - 1)} onNext={() => selectByIndex(selectedIndex + 1)} completed={Boolean(lesson?.isFinished)} onToggleComplete={toggleComplete} />
+          <LessonMediaPlayer key={lesson?._id || selectedLessonId || 'chapter'} lesson={lesson} poster={poster} />
+          <LessonDetails lesson={lesson} chapter={chapter} lessonId={lesson?._id || selectedLessonId} courseId={course._id || courseSlug} courseFiles={courseFiles} hasPrevious={selectedIndex > 0} hasNext={selectedIndex >= 0 && selectedIndex < lessons.length - 1} onPrevious={() => selectByIndex(selectedIndex - 1)} onNext={() => selectByIndex(selectedIndex + 1)} completed={Boolean(lesson?.isFinished)} onToggleComplete={toggleComplete} onStartLesson={startChapterLesson} />
         </div>
         <aside className="space-y-5">
-          <CourseProgressSidebar chapters={chapters} lessons={lessons} selectedLessonId={selectedLessonId} onSelectLesson={selectLesson} />
+          <CourseProgressSidebar chapters={chapters} lessons={lessons} selectedLessonId={selectedLessonId} selectedChapterId={chapter?._id || chapter?.title} onSelectChapter={selectChapter} onSelectLesson={selectLesson} />
           <NeedHelpCard onMessageTeacher={messageTeacher} />
         </aside>
       </div>
