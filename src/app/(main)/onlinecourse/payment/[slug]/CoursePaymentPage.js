@@ -260,6 +260,28 @@ const MOCK_EVENT = {
 
 
 const STEPS = ['Course Details', 'Payment Method', 'Confirm & Pay'];
+const GST_AMOUNT = 0.5;
+const BOOKING_TAX_AMOUNT = 0.2;
+
+const getPricingType = (course) => String(course?.pricingType || course?.course_paymenttype || '').toLowerCase();
+const getInstallmentAmount = (course) => {
+    return Number(course?.price ?? course?.amountOneTime ?? 0);
+};
+const getInstallmentCount = (course) => Math.max(1, Number(course?.installmentCount ?? course?.installment ?? 1) || 1);
+const getCoursePriceLabel = (course) => {
+    if (!course) return '';
+    const type = getPricingType(course);
+    if (type === 'free') return 'Free';
+    if (type === 'recurring') {
+        const amount = getInstallmentAmount(course);
+        const interval = String(course.recurringInterval || '').toLowerCase();
+        const intervalLabel = { week: 'week', biweekly: '2 weeks', month: 'month', year: 'year' }[interval];
+        const count = getInstallmentCount(course);
+        return `${amount}${intervalLabel ? `/${intervalLabel}` : ''}${count > 1 ? ` × ${count} payments` : ''}`;
+    }
+    return String(course.price ?? course.amountOneTime ?? 0);
+};
+const calculateRecurringTotal = (course) => getInstallmentAmount(course) * getInstallmentCount(course);
 
 
 
@@ -387,6 +409,8 @@ export default function CoursePaymentPage({slug}) {
                 );
 
                 const data = await res.json();
+
+                console.log(data?.course,"course data")
                 setCourseData(data?.course || null);
             } catch (error) {
                 console.error(error);
@@ -457,7 +481,7 @@ export default function CoursePaymentPage({slug}) {
         try {
             if (activeStep === 0) {
                 setPaymentError('');
-                if (courseData?.course_paymenttype === 'free') {
+                if (getPricingType(courseData) === 'free') {
                     await enrollFreeCourse();
                     return;
                 }
@@ -493,45 +517,39 @@ export default function CoursePaymentPage({slug}) {
 
     const getImg = (p) => {
         if (!p) return '/placeholder-event.jpg';
-        if (p.startsWith('http')) return p;
-        const base = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? '';
-        return `${base}${p.startsWith('/') ? '' : '/'}${p}`;
+        if (/^(https?:|data:|blob:|\/\/)/i.test(p)) return p;
+        const apiBase = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, '');
+        try {
+            return new URL(p, `${apiBase || window.location.origin}/`).toString();
+        } catch {
+            return p;
+        }
     };
 
     const getTotalAmount = (course, quantity = 1) => {
         if (!course) return 0;
 
         // ✅ FREE
-        if (course.course_paymenttype === 'free') {
+        if (getPricingType(course) === 'free') {
             return 0;
         }
 
         // ✅ ONE-TIME
-        if (course.course_paymenttype === 'onetimepayment') {
-            return (course.amountOneTime || 0) * quantity;
+        if (getPricingType(course) === 'one_time' || getPricingType(course) === 'paid' || getPricingType(course) === 'onetimepayment') {
+        return Number(course.price ?? course.amountOneTime ?? 0) * quantity;
         }
 
         // ✅ RECURRING
-        if (course.course_paymenttype === 'recurring') {
-            const installment = Number(course.installment || 0);
-
-            if (course.amountInMonth) {
-                return course.amountInMonth * installment;
-            }
-
-            if (course.amountInWeek) {
-                return course.amountInWeek * installment;
-            }
-
-            if (course.amountInByWeekly) {
-                return course.amountInByWeekly * installment;
-            }
+        if (getPricingType(course) === 'recurring') {
+            return calculateRecurringTotal(course) * quantity;
         }
 
         return 0;
     };
 
     const total = getTotalAmount(courseData, quantity);
+    const checkoutFees = getPricingType(courseData) === 'free' ? 0 : GST_AMOUNT + BOOKING_TAX_AMOUNT;
+    const checkoutTotal = total + checkoutFees;
 
     const handleCardChange = (f) => (e) => setCardDetails(c => ({ ...c, [f]: e.target.value }));
 
@@ -610,74 +628,9 @@ export default function CoursePaymentPage({slug}) {
 
 
     // 🔥 Helper function (put at top of file)
-const getCoursePriceLabel = (course) => {
-  if (!course) return '';
-
-  // ✅ FREE
-  if (course.course_paymenttype === 'free') {
-    return 'Free';
-  }
-
-  // ✅ ONE-TIME
-  if (course.course_paymenttype === 'onetimepayment') {
-    return `${course.amountOneTime}`;
-  }
-
-  // ✅ RECURRING (EMI)
-  if (course.course_paymenttype === 'recurring') {
-    const installment = course.installment;
-
-    if (course.amountInMonth) {
-      return `${course.amountInMonth}/month${installment ? ` × ${installment}` : ''}`;
-    }
-
-    if (course.amountInWeek) {
-      return `${course.amountInWeek}/week${installment ? ` × ${installment}` : ''}`;
-    }
-
-    if (course.amountInByWeekly) {
-      return `${course.amountInByWeekly}/bi-week${installment ? ` × ${installment}` : ''}`;
-    }
-  }
-
-  return '';
-};
-
-const getTotalRecurring = (course) => {
-  const installment = Number(course.installment || 0);
-
-  if (course.amountInWeek) {
-    return course.amountInWeek * installment;
-  }
-  if (course.amountInMonth) {
-    return course.amountInMonth * installment;
-  }
-  if (course.amountInByWeekly) {
-    return course.amountInByWeekly * installment;
-  }
-  return null;
-};
-
-const priceLabel = getCoursePriceLabel(courseData);
-const currencySymbol = courseData?.currency === 'USD' ? '$' : '₹';
-const totalRecurring = getTotalRecurring(courseData);
-
-
-const getRecurringTotal = (course) => {
-  if (!course || course.course_paymenttype !== 'recurring') return null;
-
-  const installment = Number(course.installment || 0);
-
-  if (course.amountInWeek) return course.amountInWeek * installment;
-  if (course.amountInMonth) return course.amountInMonth * installment;
-  if (course.amountInByWeekly) return course.amountInByWeekly * installment;
-
-  return null;
-};
-
-const recurringTotal = getRecurringTotal(courseData);
-
-console.log(totalRecurring,"val")
+    const priceLabel = getCoursePriceLabel(courseData);
+    const currencySymbol = courseData?.currency === 'USD' ? '$' : courseData?.currency === 'INR' ? '₹' : courseData?.currency || '₹';
+    const totalRecurring = getPricingType(courseData) === 'recurring' ? calculateRecurringTotal(courseData) : null;
 
     return (
         <ThemeProvider theme={theme}>
@@ -792,9 +745,7 @@ console.log(totalRecurring,"val")
                                                     <Box sx={{ display: 'flex', gap: 0, flexDirection: { xs: 'column', sm: 'row' } }}>
                                                         <Box
                                                             component="img"
-                                                            // src={getImg(eventData?.image)}
-                                                            // src={courseData?.heroImage}
-                                                            src={`${process.env.NEXT_PUBLIC_API_URL}/${courseData?.heroImage}`}
+                                                            src={getImg(courseData?.heroImage)}
                                                             alt={courseData?.course_title}
                                                             sx={{ width: { xs: '100%', sm: 160 }, height: { xs: 160, sm: 'auto' }, objectFit: 'cover', flexShrink: 0 }}
                                                         />
@@ -878,9 +829,9 @@ console.log(totalRecurring,"val")
                                                             }}
                                                         >
 
-                                                            {totalRecurring && (
-                                                                <span className="text-white/70 text-sm">
-                                                                    Total: ${totalRecurring}
+                                                            {totalRecurring !== null && (
+                                                                <span style={{ color: '#6b7a90', fontSize: 14 }}>
+                                                                    Total: {currencySymbol} {totalRecurring}
                                                                 </span>
                                                             )}
 
@@ -1163,18 +1114,16 @@ console.log(totalRecurring,"val")
                                                 <InfoRow>
                                                     <Label>Subtotal</Label>
                                                     <Value>
-                                                        {priceLabel === 'Free'
-                                                            ? 'Free'
-                                                            : `${currencySymbol} ${priceLabel}`}
+                                                        {priceLabel === 'Free' ? 'Free' : `${currencySymbol} ${total.toFixed(2)}`}
                                                     </Value>
                                                 </InfoRow>
                                                 <InfoRow>
-                                                    <Label>Booking Fee</Label>
-                                                    <Value>$0.00</Value>
+                                                    <Label>GST</Label>
+                                                    <Value>{priceLabel === 'Free' ? '—' : `${currencySymbol} ${GST_AMOUNT.toFixed(2)}`}</Value>
                                                 </InfoRow>
                                                 <InfoRow>
-                                                    <Label>Tax</Label>
-                                                    <Value>$0.00</Value>
+                                                    <Label>Booking Tax</Label>
+                                                    <Value>{priceLabel === 'Free' ? '—' : `${currencySymbol} ${BOOKING_TAX_AMOUNT.toFixed(2)}`}</Value>
                                                 </InfoRow>
                                             </Box>
 
@@ -1199,11 +1148,7 @@ console.log(totalRecurring,"val")
                                                         WebkitTextFillColor: 'transparent',
                                                     }}
                                                 >
-                                                    {courseData?.course_paymenttype === 'recurring'
-                                                        ? `${currencySymbol} ${recurringTotal}`
-                                                        : priceLabel === 'Free'
-                                                            ? 'Free'
-                                                            : `${currencySymbol} ${total}`}
+                                                    {priceLabel === 'Free' ? 'Free' : `${currencySymbol} ${checkoutTotal.toFixed(2)}`}
                                                 </Typography>
                                             </InfoRow>
                                         </CardContent>

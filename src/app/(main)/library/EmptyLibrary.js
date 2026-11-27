@@ -31,12 +31,6 @@ export default function EmptyLibrary({
                     route: "/events",
                 };
 
-            case "podcast":
-                return {
-                    button: "Browse Podcasts",
-                    route: "/podcast",
-                };
-
             default:
                 return {
                     button: "Explore Collection",
@@ -105,7 +99,7 @@ export default function EmptyLibrary({
                     mb: 5,
                 }}
             >
-                Your purchased books, courses, podcasts and
+                Your purchased books, courses and
                 events will appear here automatically.
 
                 <br /><br />

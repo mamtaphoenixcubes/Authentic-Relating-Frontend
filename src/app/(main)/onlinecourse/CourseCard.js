@@ -58,6 +58,24 @@ const getCourseDeliveryLabel = (course) => {
   return labels[mode?.toLowerCase()] || "Not specified";
 };
 
+const normalizeMemberId = (member) => {
+  if (member == null) return '';
+  if (typeof member !== 'object') return String(member);
+
+  const id = member.userId
+    ?? member.user_id
+    ?? member.memberId
+    ?? member.member_id
+    ?? member.user?._id
+    ?? member.user?.id
+    ?? member.member?._id
+    ?? member._id
+    ?? member.id;
+
+  if (id == null) return '';
+  return typeof id === 'object' ? String(id._id ?? id.id ?? '') : String(id);
+};
+
 export default function CourseCard() {
   const [courseData, setCourseData] = useState([]);
   const [page, setPage] = useState(0);
@@ -67,9 +85,32 @@ export default function CourseCard() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
   const [paymentReturnTo, setPaymentReturnTo] = useState('/onlinecourse');
+  const [loggedInUserId, setLoggedInUserId] = useState('');
+  const [userLoaded, setUserLoaded] = useState(false);
 
-  const handleBookNow = (courseSlug) => {
-    const paymentUrl = `/onlinecourse/payment/${courseSlug}`;
+  useEffect(() => {
+    const loadCurrentUser = () => {
+      try {
+        const user = JSON.parse(localStorage.getItem('user') || 'null');
+        setLoggedInUserId(normalizeMemberId(user));
+      } catch {
+        setLoggedInUserId('');
+      } finally {
+        setUserLoaded(true);
+      }
+    };
+
+    loadCurrentUser();
+    window.addEventListener('focus', loadCurrentUser);
+    window.addEventListener('storage', loadCurrentUser);
+    return () => {
+      window.removeEventListener('focus', loadCurrentUser);
+      window.removeEventListener('storage', loadCurrentUser);
+    };
+  }, []);
+
+  const handleBookNow = (courseSlug, courseId) => {
+    const paymentUrl = `/onlinecourse/payment/${encodeURIComponent(courseSlug)}?courseId=${encodeURIComponent(courseId || '')}`;
     if (localStorage.getItem('token')) {
       window.location.href = paymentUrl;
       return;
@@ -212,9 +253,6 @@ export default function CourseCard() {
       course.approve_course &&
       !course.isdelete
   );
-
-
-  console.log(publishedCourses,"pub")
 
   // Button common styles
   const commonButtonStyles = {
@@ -418,6 +456,14 @@ export default function CourseCard() {
               const priceLabel = getCoursePriceLabel(course);
               const currencySymbol = getCurrencySymbol(course);
               const isExpanded = expandedCards[course._id] || false;
+              const members = Array.isArray(course.members)
+                ? course.members
+                : Array.isArray(course.member)
+                  ? course.member
+                  : [];
+              const isEnrolled = Boolean(loggedInUserId) && members.some(
+                (member) => normalizeMemberId(member) === loggedInUserId
+              );
 
               return (
                 <motion.div
@@ -548,7 +594,7 @@ export default function CourseCard() {
                         }}
                       />
 
-                      {course.shortDescription &&
+                      {userLoaded && !isEnrolled && course.shortDescription &&
                         course.shortDescription.length > 100 && (
                           <Typography
                             onClick={() =>
@@ -707,42 +753,58 @@ export default function CourseCard() {
                         width: "100%",
                       }}
                     >
-                      {/* READ MORE BUTTON */}
-                      <EventButton
-                        sx={{
-                          ...commonButtonStyles,
-                          background: readMoreBackground,
-                          "&:hover": {
-                            background: readMoreHover,
-                            transform: "translateY(-1px)",
-                            boxShadow:
-                              "0px 4px 10px rgba(0,0,0,0.15)",
-                          },
-                        }}
-                        onClick={() => {
-                          window.location.href = `/onlinecourse/${course.courseSlug}`;
-                        }}
-                      >
-                        Read More
-                      </EventButton>
-
-                      {/* BOOK NOW BUTTON */}
-                      <EventButton
-                        sx={{
-                          ...commonButtonStyles,
-                          fontWeight: 600,
-                          background: buyNowBackground,
-                          "&:hover": {
-                            background: buyNowHover,
-                            transform: "translateY(-1px)",
-                            boxShadow:
-                              "0px 4px 10px rgba(0,0,0,0.15)",
-                          },
-                        }}
-                        onClick={() => handleBookNow(course.courseSlug)}
-                      >
-                        Book Now
-                      </EventButton>
+                      {!userLoaded ? null : isEnrolled ? (
+                        <EventButton
+                          sx={{
+                            ...commonButtonStyles,
+                            background: buyNowBackground,
+                            "&:hover": {
+                              background: buyNowHover,
+                              transform: "translateY(-1px)",
+                              boxShadow: "0px 4px 10px rgba(0,0,0,0.15)",
+                            },
+                          }}
+                          onClick={() => {
+                            window.location.href = `/lms/${encodeURIComponent(course.courseSlug)}?courseId=${encodeURIComponent(course._id)}`;
+                          }}
+                        >
+                          Continue your course
+                        </EventButton>
+                      ) : (
+                        <>
+                          <EventButton
+                            sx={{
+                              ...commonButtonStyles,
+                              background: readMoreBackground,
+                              "&:hover": {
+                                background: readMoreHover,
+                                transform: "translateY(-1px)",
+                                boxShadow: "0px 4px 10px rgba(0,0,0,0.15)",
+                              },
+                            }}
+                            onClick={() => {
+                              window.location.href = `/onlinecourse/${course.courseSlug}`;
+                            }}
+                          >
+                            Read More
+                          </EventButton>
+                          <EventButton
+                            sx={{
+                              ...commonButtonStyles,
+                              fontWeight: 600,
+                              background: buyNowBackground,
+                              "&:hover": {
+                                background: buyNowHover,
+                                transform: "translateY(-1px)",
+                                boxShadow: "0px 4px 10px rgba(0,0,0,0.15)",
+                              },
+                            }}
+                            onClick={() => handleBookNow(course.courseSlug, course._id)}
+                          >
+                            Book Now
+                          </EventButton>
+                        </>
+                      )}
                     </Box>
                   </Card>
                 </motion.div>

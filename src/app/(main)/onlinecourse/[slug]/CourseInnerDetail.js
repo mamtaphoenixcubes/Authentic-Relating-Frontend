@@ -103,7 +103,7 @@ export default function     CourseInnerDetail({ course }) {
     const [value, setValue] = useState(0);
     const [loginDialogOpen, setLoginDialogOpen] = useState(false);
     const router = useRouter();
-    const paymentUrl = `/onlinecourse/payment/${course?.courseSlug}`;
+    const paymentUrl = `/onlinecourse/payment/${encodeURIComponent(course?.courseSlug || '')}?courseId=${encodeURIComponent(course?._id || '')}`;
 
     const handleEnrollClick = () => {
         if (localStorage.getItem('token')) {
@@ -415,7 +415,7 @@ export default function     CourseInnerDetail({ course }) {
                                                 size="small"
                                                 variant="outlined"
                                                 disabled={!course?.courseSlug}
-                                                onClick={() => router.push(`/lms/${encodeURIComponent(course?.courseSlug || '')}`)}
+                                                onClick={() => router.push(`/lms/${encodeURIComponent(course?.courseSlug || '')}?courseId=${encodeURIComponent(course?._id || '')}`)}
                                                 sx={{
                                                     minWidth: 0,
                                                     px: 1.5,

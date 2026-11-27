@@ -23,7 +23,6 @@ export default function LibraryPage() {
 
     const [library, setLibrary] = useState({
         books: [],
-        podcast: [],
         course: [],
         events: [],
     });
@@ -60,18 +59,66 @@ export default function LibraryPage() {
 
             setLoading(true);
 
-            const res = await axiosInstance.get(
-                `/frontendApis/purchasedProducts/${userId}`
-            );
+            const token = localStorage.getItem('token') || '';
+            const [purchasedResult, dashboardResult] = await Promise.allSettled([
+                axiosInstance.get(`/frontendApis/purchasedProducts/${userId}`),
+                axiosInstance.get('/course-payments/my-learning-dashboard', {
+                    headers: { Authorization: `Bearer ${token}` },
+                }),
+            ]);
+            const purchasedProducts = purchasedResult.status === 'fulfilled'
+                ? purchasedResult.value.data?.purchasedProducts || {}
+                : {};
+            const dashboardPayload = dashboardResult.status === 'fulfilled'
+                ? dashboardResult.value.data
+                : {};
+            const dashboardCourses = Array.isArray(dashboardPayload?.courses)
+                ? dashboardPayload.courses
+                : Array.isArray(dashboardPayload?.enrollments)
+                    ? dashboardPayload.enrollments
+                    : [];
+            const dashboardById = new Map(dashboardCourses.map((course) => [String(course.courseId || course._id || ''), course]));
+            const dashboardBySlug = new Map(dashboardCourses.map((course) => [course.courseSlug, course]));
+            const purchasedCourses = Array.isArray(purchasedProducts.course) ? purchasedProducts.course : [];
+            const courses = purchasedCourses.map((course) => {
+                const dashboardCourse = dashboardById.get(String(course._id || course.courseId || ''))
+                    || dashboardBySlug.get(course.courseSlug || course.slug)
+                    || {};
+                return {
+                    ...dashboardCourse,
+                    ...course,
+                    _id: course.courseId || dashboardCourse.courseId || course._id || dashboardCourse._id,
+                    courseSlug: course.courseSlug || course.slug || dashboardCourse.courseSlug,
+                    course_title: course.course_title || course.title || dashboardCourse.title,
+                    heroImage: course.heroImage || dashboardCourse.thumbnailUrl,
+                    thumbnailUrl: course.thumbnailUrl || dashboardCourse.thumbnailUrl,
+                    resumeLessonId: dashboardCourse.lastAccessedLesson?.id
+                        || dashboardCourse.lastAccessedLessonId
+                        || course.resumeLessonId,
+                };
+            });
+            const knownCourseIds = new Set(courses.map((course) => String(course._id || '')));
+            dashboardCourses.forEach((course) => {
+                const courseId = String(course.courseId || course._id || '');
+                if (knownCourseIds.has(courseId)) return;
+                knownCourseIds.add(courseId);
+                courses.push({
+                    ...course,
+                    _id: course.courseId || course._id,
+                    course_title: course.title || course.course_title,
+                    heroImage: course.thumbnailUrl,
+                    resumeLessonId: course.lastAccessedLesson?.id || course.lastAccessedLessonId,
+                });
+            });
 
-            setLibrary(
-                res.data?.purchasedProducts || {
-                    books: [],
-                    podcast: [],
-                    course: [],
-                    events: [],
-                }
-            );
+            if (purchasedResult.status === 'rejected' && dashboardResult.status === 'rejected') {
+                throw purchasedResult.reason;
+            }
+            setLibrary({
+                books: Array.isArray(purchasedProducts.books) ? purchasedProducts.books : [],
+                course: courses,
+                events: Array.isArray(purchasedProducts.events) ? purchasedProducts.events : [],
+            });
 
         } catch (err) {
 
@@ -95,9 +142,6 @@ export default function LibraryPage() {
             case 'course':
                 return library.course || [];
 
-            case 'podcast':
-                return library.podcast || [];
-
             case 'events':
                 return library.events || [];
 
@@ -108,8 +152,6 @@ export default function LibraryPage() {
                     ...(library.books || []),
 
                     ...(library.course || []),
-
-                    ...(library.podcast || []),
 
                     ...(library.events || [])
 
@@ -134,11 +176,6 @@ export default function LibraryPage() {
         {
             key: 'course',
             label: `Courses (${library.course.length})`,
-        },
-
-        {
-            key: 'podcast',
-            label: `Podcasts (${library.podcast.length})`,
         },
 
         {
@@ -189,7 +226,7 @@ export default function LibraryPage() {
 
                         Browse everything you've purchased.
                         Read books, continue courses,
-                        access podcasts, and manage events—
+                        and manage events—
                         all from one place.
 
                     </Typography>

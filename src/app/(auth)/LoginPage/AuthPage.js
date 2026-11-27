@@ -12,6 +12,29 @@ import { useGoogleLogin } from '@react-oauth/google';
 
 const whiteBorder = '1.5px solid #fff';
 
+const resolveCourseRedirect = async (redirect) => {
+    try {
+        const redirectUrl = new URL(redirect, window.location.origin);
+        const paymentRoute = redirectUrl.pathname.match(/^\/onlinecourse\/payment\/([^/]+)\/?$/);
+        const courseId = redirectUrl.searchParams.get('courseId');
+        if (!paymentRoute || !courseId) return redirect;
+
+        const token = localStorage.getItem('token');
+        const response = await axiosInstance.get(
+            `/course-payments/check-enrollment/${encodeURIComponent(courseId)}`,
+            { headers: { Authorization: `Bearer ${token || ''}` } }
+        );
+        const enrollment = response.data?.data || response.data;
+        if (enrollment?.status === 1 && enrollment?.isEnrolled === true) {
+            return `/lms/${encodeURIComponent(decodeURIComponent(paymentRoute[1]))}?courseId=${encodeURIComponent(courseId)}`;
+        }
+    } catch (error) {
+        console.error('Could not check course enrollment after login:', error);
+    }
+
+    return redirect;
+};
+
 export default function AuthPage() {
     const router = useRouter();
 
@@ -45,12 +68,13 @@ export default function AuthPage() {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('refreshToken', response.data.refreshToken);
                 localStorage.setItem('user', JSON.stringify(response.data.user));
+                const nextRedirect = await resolveCourseRedirect(redirect);
                 if (action && bookId) {
                     router.replace(
-                        `${redirect}?action=${action}&bookId=${bookId}`
+                        `${nextRedirect}?action=${action}&bookId=${bookId}`
                     );
                 } else {
-                    router.replace(redirect);
+                    router.replace(nextRedirect);
                 }
             } else {
                 setError(response.data.error || 'Login failed');
@@ -75,12 +99,13 @@ export default function AuthPage() {
                     localStorage.setItem('token', apiRes.data.token);
                     localStorage.setItem('refreshToken', apiRes.data.refreshToken);
                     localStorage.setItem('user', JSON.stringify(apiRes.data.user));
+                    const nextRedirect = await resolveCourseRedirect(redirect);
                     if (action && bookId) {
                         router.replace(
-                            `${redirect}?action=${action}&bookId=${bookId}`
+                            `${nextRedirect}?action=${action}&bookId=${bookId}`
                         );
                     } else {
-                        router.replace(redirect);
+                        router.replace(nextRedirect);
                     }
                 } else {
                     setError(apiRes.data.error || 'Login failed');

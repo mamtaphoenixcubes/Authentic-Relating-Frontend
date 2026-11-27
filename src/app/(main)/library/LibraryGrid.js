@@ -21,13 +21,13 @@ export default function LibraryGrid({
         if (item.document !== undefined)
             return 'books';
 
-        if (item.course_title)
+        if (item.course_title || item.courseSlug || item.courseId)
             return 'course';
 
         if (item.event_name)
             return 'events';
 
-        return 'podcast';
+        return null;
 
     };
 
@@ -50,10 +50,12 @@ export default function LibraryGrid({
                 },
 
                 justifyItems: 'center',
+                alignItems: 'stretch',
+                gridAutoRows: '1fr',
             }}
         >
 
-            {items.map((item, index) => (
+            {items.filter((item) => getType(item)).map((item, index) => (
 
                 <motion.div
 
@@ -82,6 +84,7 @@ export default function LibraryGrid({
 
                     style={{
                         width: '100%',
+                        height: '100%',
                     }}
 
                 >

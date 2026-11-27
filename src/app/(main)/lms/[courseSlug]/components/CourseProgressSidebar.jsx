@@ -1,14 +1,23 @@
 ﻿'use client';
 
-import { useState } from 'react';
-import { ChevronDown, ChevronRight, Circle, CircleCheck, CircleHelp, FileText, Music2, Play } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ChevronDown, ChevronRight, Circle, CircleCheck, CircleHelp, FileText, LockKeyhole, Music2, Play } from 'lucide-react';
+import { formatLessonReleaseTime, isLessonLocked } from './lessonSchedule';
 
 const lessonIcon = (type) => type === 'quiz' ? CircleHelp : type === 'audio' ? Music2 : type === 'pdf' ? FileText : Play;
 
-export default function CourseProgressSidebar({ chapters = [], lessons = [], selectedLessonId, selectedChapterId, onSelectChapter, onSelectLesson }) {
+export default function CourseProgressSidebar({ chapters = [], lessons = [], selectedLessonId, selectedChapterId, now, onSelectChapter, onSelectLesson }) {
   const [expanded, setExpanded] = useState(() => Object.fromEntries(chapters.map((chapter, index) => [chapter._id || String(index), index === 0])));
   const completedTotal = lessons.filter((item) => item.lesson.isFinished).length;
   const percent = lessons.length ? Math.round((completedTotal / lessons.length) * 100) : 0;
+
+  useEffect(() => {
+    if (!selectedChapterId) return;
+    const chapterIndex = chapters.findIndex((chapter) => (chapter._id || chapter.title) === selectedChapterId);
+    if (chapterIndex < 0) return;
+    const chapterKey = chapters[chapterIndex]._id || String(chapterIndex);
+    setExpanded((current) => current[chapterKey] ? current : { ...current, [chapterKey]: true });
+  }, [chapters, selectedChapterId]);
 
   return (
     <section className="rounded-[24px] border border-[#dfe5ee] bg-white p-5 shadow-[0_2px_5px_rgba(16,27,49,0.04)] sm:p-6">
@@ -34,7 +43,7 @@ export default function CourseProgressSidebar({ chapters = [], lessons = [], sel
           const expandedNow = expanded[key] ?? chapterIndex === 0;
           const chapterLessons = chapter.lessons || [];
           const done = chapterLessons.filter((lesson) => lesson.isFinished).length;
-          const activeChapter = !selectedLessonId && (selectedChapterId === (chapter._id || chapter.title));
+          const activeChapter = selectedChapterId === (chapter._id || chapter.title);
           return (
             <section key={key} className="relative rounded-[17px] border border-[#d4dce8] bg-white shadow-[0_0_0_1px_rgba(212,220,232,0.28)]">
               <button
@@ -55,17 +64,24 @@ export default function CourseProgressSidebar({ chapters = [], lessons = [], sel
                     const lessonId = lesson._id || key + '-' + lessonIndex;
                     const type = String(lesson.lessonType || '').toLowerCase();
                     const Icon = lessonIcon(type);
-                    const active = selectedLessonId === lessonId;
+                    const locked = isLessonLocked(lesson, now);
+                    const active = selectedLessonId === lessonId && !locked;
                     const duration = lesson.durationFormatted || lesson.duration || '';
+                    const releaseLabel = formatLessonReleaseTime(lesson);
                     return (
                       <button
                         type="button"
                         key={lessonId}
+                        disabled={locked}
+                        title={locked ? `Available ${releaseLabel}` : undefined}
+                        aria-label={locked ? `${lesson.title || 'Lesson'} locked until ${releaseLabel}` : undefined}
                         aria-current={active ? 'true' : undefined}
                         onClick={() => onSelectLesson(lesson, chapter, lessonId)}
-                        className={'flex min-h-[36px] w-full items-center gap-2.5 rounded-[11px] px-2 py-2 text-left transition-colors ' + (active ? 'bg-[#fff0e6] text-[#f04e50]' : 'text-[#26344d] hover:bg-[#f8f9fb]')}
+                        className={'flex min-h-[36px] w-full items-center gap-2.5 rounded-[11px] px-2 py-2 text-left transition-colors ' + (locked ? 'cursor-not-allowed bg-slate-50 text-slate-400' : active ? 'bg-[#fff0e6] text-[#f04e50]' : 'text-[#26344d] hover:bg-[#f8f9fb]')}
                       >
-                        {lesson.isFinished
+                        {locked
+                          ? <LockKeyhole className="shrink-0 text-[#94a3b8]" size={15} />
+                          : lesson.isFinished
                           ? <CircleCheck className="shrink-0 text-emerald-500" size={16} />
                           : active
                             ? <span className="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[#f04e50] text-white"><Play size={9} fill="currentColor" /></span>

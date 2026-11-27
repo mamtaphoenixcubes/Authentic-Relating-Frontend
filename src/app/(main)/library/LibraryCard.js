@@ -10,6 +10,18 @@ import {
     Chip,
 } from '@mui/material';
 
+const normalizeMediaUrl = (value) => {
+    if (typeof value !== 'string' || !value.trim()) return '/placeholder.jpg';
+    const path = value.trim();
+    if (/^(https?:|data:|blob:|\/\/)/i.test(path)) return path;
+    const apiBase = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, '');
+    try {
+        return new URL(path, `${apiBase || window.location.origin}/`).toString();
+    } catch {
+        return path;
+    }
+};
+
 export default function LibraryCard({
     item,
     type,
@@ -84,26 +96,22 @@ export default function LibraryCard({
 
                 break;
 
-            case 'course':
-
-                router.push(
-                    `/onlinecourse/${item._id}`
-                );
+            case 'course': {
+                if (!item.courseSlug) return;
+                const params = new URLSearchParams();
+                const courseId = item._id || item.courseId;
+                if (courseId) params.set('courseId', courseId);
+                if (item.resumeLessonId) params.set('lessonId', item.resumeLessonId);
+                const query = params.toString();
+                router.push(`/lms/${encodeURIComponent(item.courseSlug)}${query ? `?${query}` : ''}`);
 
                 break;
+            }
 
             case 'events':
 
                 router.push(
                     `/events/${item._id}`
-                );
-
-                break;
-
-            case 'podcast':
-
-                router.push(
-                    `/podcast/${item._id}`
                 );
 
                 break;
@@ -124,13 +132,10 @@ export default function LibraryCard({
                 return item.title;
 
             case 'course':
-                return item.course_title;
+                return item.course_title || item.title;
 
             case 'events':
                 return item.event_name;
-
-            case 'podcast':
-                return item.title;
 
             default:
                 return '';
@@ -142,11 +147,11 @@ export default function LibraryCard({
     const getImage = () => {
 
         if (type === 'books') {
-
-            return item.image
-                ? `${process.env.NEXT_PUBLIC_API_URL}/${item.image}`
-                : '/Book.png';
-
+            return item.image ? normalizeMediaUrl(item.image) : '/Book.png';
+        }
+        if (type === 'course') {
+            const image = item.heroImage || item.thumbnailUrl || (Array.isArray(item.image) ? item.image[0] : item.image);
+            return normalizeMediaUrl(image);
         }
 
         return '/placeholder.jpg';
@@ -168,9 +173,6 @@ export default function LibraryCard({
             case 'events':
                 return 'Event';
 
-            case 'podcast':
-                return 'Podcast';
-
             default:
                 return '';
 
@@ -189,30 +191,11 @@ export default function LibraryCard({
             sx={{
 
                 width: '100%',
-
-                maxWidth: {
-
-                    xs: 280,
-
-                    sm: 320,
-
-                    md: 420,
-
-                    lg: 520,
-
-                },
-
-                minHeight: {
-
-                    xs: 320,
-
-                    sm: 340,
-
-                    md: 360,
-
-                    lg: 380,
-
-                },
+                height: '100%',
+                minHeight: { xs: 390, sm: 410 },
+                display: 'flex',
+                flexDirection: 'column',
+                minWidth: 0,
 
                 borderRadius: 3,
 
@@ -248,13 +231,7 @@ export default function LibraryCard({
 
                 sx={{
 
-                    height: {
-
-                        xs: 180,
-
-                        md: 260,
-
-                    },
+                    height: { xs: 190, md: 210 },
 
                     overflow: 'hidden',
 
@@ -267,6 +244,13 @@ export default function LibraryCard({
                     component="img"
 
                     image={getImage()}
+
+                    alt={getTitle() || 'Library item'}
+
+                    onError={(event) => {
+                        event.currentTarget.onerror = null;
+                        event.currentTarget.src = '/placeholder.jpg';
+                    }}
 
                     className="card-image"
 
@@ -295,9 +279,9 @@ export default function LibraryCard({
 
                     display: 'flex',
 
-                    flexDirection: 'column',
-
-                    height: '100%',
+                flexDirection: 'column',
+                    flex: 1,
+                    minHeight: 0,
 
                 }}
 
@@ -362,7 +346,7 @@ export default function LibraryCard({
                     fontSize={20}
 
                     mb={1}
-
+                    sx={{ minHeight: 52, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
                 >
 
                     {getTitle()}
@@ -392,8 +376,6 @@ export default function LibraryCard({
                     {type === "events" &&
                         "View your event details and upcoming schedule."}
 
-                    {type === "podcast" &&
-                        "Listen to your purchased podcast anytime."}
                 </Typography>
 
                 <Box
@@ -414,7 +396,6 @@ export default function LibraryCard({
 
                         {type === "events" && "📅 Event"}
 
-                        {type === "podcast" && "🎧 Podcast"}
                     </Typography>
 
 

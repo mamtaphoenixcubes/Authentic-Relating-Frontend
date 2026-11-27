@@ -62,7 +62,7 @@ const isPdfFile = (file) => {
   return /pdf/i.test(file?.mimeType || file?.type || file?.fileType || '') || /\.pdf(?:$|[?#])/i.test(fileUrl(file));
 };
 
-export default function LessonDetails({ lesson, chapter, lessonId, courseId, onPrevious, onNext, hasPrevious, hasNext, completed, onToggleComplete, onStartLesson }) {
+export default function LessonDetails({ lesson, chapter, lessonId, courseId, onPrevious, onNext, hasPrevious, hasNext, completed, onToggleComplete, progressError, canStartLesson = true, onStartLesson }) {
   const [activeTab, setActiveTab] = useState('overview');
   const [notes, setNotes] = useState('');
   const [noteSaved, setNoteSaved] = useState(false);
@@ -105,7 +105,7 @@ export default function LessonDetails({ lesson, chapter, lessonId, courseId, onP
       {description
         ? <div className="rich-course-content mt-3 text-sm leading-6 text-slate-700 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_ul]:my-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:my-1 [&_h1]:mb-2 [&_h1]:text-xl [&_h1]:font-bold [&_h2]:mb-2 [&_h2]:text-lg [&_h2]:font-bold [&_h3]:mb-2 [&_h3]:font-bold [&_blockquote]:border-l-2 [&_blockquote]:border-[#f04e50] [&_blockquote]:pl-3 [&_blockquote]:italic [&_a]:text-[#f04e50] [&_a]:underline" dangerouslySetInnerHTML={{ __html: richTextHtml(description) }} />
         : <p className="mt-3 text-sm leading-6 text-slate-500">No description has been added for this chapter yet.</p>}
-      <button type="button" onClick={onStartLesson} disabled={!chapter?.lessons?.length} className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-[#f04e50] px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#df4146] disabled:cursor-not-allowed disabled:opacity-50">Go to this chapter’s lessons <span className="ml-2" aria-hidden="true">→</span></button>
+      <button type="button" onClick={onStartLesson} disabled={!chapter?.lessons?.length || !canStartLesson} className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-[#f04e50] px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#df4146] disabled:cursor-not-allowed disabled:opacity-50">{canStartLesson ? 'Go to this chapter’s lessons' : 'Lessons are not available yet'} <span className="ml-2" aria-hidden="true">→</span></button>
     </section>;
   }
 
@@ -129,9 +129,10 @@ export default function LessonDetails({ lesson, chapter, lessonId, courseId, onP
         </div>
       </div>}
     </div>
+    {progressError && <p role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{progressError}</p>}
     <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-5">
       <button type="button" onClick={onPrevious} disabled={!hasPrevious} className="rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-bold text-slate-600 disabled:cursor-not-allowed disabled:opacity-40">← &nbsp; Previous Lesson</button>
-      <button type="button" onClick={onToggleComplete} className="rounded-xl bg-slate-100 px-5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-200">{completed ? '✓ Completed' : '✓  Mark as Completed'}</button>
+      <button type="button" onClick={onToggleComplete} disabled={completed} className="rounded-xl bg-slate-100 px-5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-60">{completed ? '✓ Completed' : '✓  Mark as Completed'}</button>
       <button type="button" onClick={onNext} disabled={!hasNext} className="rounded-xl bg-[#f04e50] px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-[#df4146] disabled:cursor-not-allowed disabled:opacity-40">Next Lesson &nbsp; →</button>
     </div>
   </section>;
